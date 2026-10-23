@@ -1,0 +1,29 @@
+CREATE DATABASE IF NOT EXISTS BookingVenue;
+USE BookingVenue;
+DROP TABLE IF EXISTS Booking;
+DROP TABLE IF EXISTS Venue;
+
+CREATE TABLE Venue (
+	VenueId INT PRIMARY KEY AUTO_INCREMENT,
+	Name VARCHAR(50) NOT NULL,
+	Street VARCHAR(50) NOT NULL,
+	PostalNumber VARCHAR(5) NOT NULL,
+	City VARCHAR(50) NOT NULL,
+	Description VARCHAR(255) DEFAULT 'Den här lokalen har ingen beskrivning ännu.',
+	Space INT NOT NULL,
+	Capacity INT NOT NULL,
+	PricePerHour INT UNSIGNED NOT NULL,
+	ImageURL VARCHAR(255) DEFAULT 'https://images.pexels.com/photos/39225128/pexels-photo-39225128.jpeg'
+);
+
+CREATE TABLE Booking (
+	BookingId CHAR(8) PRIMARY KEY,
+	VenueId INT NOT NULL,
+	FirstName VARCHAR(50) NOT NULL,
+	LastName VARCHAR(50) NOT NULL,
+	StartTime DATETIME NOT NULL,
+	EndTime DATETIME NOT NULL,
+	Status BOOL NOT NULL DEFAULT TRUE,
+FOREIGN KEY (VenueId) REFERENCES Venue(VenueId),
+CHECK (EndTime > StartTime)
+);
