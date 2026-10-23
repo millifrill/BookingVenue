@@ -5,10 +5,11 @@ DROP TABLE IF EXISTS Venue;
 
 CREATE TABLE Venue (
 	VenueId INT PRIMARY KEY AUTO_INCREMENT,
+	Name VARCHAR(50) NOT NULL,
 	Street VARCHAR(50) NOT NULL,
 	PostalNumber VARCHAR(5) NOT NULL,
 	City VARCHAR(50) NOT NULL,
-	Description VARCHAR(255),
+	Description VARCHAR(255) DEFAULT 'Den här lokalen har ingen beskrivning ännu.',
 	Space INT NOT NULL,
 	Capacity INT NOT NULL,
 	PricePerHour INT UNSIGNED NOT NULL,
