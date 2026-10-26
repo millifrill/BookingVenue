@@ -13,7 +13,7 @@ INSERT INTO Venue (CityId, Name, Street, PostalNumber, Description, Space, Capac
 (1, 'Takterrassen Strand',  'Strandvägen 7',      '11456', 'Takterrass med utsikt över vattnet',                 110,  50,  1800, 'https://images.pexels.com/photos/1955986/pexels-photo-1955986.jpeg'),
 (7, 'Ljudstudion Norr',     'Kyrkogatan 19',      '90325', DEFAULT,                                              18,   5,   400,  DEFAULT);
 
-INSERT INTO Booking (BookingId, VenueId, FirstName, LastName, StartTime, EndTime, Status) VALUES
+INSERT INTO Booking (BookingId, VenueId, FirstName, LastName, StartTime, EndTime, Active) VALUES
 -- Lokal 1: Konferensrum, Stockholm
 ('A2B3C4D5', 1,  'Anna',     'Svensson',  '2026-10-02 09:00', '2026-10-02 11:00', TRUE),
 ('B3C4D5E6', 1,  'Karin',    'Lindqvist', '2026-10-15 13:00', '2026-10-15 16:00', TRUE),

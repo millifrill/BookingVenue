@@ -2,6 +2,12 @@ CREATE DATABASE IF NOT EXISTS BookingVenue;
 USE BookingVenue;
 DROP TABLE IF EXISTS Booking;
 DROP TABLE IF EXISTS Venue;
+DROP TABLE IF EXISTS City;
+
+CREATE TABLE City (
+	CityId INT PRIMARY KEY AUTO_INCREMENT,
+	Name VARCHAR(50) NOT NULL UNIQUE
+);
 
 CREATE TABLE Venue (
 	VenueId INT PRIMARY KEY AUTO_INCREMENT,
@@ -13,8 +19,8 @@ CREATE TABLE Venue (
 	Space INT NOT NULL,
 	Capacity INT NOT NULL,
 	PricePerHour INT UNSIGNED NOT NULL,
-	ImageURL VARCHAR(255) DEFAULT 'https://images.pexels.com/photos/39225128/pexels-photo-39225128.jpeg'
-	FOREIGN KEY (CityId) REFERENCES City(CityId),
+	ImageURL VARCHAR(255) DEFAULT 'https://images.pexels.com/photos/39225128/pexels-photo-39225128.jpeg',
+	FOREIGN KEY (CityId) REFERENCES City(CityId)
 );
 
 CREATE TABLE Booking (
@@ -27,9 +33,4 @@ CREATE TABLE Booking (
 	Active BOOL NOT NULL DEFAULT TRUE,
 	FOREIGN KEY (VenueId) REFERENCES Venue(VenueId),
 	CHECK (EndTime > StartTime)
-);
-
-CREATE TABLE City (
-	CityId INT PRIMARY KEY AUTO_INCREMENT,
-	Name VARCHAR(50) NOT NULL
 );
