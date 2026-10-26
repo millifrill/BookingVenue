@@ -1,16 +1,19 @@
-INSERT INTO Venue (Name, Street, PostalNumber, City, Description, Space, Capacity, PricePerHour, ImageURL) VALUES
-('Konferensrum Ljuset',  'Storgatan 1',        '11129', 'Stockholm', 'Ljust konferensrum med projektor och whiteboard',    40,   20,  500,  'https://images.pexels.com/photos/16585156/pexels-photo-16585156.jpeg'),
-('Padelcenter Göteborg', 'Lillgatan 12',       '41103', 'Göteborg',  'Padelbana inomhus med belysning och omklädningsrum', 200,  4,   300,  'https://images.pexels.com/photos/32474981/pexels-photo-32474981.jpeg'),
-('Festvåningen Hamnen',  'Hamngatan 5',        '21121', 'Malmö',     'Festlokal med bar, kök och dansgolv',                150,  80,  1200, 'https://images.pexels.com/photos/17294774/pexels-photo-17294774.jpeg'),
-('Mötesplats Uppsala',   'Kungsgatan 22',      '75331', 'Uppsala',   DEFAULT,                                                 25,   10,  350,  'https://images.pexels.com/photos/22718136/pexels-photo-22718136.jpeg'),
-('Dansstudion Rytmen',   'Drottninggatan 8',   '70210', 'Örebro',    'Danslokal med spegelvägg och ljudanläggning',        120,  30,  600,  'https://images.pexels.com/photos/1398266/pexels-photo-1398266.jpeg'),
-('Loftet Haga',          'Östra Hamngatan 14', '41110', 'Göteborg',  'Industriloft med högt i tak, passar events',         90,   40,  900,  'https://images.pexels.com/photos/7031834/pexels-photo-7031834.jpeg'),
-('Aulan Sveavägen',      'Sveavägen 40',       '11134', 'Stockholm', 'Auditorium med scen, ljud och ljus',                 300,  150, 2500, DEFAULT),
-('Östgötahallen',        'Norra Storgatan 3',  '58222', 'Linköping', 'Inomhushall för fotboll och andra bollsporter',      1800, 22,  1500, 'https://images.pexels.com/photos/36293742/pexels-photo-36293742.jpeg'),
-('Takterrassen Strand',  'Strandvägen 7',      '11456', 'Stockholm', 'Takterrass med utsikt över vattnet',                 110,  50,  1800, 'https://images.pexels.com/photos/1955986/pexels-photo-1955986.jpeg'),
-('Ljudstudion Norr',     'Kyrkogatan 19',      '90325', 'Umeå',      'Ljudisolerad studio för podcast och inspelning',     18,   5,   400,  DEFAULT);
+INSERT INTO City (Name) VALUES
+('Stockholm'), ('Göteborg'), ('Malmö'), ('Uppsala'), ('Örebro'), ('Linköping'), ('Umeå');
 
-INSERT INTO Booking (BookingId, VenueId, FirstName, LastName, StartTime, EndTime, Status) VALUES
+INSERT INTO Venue (CityId, Name, Street, PostalNumber, Description, Space, Capacity, PricePerHour, ImageURL) VALUES
+(1, 'Konferensrum Ljuset',  'Storgatan 1',        '11129', 'Ljust konferensrum med projektor och whiteboard',    40,   20,  500,  'https://images.pexels.com/photos/16585156/pexels-photo-16585156.jpeg'),
+(2, 'Padelcenter Göteborg', 'Lillgatan 12',       '41103', 'Padelbana inomhus med belysning och omklädningsrum', 200,  4,   300,  'https://images.pexels.com/photos/32474981/pexels-photo-32474981.jpeg'),
+(3, 'Festvåningen Hamnen',  'Hamngatan 5',        '21121', 'Festlokal med bar, kök och dansgolv',                150,  80,  1200, 'https://images.pexels.com/photos/17294774/pexels-photo-17294774.jpeg'),
+(4, 'Mötesplats Uppsala',   'Kungsgatan 22',      '75331', DEFAULT,                                              25,   10,  350,  'https://images.pexels.com/photos/22718136/pexels-photo-22718136.jpeg'),
+(5, 'Dansstudion Rytmen',   'Drottninggatan 8',   '70210', 'Danslokal med spegelvägg och ljudanläggning',        120,  30,  600,  'https://images.pexels.com/photos/1398266/pexels-photo-1398266.jpeg'),
+(2, 'Loftet Haga',          'Östra Hamngatan 14', '41110', 'Industriloft med högt i tak, passar events',         90,   40,  900,  'https://images.pexels.com/photos/7031834/pexels-photo-7031834.jpeg'),
+(1, 'Aulan Sveavägen',      'Sveavägen 40',       '11134', 'Auditorium med scen, ljud och ljus',                 300,  150, 2500, DEFAULT),
+(6, 'Östgötahallen',        'Norra Storgatan 3',  '58222', 'Inomhushall för fotboll och andra bollsporter',      1800, 22,  1500, 'https://images.pexels.com/photos/36293742/pexels-photo-36293742.jpeg'),
+(1, 'Takterrassen Strand',  'Strandvägen 7',      '11456', 'Takterrass med utsikt över vattnet',                 110,  50,  1800, 'https://images.pexels.com/photos/1955986/pexels-photo-1955986.jpeg'),
+(7, 'Ljudstudion Norr',     'Kyrkogatan 19',      '90325', DEFAULT,                                              18,   5,   400,  DEFAULT);
+
+INSERT INTO Booking (BookingId, VenueId, FirstName, LastName, StartTime, EndTime, Active) VALUES
 -- Lokal 1: Konferensrum, Stockholm
 ('A2B3C4D5', 1,  'Anna',     'Svensson',  '2026-10-02 09:00', '2026-10-02 11:00', TRUE),
 ('B3C4D5E6', 1,  'Karin',    'Lindqvist', '2026-10-15 13:00', '2026-10-15 16:00', TRUE),
