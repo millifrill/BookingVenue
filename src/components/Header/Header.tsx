@@ -28,7 +28,7 @@ export default function Header() {
    return (
       <Navbar
          as="header"
-         expand="md"
+         expand="lg"
          collapseOnSelect
          className="site-header"
       >

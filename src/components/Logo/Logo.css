@@ -1,7 +1,7 @@
 .logo {
    font-family: var(--font-display);
    font-weight: 700;
-   font-size: 2rem;
+   font-size: 1.5rem;
    line-height: 1.1;
    letter-spacing: -0.03em;
    color: var(--color-ink);
@@ -9,4 +9,10 @@
 
 .logo__dot {
    color: var(--color-accent);
+}
+
+@media (min-width: 576px) {
+   .logo {
+      font-size: 2rem;
+   }
 }
