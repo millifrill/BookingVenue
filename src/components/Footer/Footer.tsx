@@ -15,7 +15,7 @@ export default function Footer() {
                   <Logo />
                </Link>
                <p className="site-footer__tagline">
-                  Utvalda lokaler i Stockholm, Göteborg, Malmö och Uppsala.
+                  Utvalda lokaler i hela Sverige.
                </p>
             </div>
             <nav aria-label="Sidfot" className="site-footer__nav">

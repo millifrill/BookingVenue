@@ -24,8 +24,8 @@
 
 .site-footer__nav {
    display: flex;
-   flex-wrap: wrap;
-   gap: var(--space-3) var(--space-5);
+   flex-direction: column;
+   gap: var(--space-2);
 }
 
 .site-footer__link {
@@ -52,8 +52,12 @@
 @media (min-width: 768px) {
    .site-footer__container {
       padding-inline: var(--space-6);
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+   }
+
+   .site-footer__copyright {
+      justify-self: end;
    }
 }
