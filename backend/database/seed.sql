@@ -1,7 +1,7 @@
-INSERT INTO City (Name) VALUES
+INSERT INTO City (name) VALUES
 ('Stockholm'), ('Göteborg'), ('Malmö'), ('Uppsala'), ('Örebro'), ('Linköping'), ('Umeå');
 
-INSERT INTO Venue (CityId, Name, Street, PostalNumber, Description, Space, Capacity, PricePerHour, ImageURL) VALUES
+INSERT INTO Venue (cityId, name, street, postalNumber, description, space, capacity, pricePerHour, imageURL) VALUES
 (1, 'Konferensrum Ljuset',  'Storgatan 1',        '11129', 'Ljust konferensrum med projektor och whiteboard',    40,   20,  500,  'https://images.pexels.com/photos/16585156/pexels-photo-16585156.jpeg'),
 (2, 'Padelcenter Göteborg', 'Lillgatan 12',       '41103', 'Padelbana inomhus med belysning och omklädningsrum', 200,  4,   300,  'https://images.pexels.com/photos/32474981/pexels-photo-32474981.jpeg'),
 (3, 'Festvåningen Hamnen',  'Hamngatan 5',        '21121', 'Festlokal med bar, kök och dansgolv',                150,  80,  1200, 'https://images.pexels.com/photos/17294774/pexels-photo-17294774.jpeg'),
@@ -13,7 +13,7 @@ INSERT INTO Venue (CityId, Name, Street, PostalNumber, Description, Space, Capac
 (1, 'Takterrassen Strand',  'Strandvägen 7',      '11456', 'Takterrass med utsikt över vattnet',                 110,  50,  1800, 'https://images.pexels.com/photos/1955986/pexels-photo-1955986.jpeg'),
 (7, 'Ljudstudion Norr',     'Kyrkogatan 19',      '90325', DEFAULT,                                              18,   5,   400,  DEFAULT);
 
-INSERT INTO Booking (BookingId, VenueId, FirstName, LastName, StartTime, EndTime, Active) VALUES
+INSERT INTO Booking (bookingId, venueId, firstName, lastName, startTime, endTime, active) VALUES
 -- Lokal 1: Konferensrum, Stockholm
 ('A2B3C4D5', 1,  'Anna',     'Svensson',  '2026-10-02 09:00', '2026-10-02 11:00', TRUE),
 ('B3C4D5E6', 1,  'Karin',    'Lindqvist', '2026-10-15 13:00', '2026-10-15 16:00', TRUE),
