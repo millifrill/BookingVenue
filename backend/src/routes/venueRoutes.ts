@@ -1,7 +1,7 @@
 import express from 'express';
 import {
-   getVenueById,
    getVenues,
+   getVenueById,
    createVenue,
    updateVenue,
    deleteVenue,

@@ -96,20 +96,24 @@ export const createVenue = async (
          .status(400)
          .json({ error: 'Missing required fields', success: false });
    }
+
    const sqlQuery = `INSERT INTO Venue(cityId, name, street, postalNumber, description, space, capacity, pricePerHour, imageURL)
-   VALUES (?,?,?,${description !== undefined ? '?' : 'DEFAULT'},?,?,?,?,${imageURL !== undefined ? '?' : 'DEFAULT'})`;
+   VALUES (?,?,?,${description === undefined || description === '' ? 'DEFAULT' : '?'},?,?,?,?,${imageURL === undefined || imageURL === '' ? 'DEFAULT' : '?'})`;
+
+   const sqlValues = [cityId, name, street, postalNumber];
+
+   if (description !== undefined && description !== '') {
+      sqlValues.push(description);
+   }
+
+   sqlValues.push(space, capacity, pricePerHour);
+
+   if (imageURL !== undefined && imageURL !== '') {
+      sqlValues.push(imageURL);
+   }
+
    try {
-      await mySqlDatabase.execute<Venue[]>(sqlQuery, [
-         cityId,
-         name,
-         street,
-         postalNumber,
-         description,
-         space,
-         capacity,
-         pricePerHour,
-         imageURL,
-      ]);
+      await mySqlDatabase.execute<Venue[]>(sqlQuery, sqlValues);
       res.status(201).json({
          message: 'Venue created successfully',
          success: true,
@@ -156,20 +160,27 @@ export const updateVenue = async (
          .status(400)
          .json({ error: 'Missing required fields', success: false });
    }
-   const sqlQuery = `UPDATE Venue SET cityId = ?, name = ?, street = ?, postalNumber = ?, description = ${description !== undefined ? '?' : 'DEFAULT'}, space = ?, capacity = ?, pricePerHour = ?, imageURL = ${imageURL !== undefined ? '?' : 'DEFAULT'} WHERE venueId = ?`;
+   const sqlQuery = `UPDATE Venue SET cityId = ?, name = ?, street = ?, postalNumber = ?, description = ${description === undefined || description === '' ? 'DEFAULT' : '?'}, space = ?, capacity = ?, pricePerHour = ?, imageURL = ${imageURL === undefined || imageURL === '' ? 'DEFAULT' : '?'} WHERE venueId = ?`;
+
+   const sqlValues = [cityId, name, street, postalNumber];
+
+   if (description !== undefined && description !== '') {
+      sqlValues.push(description);
+   }
+
+   sqlValues.push(space, capacity, pricePerHour);
+
+   if (imageURL !== undefined && imageURL !== '') {
+      sqlValues.push(imageURL);
+   }
+
+   sqlValues.push(id);
+
    try {
-      const [result] = await mySqlDatabase.execute<ResultSetHeader>(sqlQuery, [
-         cityId,
-         name,
-         street,
-         postalNumber,
-         description,
-         space,
-         capacity,
-         pricePerHour,
-         imageURL,
-         id,
-      ]);
+      const [result] = await mySqlDatabase.execute<ResultSetHeader>(
+         sqlQuery,
+         sqlValues,
+      );
       if (result.affectedRows === 0) {
          res.status(404).json({ error: 'Venue not found', success: false });
       } else {
