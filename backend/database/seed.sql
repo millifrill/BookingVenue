@@ -74,3 +74,19 @@ INSERT INTO Booking (bookingId, venueId, firstName, lastName, startTime, endTime
 ('C3D4E5F6', 10, 'Malin',    'Dahlberg',  '2026-11-12 11:00', '2026-11-12 13:00', TRUE),
 ('D4E5F6G7', 10, 'Robin',    'Åkesson',   '2026-11-26 14:00', '2026-11-26 16:00', FALSE),
 ('E5F6G7H8', 10, 'Frida',    'Lundqvist', '2026-12-17 10:00', '2026-12-17 12:00', TRUE);
+
+INSERT INTO Amenity (Name) VALUES
+('WiFi'), ('Projektor'), ('Whiteboard'), ('Ljudanläggning'), ('Bar'),
+('Kök'), ('Omklädningsrum'), ('Parkering'), ('Scen'), ('Tillgänglighetsanpassat');
+
+INSERT INTO VenueAmenity (VenueId, AmenityId) VALUES
+(1, 1), (1, 2), (1, 3), (1, 8),            -- Konferensrum Ljuset: WiFi, Projektor, Whiteboard, Parkering
+(2, 7), (2, 8),                            -- Padelcenter: Omklädningsrum, Parkering
+(3, 4), (3, 5), (3, 6), (3, 10),           -- Festvåningen: Ljudanläggning, Bar, Kök, Tillgänglighetsanpassat
+(4, 1), (4, 3),                            -- Mötesplats Uppsala: WiFi, Whiteboard
+(5, 4), (5, 7),                            -- Dansstudion: Ljudanläggning, Omklädningsrum
+(6, 1), (6, 4), (6, 8),                    -- Loftet Haga: WiFi, Ljudanläggning, Parkering
+(7, 1), (7, 2), (7, 4), (7, 9), (7, 10),   -- Aulan Sveavägen: WiFi, Projektor, Ljudanläggning, Scen, Tillgänglighetsanpassat
+(8, 7), (8, 8),                            -- Östgötahallen: Omklädningsrum, Parkering
+(9, 4), (9, 5), (9, 10),                   -- Takterrassen: Ljudanläggning, Bar, Tillgänglighetsanpassat
+(10, 1), (10, 4);                          -- Ljudstudion Norr: WiFi, Ljudanläggning

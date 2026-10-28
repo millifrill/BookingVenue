@@ -1,5 +1,7 @@
 CREATE DATABASE IF NOT EXISTS BookingVenue;
 USE BookingVenue;
+DROP TABLE IF EXISTS VenueAmenity;
+DROP TABLE IF EXISTS Amenity;
 DROP TABLE IF EXISTS Booking;
 DROP TABLE IF EXISTS Venue;
 DROP TABLE IF EXISTS City;
@@ -33,4 +35,17 @@ CREATE TABLE Booking (
 	active BOOL NOT NULL DEFAULT TRUE,
 	FOREIGN KEY (venueId) REFERENCES Venue(venueId),
 	CHECK (endTime > startTime)
+);
+
+CREATE TABLE Amenity (
+	amenityId INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE VenueAmenity (
+	venueId INT NOT NULL,
+	amenityId INT NOT NULL,
+	PRIMARY KEY (venueId, amenityId),
+	FOREIGN KEY (venueId) REFERENCES Venue(venueId),
+	FOREIGN KEY (amenityId) REFERENCES Amenity(amenityId)
 );
