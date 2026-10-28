@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export function filterByCity<T extends { cityId: number }>(
-   _venues: T[],
-   _cityId: number | null,
+   venues: T[],
+   cityId: number | null,
 ): T[] {
-   throw new Error('Not implemented');
+   if (cityId === null) return venues;
+   return venues.filter((venue) => venue.cityId === cityId);
 }
