@@ -5,7 +5,7 @@ import {
    createVenue,
    updateVenue,
    deleteVenue,
-} from '../controllers/venueController.js';
+} from '../controllers/venueController.ts';
 
 const router = express.Router();
 

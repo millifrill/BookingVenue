@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import mySqlPool from '../connectionMysql.js';
 import type { ResultSetHeader, RowDataPacket } from 'mysql2';
+import mySqlPool from '../connectionMySql.ts';
 
 const mySqlDatabase = mySqlPool;
 
