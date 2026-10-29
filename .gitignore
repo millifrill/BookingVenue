@@ -23,6 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+<<<<<<< HEAD
 # Cypress artefacts
 cypress/screenshots
 cypress/videos
+=======
+.env
+>>>>>>> origin/main
