@@ -15,7 +15,7 @@ const ALL_CITIES = '';
 
 export default function CityFilter({ cities, value, onChange }: CityFilterProps) {
    return (
-      <Form.Group controlId="city-filter">
+      <Form.Group controlId="cityFilter">
          <Form.Label>Stad</Form.Label>
          <Form.Select
             value={value ?? ALL_CITIES}
