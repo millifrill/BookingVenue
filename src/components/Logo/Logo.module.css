@@ -11,7 +11,7 @@
    color: var(--color-accent);
 }
 
-@media (min-width: 576px) {
+@media (width >= 576px) {
    .logo {
       font-size: 2rem;
    }

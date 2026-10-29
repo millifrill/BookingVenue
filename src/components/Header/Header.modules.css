@@ -66,7 +66,7 @@
    padding-top: var(--space-3);
 }
 
-@media (min-width: 992px) {
+@media (width >= 992px) {
    .site-header .navbar-collapse {
       padding-top: 0;
    }

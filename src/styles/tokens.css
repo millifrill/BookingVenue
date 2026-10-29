@@ -32,7 +32,7 @@
    --space-8: 64px;
 
    /* Typography */
-   --font-display: 'Fraunces', Georgia, serif;
+   --font-display: 'Fraunces', georgia, serif;
    --font-body: 'Manrope', system-ui, sans-serif;
 
    /* Bootstrap overrides */
