@@ -3,9 +3,9 @@ import Header from './components/Header/Header';
 
 function App() {
    return (
-      <div className="app">
+      <div className='app'>
          <Header />
-         <main className="app__main" />
+         <main className='app-main' />
          <Footer />
       </div>
    );
