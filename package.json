@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test:component": "cypress run --component",
+    "cy:open": "cypress open --component",
     "preview": "vite preview"
   },
   "dependencies": {
