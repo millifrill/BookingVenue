@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "types": ["cypress", "vite/client"]
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}
