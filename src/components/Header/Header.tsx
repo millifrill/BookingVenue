@@ -2,7 +2,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
 import { ADMIN_PATH, MAIN_LINKS } from '../../config/navigation';
 import Logo from '../Logo/Logo';
-import './Header.css';
+import styles from './Header.module.css';
 
 function LockIcon() {
   return (
@@ -25,30 +25,37 @@ function LockIcon() {
 
 export default function Header() {
   return (
-    <Navbar as='header' expand='lg' collapseOnSelect className='site-header'>
-      <Container className='site-header-container'>
-        <Navbar.Brand as={Link} to='/' className='site-header-brand'>
+    <Navbar
+      as='header'
+      expand='lg'
+      collapseOnSelect
+      className={styles['site-header']}>
+      <Container className={styles['site-header-container']}>
+        <Navbar.Brand as={Link} to='/' className={styles['site-header-brand']}>
           <Logo />
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls='mainMenu'
           label='Visa meny'
-          className='site-header-toggle'
+          className={styles['site-header-toggle']}
         />
         <Navbar.Collapse id='mainMenu'>
-          <Nav as='nav' aria-label='Huvudmeny' className='site-header-nav'>
+          <Nav
+            as='nav'
+            aria-label='Huvudmeny'
+            className={styles['site-header-nav']}>
             {MAIN_LINKS.map(({ label, to, end }) => (
               <Nav.Link key={to} as={NavLink} to={to} end={end} eventKey={to}>
                 {label}
               </Nav.Link>
             ))}
           </Nav>
-          <Nav className='site-header-actions'>
+          <Nav className={styles['site-header-actions']}>
             <Nav.Link
               as={NavLink}
               to={ADMIN_PATH}
               eventKey={ADMIN_PATH}
-              className='site-header-admin'>
+              className={styles['site-header-admin']}>
               <LockIcon />
               Admin
             </Nav.Link>
