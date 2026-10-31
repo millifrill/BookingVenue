@@ -17,7 +17,13 @@ function LockIcon() {
       strokeLinecap='round'
       strokeLinejoin='round'
       aria-hidden='true'>
-      <rect x='3' y='11' width='18' height='11' rx='2' />
+      <rect
+        x='3'
+        y='11'
+        width='18'
+        height='11'
+        rx='2'
+      />
       <path d='M7 11V7a5 5 0 0 1 10 0v4' />
     </svg>
   );
@@ -31,7 +37,10 @@ export default function Header() {
       collapseOnSelect
       className={styles['site-header']}>
       <Container className={styles['site-header-container']}>
-        <Navbar.Brand as={Link} to='/' className={styles['site-header-brand']}>
+        <Navbar.Brand
+          as={Link}
+          to='/'
+          className={styles['site-header-brand']}>
           <Logo />
         </Navbar.Brand>
         <Navbar.Toggle
@@ -45,7 +54,12 @@ export default function Header() {
             aria-label='Huvudmeny'
             className={styles['site-header-nav']}>
             {MAIN_LINKS.map(({ label, to, end }) => (
-              <Nav.Link key={to} as={NavLink} to={to} end={end} eventKey={to}>
+              <Nav.Link
+                key={to}
+                as={NavLink}
+                to={to}
+                end={end}
+                eventKey={to}>
                 {label}
               </Nav.Link>
             ))}

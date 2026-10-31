@@ -11,16 +11,23 @@ export default function Footer() {
     <footer className={styles['site-footer']}>
       <Container className={styles['site-footer-container']}>
         <div className={styles['site-footer-brand']}>
-          <Link to='/' className={styles['site-footer-logo-link']}>
+          <Link
+            to='/'
+            className={styles['site-footer-logo-link']}>
             <Logo />
           </Link>
           <p className={styles['site-footer-tagline']}>
             Utvalda lokaler i hela Sverige.
           </p>
         </div>
-        <nav aria-label='Sidfot' className={styles['site-footer-nav']}>
+        <nav
+          aria-label='Sidfot'
+          className={styles['site-footer-nav']}>
           {FOOTER_LINKS.map(({ label, to }) => (
-            <Link key={to} to={to} className={styles['site-footer-link']}>
+            <Link
+              key={to}
+              to={to}
+              className={styles['site-footer-link']}>
               {label}
             </Link>
           ))}
