@@ -7,13 +7,36 @@ export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.ts'],
-    plugins: { js },
-    extends: ['js/recommended'],
+    extends: [js.configs.recommended, tseslint.configs.recommended],
     rules: {
-      'no-unused-vars': 'warn',
-      'no-undef': 'warn',
+      'no-duplicate-imports': 'warn',
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: ['variable', 'typeProperty'],
+          format: ['camelCase'],
+        },
+        {
+          selector: ['variable', 'parameter'],
+          modifiers: ['const'],
+          format: ['camelCase', 'UPPER_CASE'],
+        },
+        {
+          selector: 'function',
+          format: ['camelCase', 'PascalCase'],
+        },
+        {
+          selector: 'typeLike',
+          format: ['PascalCase'],
+        },
+        {
+          selector: 'variable',
+          types: ['boolean'],
+          format: ['PascalCase'],
+          prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
+        },
+      ],
     },
     languageOptions: { globals: globals.node },
   },
-  tseslint.configs.recommended,
 ]);
