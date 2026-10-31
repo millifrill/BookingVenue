@@ -9,7 +9,7 @@ const password = process.env.MYSQL_PASSWORD;
 const database = process.env.MYSQL_DATABASE;
 
 if (!host || !user || !password || !database) {
-   throw new Error('Missing MySQL environmet variables');
+  throw new Error('Missing MySQL environmet variables');
 }
 
 const mySqlPool = mysql.createPool({ host, user, password, database });

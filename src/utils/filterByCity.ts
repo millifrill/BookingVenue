@@ -1,7 +1,7 @@
 export function filterByCity<T extends { cityId: number }>(
-   venues: T[],
-   cityId: number | null,
+  venues: T[],
+  cityId: number | null,
 ): T[] {
-   if (cityId === null) return venues;
-   return venues.filter((venue) => venue.cityId === cityId);
+  if (cityId === null) return venues;
+  return venues.filter((venue) => venue.cityId === cityId);
 }
