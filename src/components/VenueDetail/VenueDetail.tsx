@@ -1,3 +1,4 @@
+import Booking from '../Booking/Booking';
 import type { Venue } from '../../types/Venue';
 import { Image } from 'react-bootstrap';
 import styles from './VenueDetail.module.css';
@@ -97,9 +98,7 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
             ))}
           </ul>
         </div>
-        <aside className={styles['booking']}>
-          <h2>Boka</h2>
-        </aside>
+        <Booking />
       </div>
     </section>
   );
