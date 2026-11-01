@@ -2,8 +2,7 @@ import { useParams, Navigate } from "react-router-dom";
 import VenueDetail from "../components/VenueDetail/VenueDetail";
 import { useEffect, useState } from "react";
 import type { Venue } from "../types/Venue";
-import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'react-bootstrap-icons';
+
 
 export default function VenueDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -31,12 +30,12 @@ export default function VenueDetailPage() {
   }, [id]);
 
   if (notFound) {
-    return <Navigate to="/venue" replace />;
+    return <Navigate to="/404" replace />;
   }
 
   return(
   <>
-    <VenueDetail venue={venue} venueId={id} />
+    <VenueDetail venue={venue} />
   </>
 )
 }
