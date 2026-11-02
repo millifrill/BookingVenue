@@ -27,7 +27,7 @@ const mountVenueDetail = (v: Venue) => {
 };
 
 describe('VenueDetail', () => {
-  it('Given a venue, When the component has rendered, Then the venue details should be displayed', () => {
+  it('venue details are displayed', () => {
     const venue = fakeVenue();
     mountVenueDetail(venue);
 
@@ -39,7 +39,7 @@ describe('VenueDetail', () => {
     cy.contains('p', venue.description).should('be.visible');
     cy.get('img').should('have.attr', 'src', venue.imageURL).and('have.attr', 'alt', venue.venueName);
   });
-  it('Given a venue with amenities, When the component has rendered, Then the amenities should be displayed', () => {
+  it('amenities are displayed', () => {
     const venue = fakeVenue();
     mountVenueDetail(venue);
 
@@ -47,7 +47,7 @@ describe('VenueDetail', () => {
       cy.contains('li', amenity.name).should('be.visible');
     });
   });
-  it('Given a venue, When the component has rendered, Then the back link should point to /venue', () => {
+  it('back link points to /venue', () => {
     const venue = fakeVenue();
     mountVenueDetail(venue);
 
