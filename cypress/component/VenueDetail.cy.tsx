@@ -1,23 +1,24 @@
 import { MemoryRouter } from 'react-router-dom';
 import VenueDetail from '../../src/components/VenueDetail/VenueDetail';
 import type { Venue } from '../../src/types/Venue';
+import { faker } from '@faker-js/faker';
 
-const venue: Venue = {
-  venueId: 1,
-  cityId: 1,
-  venueName: 'Testlokalen',
-  cityName: 'Teststaden',
-  street: 'Testgatan 123',
-  postalNumber: '12345',
-  description: 'En testlokal för testare som genomför tester i teststaden.',
-  space: 20,
-  capacity: 10,
-  pricePerHour: 100,
-  imageURL: 'https://images.pexels.com/photos/39225128/pexels-photo-39225128.jpeg',
+const fakeVenue = (): Venue => ({ 
+  venueId: faker.number.int({ min: 1, max: 1000 }),
+  cityId: faker.number.int({ min: 1, max: 1000 }),
+  venueName: faker.company.name(),
+  cityName: faker.location.city(),
+  street: faker.location.streetAddress(),
+  postalNumber: faker.location.zipCode('#####'),
+  description: faker.lorem.sentences(3),
+  space: faker.number.int({ min: 1, max: 1000 }),
+  capacity: faker.number.int({ min: 1, max: 1000 }),
+  pricePerHour: faker.number.int({ min: 1, max: 1000 }),
+  imageURL: faker.image.url(),
   amenities: [{amenityId: 1, name: 'Wifi'}, {amenityId: 2, name: 'Projektor'}, {amenityId: 3, name: 'Whiteboard'}, {amenityId: 4, name: 'Ljudanläggning'}, {amenityId: 5, name: 'Bar'}, ],
-};
+});
 
-const mountVenueDetail = (v: Venue = venue) => {
+const mountVenueDetail = (v: Venue) => {
   cy.mount(
     <MemoryRouter>
         <VenueDetail venue={v} />
@@ -27,7 +28,8 @@ const mountVenueDetail = (v: Venue = venue) => {
 
 describe('VenueDetail', () => {
   it('Given a venue, When the component has rendered, Then the venue details should be displayed', () => {
-    mountVenueDetail();
+    const venue = fakeVenue();
+    mountVenueDetail(venue);
 
     cy.contains('h1', venue.venueName).should('be.visible');
     cy.contains(`${venue.street}, ${venue.postalNumber} ${venue.cityName}`).should('be.visible');
@@ -38,14 +40,16 @@ describe('VenueDetail', () => {
     cy.get('img').should('have.attr', 'src', venue.imageURL).and('have.attr', 'alt', venue.venueName);
   });
   it('Given a venue with amenities, When the component has rendered, Then the amenities should be displayed', () => {
-    mountVenueDetail();
+    const venue = fakeVenue();
+    mountVenueDetail(venue);
 
     venue.amenities.forEach((amenity) => {
       cy.contains('li', amenity.name).should('be.visible');
     });
   });
   it('Given a venue, When the component has rendered, Then the back link should point to /venue', () => {
-    mountVenueDetail();
+    const venue = fakeVenue();
+    mountVenueDetail(venue);
 
     cy.contains('a', 'Alla Lokaler').should('have.attr', 'href', '/venue');
   });
