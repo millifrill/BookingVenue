@@ -6,7 +6,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 export default defineConfig([
   globalIgnores(['dist']),
   {
-    files: ['**/*.ts'],
+    files: ['src/**/*.ts'],
     extends: [js.configs.recommended, tseslint.configs.recommended],
     rules: {
       'no-duplicate-imports': 'warn',
@@ -22,21 +22,26 @@ export default defineConfig([
           format: ['camelCase', 'UPPER_CASE'],
         },
         {
-          selector: 'function',
+          selector: ['function'],
           format: ['camelCase', 'PascalCase'],
         },
         {
-          selector: 'typeLike',
+          selector: ['typeLike'],
           format: ['PascalCase'],
         },
         {
-          selector: 'variable',
+          selector: ['variable'],
           types: ['boolean'],
           format: ['PascalCase'],
           prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
         },
       ],
     },
-    languageOptions: { globals: globals.node },
+    languageOptions: {
+      globals: globals.node,
+      parserOptions: {
+        projectService: true,
+      },
+    },
   },
 ]);
