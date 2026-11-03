@@ -45,7 +45,7 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
   return (
     <section className={styles['venue']}>
       <Link
-        to='/venue'
+        to='/'
         className={styles['all-venues-link']}>
         <ArrowLeft /> Alla Lokaler
       </Link>

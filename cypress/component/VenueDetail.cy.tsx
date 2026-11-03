@@ -61,6 +61,6 @@ describe('VenueDetail', () => {
     const venue = fakeVenue();
     mountVenueDetail(venue);
 
-    cy.contains('a', 'Alla Lokaler').should('have.attr', 'href', '/venue');
+    cy.contains('a', 'Alla Lokaler').should('have.attr', 'href', '/');
   });
 });

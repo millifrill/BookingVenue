@@ -11,7 +11,7 @@ function App() {
       <main className='app-main'>
         <Routes>
           <Route
-            path='/venue'
+            path='/'
             element={<div> TODO: Venuepage </div>}
           />
           <Route
