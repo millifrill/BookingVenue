@@ -5,8 +5,8 @@ export interface Amenity {
 
 export interface Venue {
   venueId: number;
+  name: string;
   cityId: number;
-  venueName: string;
   cityName: string;
   street: string;
   postalNumber: string;

@@ -45,7 +45,7 @@ export const getVenueById = async (
 ) => {
   const { id } = req.params;
   const sqlQuery = `SELECT 
-   v.venueId, v.cityId, v.name AS venueName, c.name AS cityName, v.street, v.postalNumber, v.description, v.space, v.capacity, v.pricePerHour, v.imageURL 
+   v.venueId, v.cityId, v.name, c.name AS cityName, v.street, v.postalNumber, v.description, v.space, v.capacity, v.pricePerHour, v.imageURL 
    FROM Venue v 
    JOIN City c ON v.cityId = c.cityId
    WHERE v.venueId = ?`;

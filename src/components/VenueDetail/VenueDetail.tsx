@@ -51,13 +51,13 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
       </Link>
       <Image
         src={venue?.imageURL}
-        alt={venue?.venueName}
+        alt={venue?.name}
         className={styles['image']}
       />
       <div className={styles['content']}>
         <div className={styles['info']}>
           <div className={styles['name-location']}>
-            <h1>{venue?.venueName}</h1>
+            <h1>{venue?.name}</h1>
             <div className={styles['location']}>
               <GeoAlt />
               <span>

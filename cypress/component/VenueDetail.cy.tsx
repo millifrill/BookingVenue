@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 const fakeVenue = (): Venue => ({
   venueId: faker.number.int({ min: 1, max: 1000 }),
   cityId: faker.number.int({ min: 1, max: 1000 }),
-  venueName: faker.company.name(),
+  name: faker.company.name(),
   cityName: faker.location.city(),
   street: faker.location.streetAddress(),
   postalNumber: faker.location.zipCode('#####'),
@@ -37,7 +37,7 @@ describe('VenueDetail', () => {
     const venue = fakeVenue();
     mountVenueDetail(venue);
 
-    cy.contains('h1', venue.venueName).should('be.visible');
+    cy.contains('h1', venue.name).should('be.visible');
     cy.contains(
       `${venue.street}, ${venue.postalNumber} ${venue.cityName}`,
     ).should('be.visible');
@@ -47,7 +47,7 @@ describe('VenueDetail', () => {
     cy.contains('p', venue.description).should('be.visible');
     cy.get('img')
       .should('have.attr', 'src', venue.imageURL)
-      .and('have.attr', 'alt', venue.venueName);
+      .and('have.attr', 'alt', venue.name);
   });
   it('amenities are displayed', () => {
     const venue = fakeVenue();
