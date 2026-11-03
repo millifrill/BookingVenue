@@ -5,11 +5,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/tokens.css';
 import './index.css';
 import App from './App.tsx';
+import './styles/global.css';
+import VenueProvider from './context/VenueContext/VenueContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
    <StrictMode>
       <BrowserRouter>
-         <App />
+         <VenueProvider>
+            <App />
+         </VenueProvider>
       </BrowserRouter>
    </StrictMode>,
 );
