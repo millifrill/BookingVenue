@@ -1,43 +1,43 @@
 /* Design tokens – mirrors the "Tokens" variable collection in Figma. */
 :root {
-   /* Colours */
-   --color-bg: #faf8f4;
-   --color-surface: #fefdfa;
-   --color-ink: #1c1b1a;
-   --color-ink-muted: #5e5b55;
-   --color-ink-subtle: #9a958b;
-   --color-border: #e6e0d3;
-   --color-sand: #ece7dd;
-   --color-footer: #f1ede6;
-   --color-primary: #2d4a3a;
-   --color-primary-text: #fefdfa;
-   --color-accent: #c0562f;
-   --color-accent-soft: #e2b4a3;
-   --color-danger: #b3261e;
+  /* Colours */
+  --color-bg: #faf8f4;
+  --color-surface: #fefdfa;
+  --color-ink: #1c1b1a;
+  --color-ink-muted: #5e5b55;
+  --color-ink-subtle: #9a958b;
+  --color-border: #e6e0d3;
+  --color-sand: #ece7dd;
+  --color-footer: #f1ede6;
+  --color-primary: #2d4a3a;
+  --color-primary-text: #fefdfa;
+  --color-accent: #c0562f;
+  --color-accent-soft: #e2b4a3;
+  --color-danger: #b3261e;
 
-   /* Radii */
-   --radius-sm: 12px;
-   --radius-md: 16px;
-   --radius-lg: 24px;
-   --radius-pill: 999px;
+  /* Radii */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
 
-   /* Spacing */
-   --space-1: 4px;
-   --space-2: 8px;
-   --space-3: 12px;
-   --space-4: 16px;
-   --space-5: 24px;
-   --space-6: 32px;
-   --space-7: 48px;
-   --space-8: 64px;
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
 
-   /* Typography */
-   --font-display: 'Fraunces', Georgia, serif;
-   --font-body: 'Manrope', system-ui, sans-serif;
+  /* Typography */
+  --font-display: 'Fraunces', georgia, serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
 
-   /* Bootstrap overrides */
-   --bs-body-bg: var(--color-bg);
-   --bs-body-color: var(--color-ink);
-   --bs-body-font-family: var(--font-body);
-   --bs-border-color: var(--color-border);
+  /* Bootstrap overrides */
+  --bs-body-bg: var(--color-bg);
+  --bs-body-color: var(--color-ink);
+  --bs-body-font-family: var(--font-body);
+  --bs-border-color: var(--color-border);
 }
