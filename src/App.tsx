@@ -10,10 +10,27 @@ function App() {
       <Header />
       <main className='app-main'>
         <Routes>
-          <Route path='/venue' element={<div> TODO: Venuepage </div>} />
-          <Route path='/venue/:id' element={<VenueDetailPage />} />
-          <Route path='/404' element={<NotFoundPage />} />
-          <Route path='*' element={<Navigate to='/404' replace /> } />
+          <Route
+            path='/venue'
+            element={<div> TODO: Venuepage </div>}
+          />
+          <Route
+            path='/venue/:id'
+            element={<VenueDetailPage />}
+          />
+          <Route
+            path='/404'
+            element={<NotFoundPage />}
+          />
+          <Route
+            path='*'
+            element={
+              <Navigate
+                to='/404'
+                replace
+              />
+            }
+          />
         </Routes>
       </main>
       <Footer />

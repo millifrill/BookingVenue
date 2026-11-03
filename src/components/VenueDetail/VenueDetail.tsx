@@ -44,7 +44,9 @@ interface VenueDetailProps {
 export default function VenueDetail({ venue }: VenueDetailProps) {
   return (
     <section className={styles['venue']}>
-      <Link to='/venue' className={styles['all-venues-link']}>
+      <Link
+        to='/venue'
+        className={styles['all-venues-link']}>
         <ArrowLeft /> Alla Lokaler
       </Link>
       <Image
@@ -87,7 +89,9 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
           <h2>Det här ingår</h2>
           <ul className={styles['amenities']}>
             {venue?.amenities?.map((amenity) => (
-              <li key={amenity.amenityId} className={styles['amenity']}>
+              <li
+                key={amenity.amenityId}
+                className={styles['amenity']}>
                 {(() => {
                   const IconComponent =
                     amenityIcons[amenity.name] || amenityIcons.Default;

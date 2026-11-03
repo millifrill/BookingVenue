@@ -1,8 +1,7 @@
-import { useParams, Navigate } from "react-router-dom";
-import VenueDetail from "../components/VenueDetail/VenueDetail";
-import { useEffect, useState } from "react";
-import type { Venue } from "../types/Venue";
-
+import { useParams, Navigate } from 'react-router-dom';
+import VenueDetail from '../components/VenueDetail/VenueDetail';
+import { useEffect, useState } from 'react';
+import type { Venue } from '../types/Venue';
 
 export default function VenueDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -10,7 +9,6 @@ export default function VenueDetailPage() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-
     async function fetchVenue() {
       try {
         const response = await fetch(`http://localhost:3000/api/venue/${id}`);
@@ -20,9 +18,9 @@ export default function VenueDetailPage() {
         }
         const data: Venue = await response.json();
         setVenue(data);
-        console.log("Venue details:", data);
+        console.log('Venue details:', data);
       } catch (error) {
-        console.error("Error fetching venue:", error);
+        console.error('Error fetching venue:', error);
         setNotFound(true);
       }
     }
@@ -30,12 +28,17 @@ export default function VenueDetailPage() {
   }, [id]);
 
   if (notFound) {
-    return <Navigate to="/404" replace />;
+    return (
+      <Navigate
+        to='/404'
+        replace
+      />
+    );
   }
 
-  return(
-  <>
-    <VenueDetail venue={venue} />
-  </>
-)
+  return (
+    <>
+      <VenueDetail venue={venue} />
+    </>
+  );
 }

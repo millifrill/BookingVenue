@@ -43,8 +43,8 @@ export const getVenueById = async (
   >,
   res: Response,
 ) => {
-   const { id } = req.params;
-   const sqlQuery = `SELECT 
+  const { id } = req.params;
+  const sqlQuery = `SELECT 
    v.venueId, v.cityId, v.name AS venueName, c.name AS cityName, v.street, v.postalNumber, v.description, v.space, v.capacity, v.pricePerHour, v.imageURL 
    FROM Venue v 
    JOIN City c ON v.cityId = c.cityId
@@ -62,12 +62,12 @@ export const getVenueById = async (
       [id],
     );
     res.status(200).json({ ...result[0], amenities });
-   } catch (err) {
-      console.error('Error fetchig venue:', err);
-      return res
-         .status(500)
-         .json({ error: 'Failed to fetch venue', success: false });
-   }
+  } catch (err) {
+    console.error('Error fetchig venue:', err);
+    return res
+      .status(500)
+      .json({ error: 'Failed to fetch venue', success: false });
+  }
 };
 
 export const createVenue = async (
