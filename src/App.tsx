@@ -8,7 +8,7 @@ function App() {
   return (
     <div className='app'>
       <Header />
-      <main className='app__main'>
+      <main className='app-main'>
         <Routes>
           <Route path='/venue' element={<div> TODO: Venuepage </div>} />
           <Route path='/venue/:id' element={<VenueDetailPage />} />
