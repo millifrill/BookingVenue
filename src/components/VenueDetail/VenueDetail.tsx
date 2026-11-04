@@ -62,7 +62,7 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
           <h1>{venue.name}</h1>
           <div className={styles['location-price-capacity-space']}>
             <div className={styles['location']}>
-              <GeoAlt size={20} />
+              <GeoAlt size={18} />
               <span>
                 {venue.street}, {venue.postalNumber}
                 {` `}
@@ -70,15 +70,15 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
               </span>
             </div>
             <div className={styles['price']}>
-              <Tag size={20} />
-              <span>{venue.pricePerHour} kr/t</span>
+              <Tag size={18} />
+              <span>{venue.pricePerHour} kr/timme</span>
             </div>
             <div className={styles['capacity']}>
               <People size={20} />
               <span>Upp till {venue.capacity} personer</span>
             </div>
             <div className={styles['space']}>
-              <HouseDoor size={19} />
+              <HouseDoor size={18} />
               <span>{venue.space} m²</span>
             </div>
           </div>

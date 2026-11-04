@@ -18,7 +18,6 @@ export default function VenueProvider({
         const res = await axios.get<Venue[]>(
           'http://localhost:3000/api/venues',
         );
-        console.log('res.data', res.data);
         setAllVenues(res.data);
       } catch (error) {
         console.error('Failed to fetch Venues', error);

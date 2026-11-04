@@ -17,19 +17,19 @@ function VenueCard({ venue }: { venue: Venue }) {
         <Card.Title as={'h3'}>{venue.name}</Card.Title>
         <div className={styles['venue-info']}>
           <span>
-            <GeoAlt size={20} />
+            <GeoAlt size={18} />
             {venue.cityName}
           </span>
           <span>
-            <People size={20} />
-            Upp till {venue.capacity} pers
+            <People size={18} />
+            Upp till {venue.capacity} personer
           </span>
           <span>
-            <HouseDoor size={19} />
-            {venue.space} kvm
+            <HouseDoor size={18} />
+            {venue.space} m²
           </span>
           <span>
-            <Tag size={20} />
+            <Tag size={18} />
             {venue.pricePerHour} kr/timme
           </span>
         </div>
