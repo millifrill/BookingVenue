@@ -89,7 +89,7 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
           </div>
           <h2>Det här ingår</h2>
           <ul className={styles['amenities']}>
-            {venue.amenities?.map((amenity) => (
+            {venue.amenities.map((amenity) => (
               <li
                 key={amenity.amenityId}
                 className={styles['amenity']}>
