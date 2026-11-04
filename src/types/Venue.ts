@@ -6,15 +6,15 @@ export interface Amenity {
 export interface Venue {
    venueId: number;
    cityId: number;
-   venueName: string;
    name: string;
+   cityName: string;
    street: string;
    postalNumber: string;
-   description: string;
+   description: string | undefined;
    space: number;
    capacity: number;
    pricePerHour: number;
-   imageURL: string;
+   imageURL: string | undefined;
    amenities: Amenity[];
 }
 

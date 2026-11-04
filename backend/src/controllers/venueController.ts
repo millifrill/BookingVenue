@@ -8,6 +8,7 @@ interface Venue extends RowDataPacket {
    venueId: number;
    cityId: number;
    name: string;
+   cityName: string;
    street: string;
    postalNumber: string;
    description: string;
@@ -20,7 +21,9 @@ interface Venue extends RowDataPacket {
 export const getVenues = async (_req: Request, res: Response) => {
    try {
       const [result] = await mySqlDatabase.query<Venue[]>(
-         'SELECT * FROM Venue',
+         `SELECT Venue.*, City.name AS cityName
+       FROM Venue
+       JOIN City ON Venue.cityId = City.cityId`,
       );
       if (result.length === 0) {
          return res
