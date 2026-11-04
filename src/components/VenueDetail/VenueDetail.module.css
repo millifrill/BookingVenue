@@ -32,12 +32,13 @@
 
 .name-location {
   display: flex;
+  flex-direction: column;
   gap: var(--space-2);
 }
 
 .price-capacity-space {
   display: flex;
-  gap: var(--space-5);
+  flex-direction: column;
   width: 90%;
   margin-bottom: var(--space-4);
 }
@@ -64,7 +65,7 @@
   margin: 0;
   display: grid;
   gap: var(--space-3);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .amenity {
@@ -76,8 +77,23 @@
   background-color: var(--color-sand);
 }
 
+@media (width >= 576px) {
+  .amenities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 768px) {
+  .name-location {
+    flex-direction: row;
+  }
+}
+
 @media (width >= 992px) {
   .content {
     grid-template-columns: 1.2fr 0.8fr;
+  }
+  .name-location {
+    flex-direction: column;
   }
 }
