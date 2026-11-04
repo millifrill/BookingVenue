@@ -97,3 +97,9 @@
     flex-direction: column;
   }
 }
+
+@media (width >= 1280px) {
+  .name-location {
+    flex-direction: row;
+  }
+}
