@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export function filterByArea<T extends { space: number }>(
-  _venues: T[],
-  _minSpace: number | null,
+  venues: T[],
+  minSpace: number | null,
 ): T[] {
-  throw new Error('Not implemented');
+  if (minSpace === null) return venues;
+  return venues.filter((venue) => venue.space >= minSpace);
 }
