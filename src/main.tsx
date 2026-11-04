@@ -9,11 +9,11 @@ import './styles/global.css';
 import VenueProvider from './context/VenueContext/VenueContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
-   <StrictMode>
-      <BrowserRouter>
-         <VenueProvider>
-            <App />
-         </VenueProvider>
-      </BrowserRouter>
-   </StrictMode>,
+  <StrictMode>
+    <BrowserRouter>
+      <VenueProvider>
+        <App />
+      </VenueProvider>
+    </BrowserRouter>
+  </StrictMode>,
 );

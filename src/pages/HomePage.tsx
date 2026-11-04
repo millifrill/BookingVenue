@@ -1,11 +1,11 @@
 import VenueList from '../components/VenueList/VenueList';
 
 function HomePage() {
-   return (
-      <>
-         <VenueList />
-      </>
-   );
+  return (
+    <>
+      <VenueList />
+    </>
+  );
 }
 
 export default HomePage;

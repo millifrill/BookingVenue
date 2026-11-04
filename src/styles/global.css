@@ -4,34 +4,34 @@ h3,
 h4,
 h5,
 h6 {
-   font-family: var(--font-display);
+  font-family: var(--font-display);
 }
 
 h3 {
-   font-size: 1.5rem;
-   margin-bottom: 12px;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
 }
 
 p {
-   font-family: var(--font-body);
-   font-size: 0.875rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
 }
 
 .btn-primary {
-   --bs-btn-font-family: var(--font-body);
-   --bs-btn-bg: var(--color-surface);
-   --bs-btn-color: var(--color-ink);
-   --bs-btn-border-color: var(--color-border);
-   --bs-btn-border-radius: var(--radius-pill);
-   --bs-btn-padding-x: var(--space-5);
-   --bs-btn-padding-y: var(--space-3);
+  --bs-btn-font-family: var(--font-body);
+  --bs-btn-bg: var(--color-surface);
+  --bs-btn-color: var(--color-ink);
+  --bs-btn-border-color: var(--color-border);
+  --bs-btn-border-radius: var(--radius-pill);
+  --bs-btn-padding-x: var(--space-5);
+  --bs-btn-padding-y: var(--space-3);
 }
 
 .btn-secondary {
-   --bs-btn-font-family: var(--font-body);
-   --bs-btn-bg: var(--color-primary);
-   --bs-btn-color: var(--color-primary-text);
-   --bs-btn-border-radius: var(--radius-pill);
-   --bs-btn-padding-x: var(--space-5);
-   --bs-btn-padding-y: var(--space-3);
+  --bs-btn-font-family: var(--font-body);
+  --bs-btn-bg: var(--color-primary);
+  --bs-btn-color: var(--color-primary-text);
+  --bs-btn-border-radius: var(--radius-pill);
+  --bs-btn-padding-x: var(--space-5);
+  --bs-btn-padding-y: var(--space-3);
 }

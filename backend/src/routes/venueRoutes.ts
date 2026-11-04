@@ -1,10 +1,10 @@
 import express from 'express';
 import {
-   getVenues,
-   getVenueById,
-   createVenue,
-   updateVenue,
-   deleteVenue,
+  getVenues,
+  getVenueById,
+  createVenue,
+  updateVenue,
+  deleteVenue,
 } from '../controllers/venueController.ts';
 
 const router = express.Router();
