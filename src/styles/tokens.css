@@ -14,6 +14,7 @@
    --color-accent: #c0562f;
    --color-accent-soft: #e2b4a3;
    --color-danger: #b3261e;
+   --color-shadow: #1c1b1a0f;
 
    /* Radii */
    --radius-sm: 12px;
@@ -26,10 +27,11 @@
    --space-2: 8px;
    --space-3: 12px;
    --space-4: 16px;
-   --space-5: 24px;
-   --space-6: 32px;
-   --space-7: 48px;
-   --space-8: 64px;
+   --space-5: 20px;
+   --space-6: 24px;
+   --space-7: 32px;
+   --space-8: 48px;
+   --space-9: 64px;
 
    /* Typography */
    --font-display: 'Fraunces', georgia, serif;

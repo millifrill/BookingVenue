@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import type { Venue } from '../../types/Venue';
-import { VenueContext } from './useVenue';
+import { VenueContext } from './useVenueContext';
 
 export default function VenueProvider({
    children,
