@@ -8,7 +8,6 @@ import {
   Tag,
   GeoAlt,
   People,
-  ArrowsFullscreen,
   Wifi,
   Projector,
   Easel2,
@@ -21,6 +20,7 @@ import {
   PersonWheelchair,
   Check,
   type Icon,
+  HouseDoor,
 } from 'react-bootstrap-icons';
 
 const amenityIcons: Record<string, Icon> = {
@@ -62,7 +62,7 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
           <h1>{venue.name}</h1>
           <div className={styles['location-price-capacity-space']}>
             <div className={styles['location']}>
-              <GeoAlt />
+              <GeoAlt size={20} />
               <span>
                 {venue.street}, {venue.postalNumber}
                 {` `}
@@ -70,20 +70,18 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
               </span>
             </div>
             <div className={styles['price']}>
-              <Tag />
+              <Tag size={20} />
               <span>{venue.pricePerHour} kr/t</span>
             </div>
-
             <div className={styles['capacity']}>
-              <People />
+              <People size={20} />
               <span>Upp till {venue.capacity} personer</span>
             </div>
             <div className={styles['space']}>
-              <ArrowsFullscreen />
+              <HouseDoor size={19} />
               <span>{venue.space} m²</span>
             </div>
           </div>
-
           <div className={styles['description']}>
             <p>{venue.description}</p>
           </div>

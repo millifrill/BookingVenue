@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import styles from './VenueCard.module.css';
 import type { Venue } from '../../types/Venue';
 import { Link } from 'react-router-dom';
-import { HouseDoor, People, PinAngle, Tag } from 'react-bootstrap-icons';
+import { GeoAlt, HouseDoor, People, Tag } from 'react-bootstrap-icons';
 
 function VenueCard({ venue }: { venue: Venue }) {
   return (
@@ -17,7 +17,7 @@ function VenueCard({ venue }: { venue: Venue }) {
         <Card.Title as={'h3'}>{venue.name}</Card.Title>
         <div className={styles['venue-info']}>
           <span>
-            <PinAngle size={20} />
+            <GeoAlt size={20} />
             {venue.cityName}
           </span>
           <span>
@@ -25,7 +25,7 @@ function VenueCard({ venue }: { venue: Venue }) {
             Upp till {venue.capacity} pers
           </span>
           <span>
-            <HouseDoor size={18} />
+            <HouseDoor size={19} />
             {venue.space} kvm
           </span>
           <span>
