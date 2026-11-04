@@ -42,6 +42,9 @@ interface VenueDetailProps {
 }
 
 export default function VenueDetail({ venue }: VenueDetailProps) {
+  if (!venue) {
+    return "Lokal hittades inte.";
+  }
   return (
     <section className={styles['venue']}>
       <Link
@@ -50,45 +53,45 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
         <ArrowLeft /> Alla Lokaler
       </Link>
       <Image
-        src={venue?.imageURL}
-        alt={venue?.name}
+        src={venue.imageURL}
+        alt={venue.name}
         className={styles['image']}
       />
       <div className={styles['content']}>
         <div className={styles['info']}>
           <div className={styles['name-location']}>
-            <h1>{venue?.name}</h1>
+            <h1>{venue.name}</h1>
             <div className={styles['location']}>
               <GeoAlt />
               <span>
-                {venue?.street}, {venue?.postalNumber}
+                {venue.street}, {venue.postalNumber}
                 {` `}
-                {venue?.cityName}
+                {venue.cityName}
               </span>
             </div>
           </div>
           <div className={styles['price-capacity-space']}>
             <div className={styles['price']}>
               <Tag />
-              <span>{venue?.pricePerHour} kr/t</span>
+              <span>{venue.pricePerHour} kr/t</span>
             </div>
 
             <div className={styles['capacity']}>
               <People />
-              <span>Upp till {venue?.capacity} personer</span>
+              <span>Upp till {venue.capacity} personer</span>
             </div>
             <div className={styles['space']}>
               <ArrowsFullscreen />
-              <span>{venue?.space} m²</span>
+              <span>{venue.space} m²</span>
             </div>
           </div>
 
           <div className={styles['description']}>
-            <p>{venue?.description}</p>
+            <p>{venue.description}</p>
           </div>
           <h2>Det här ingår</h2>
           <ul className={styles['amenities']}>
-            {venue?.amenities?.map((amenity) => (
+            {venue.amenities?.map((amenity) => (
               <li
                 key={amenity.amenityId}
                 className={styles['amenity']}>
