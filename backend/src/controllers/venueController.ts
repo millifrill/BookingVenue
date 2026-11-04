@@ -44,13 +44,24 @@ export const getVenueById = async (
   res: Response,
 ) => {
   const { id } = req.params;
-  const sqlQuery = 'SELECT * FROM Venue WHERE venueId = ?';
+  const sqlQuery = `SELECT 
+   v.venueId, v.cityId, v.name, c.name AS cityName, v.street, v.postalNumber, v.description, v.space, v.capacity, v.pricePerHour, v.imageURL 
+   FROM Venue v 
+   JOIN City c ON v.cityId = c.cityId
+   WHERE v.venueId = ?`;
   try {
     const [result] = await mySqlDatabase.execute<Venue[]>(sqlQuery, [id]);
     if (result.length === 0) {
       return res.status(404).json({ error: 'Venue not found', success: false });
     }
-    res.status(200).json(result[0]);
+    const [amenities] = await mySqlDatabase.execute<RowDataPacket[]>(
+      `SELECT a.amenityId, a.name 
+       FROM Amenity a
+       JOIN VenueAmenity va ON a.amenityId = va.amenityId
+       WHERE va.venueId = ?`,
+      [id],
+    );
+    res.status(200).json({ ...result[0], amenities });
   } catch (err) {
     console.error('Error fetchig venue:', err);
     return res

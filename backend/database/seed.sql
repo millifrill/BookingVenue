@@ -2,16 +2,16 @@ INSERT INTO City (name) VALUES
 ('Stockholm'), ('Göteborg'), ('Malmö'), ('Uppsala'), ('Örebro'), ('Linköping'), ('Umeå');
 
 INSERT INTO Venue (cityId, name, street, postalNumber, description, space, capacity, pricePerHour, imageURL) VALUES
-(1, 'Konferensrum Ljuset',  'Storgatan 1',        '11129', 'Ljust konferensrum med projektor och whiteboard',    40,   20,  500,  'https://images.pexels.com/photos/16585156/pexels-photo-16585156.jpeg'),
-(2, 'Padelcenter Göteborg', 'Lillgatan 12',       '41103', 'Padelbana inomhus med belysning och omklädningsrum', 200,  4,   300,  'https://images.pexels.com/photos/32474981/pexels-photo-32474981.jpeg'),
-(3, 'Festvåningen Hamnen',  'Hamngatan 5',        '21121', 'Festlokal med bar, kök och dansgolv',                150,  80,  1200, 'https://images.pexels.com/photos/17294774/pexels-photo-17294774.jpeg'),
-(4, 'Mötesplats Uppsala',   'Kungsgatan 22',      '75331', DEFAULT,                                              25,   10,  350,  'https://images.pexels.com/photos/22718136/pexels-photo-22718136.jpeg'),
-(5, 'Dansstudion Rytmen',   'Drottninggatan 8',   '70210', 'Danslokal med spegelvägg och ljudanläggning',        120,  30,  600,  'https://images.pexels.com/photos/1398266/pexels-photo-1398266.jpeg'),
-(2, 'Loftet Haga',          'Östra Hamngatan 14', '41110', 'Industriloft med högt i tak, passar events',         90,   40,  900,  'https://images.pexels.com/photos/7031834/pexels-photo-7031834.jpeg'),
-(1, 'Aulan Sveavägen',      'Sveavägen 40',       '11134', 'Auditorium med scen, ljud och ljus',                 300,  150, 2500, DEFAULT),
-(6, 'Östgötahallen',        'Norra Storgatan 3',  '58222', 'Inomhushall för fotboll och andra bollsporter',      1800, 22,  1500, 'https://images.pexels.com/photos/36293742/pexels-photo-36293742.jpeg'),
-(1, 'Takterrassen Strand',  'Strandvägen 7',      '11456', 'Takterrass med utsikt över vattnet',                 110,  50,  1800, 'https://images.pexels.com/photos/1955986/pexels-photo-1955986.jpeg'),
-(7, 'Ljudstudion Norr',     'Kyrkogatan 19',      '90325', DEFAULT,                                              18,   5,   400,  DEFAULT);
+(1, 'Konferensrum Ljuset',  'Storgatan 1',        '11129', 'Ljust konferensrum med projektor och whiteboard, perfekt för workshops, möten och presentationer. Lokalen rymmer upp till 20 personer och är enkel att anpassa efter olika upplägg. Här finns allt du behöver för ett effektivt och fokuserat möte.',      40,   20,  500,  'https://images.pexels.com/photos/16585156/pexels-photo-16585156.jpeg'),
+(2, 'Padelcenter Göteborg', 'Lillgatan 12',       '41103', 'Padelbana inomhus med belysning och omklädningsrum, så att du kan spela oavsett väder och tid på dygnet. Banan passar fyra spelare och fungerar lika bra för vänmatcher som för träning. Efter matchen kan du i lugn och ro byta om i omklädningsrummet.', 200,  4,   300,  'https://images.pexels.com/photos/32474981/pexels-photo-32474981.jpeg'),
+(3, 'Festvåningen Hamnen',  'Hamngatan 5',        '21121', 'Festlokal med bar, kök och dansgolv för upp till 80 gäster. Lokalen passar utmärkt för bröllop, födelsedagar och företagsfester. Med eget kök och egen bar kan du enkelt ordna både mat och dryck på plats.',                                              150,  80,  1200, 'https://images.pexels.com/photos/17294774/pexels-photo-17294774.jpeg'),
+(4, 'Mötesplats Uppsala',   'Kungsgatan 22',      '75331', DEFAULT,                                                                                                                                                                                                                                                    25,   10,  350,  'https://images.pexels.com/photos/22718136/pexels-photo-22718136.jpeg'),
+(5, 'Dansstudion Rytmen',   'Drottninggatan 8',   '70210', 'Danslokal med spegelvägg och ljudanläggning där upp till 30 personer får gott om utrymme att röra sig. Lokalen passar för danslektioner, repetitioner och workshops. Den rymliga ytan gör det enkelt att öva in koreografi i grupp.',                      120,  30,  600,  'https://images.pexels.com/photos/1398266/pexels-photo-1398266.jpeg'),
+(2, 'Loftet Haga',          'Östra Hamngatan 14', '41110', 'Industriloft med högt i tak och en rå, öppen atmosfär som ger varje event en egen karaktär. Lokalen rymmer upp till 40 personer och passar för fester, pop-ups och utställningar. Den stora ytan gör det enkelt att möblera efter eget behov.',            90,   40,  900,  'https://images.pexels.com/photos/7031834/pexels-photo-7031834.jpeg'),
+(1, 'Aulan Sveavägen',      'Sveavägen 40',       '11134', 'Auditorium med scen, ljud och ljus för upp till 150 personer. Lokalen passar för konferenser, föreläsningar och konserter. Den professionella tekniken gör att både talare och artister kommer till sin rätt.',                                            300,  150, 2500, DEFAULT),
+(6, 'Östgötahallen',        'Norra Storgatan 3',  '58222', 'Inomhushall för fotboll och andra bollsporter med gott om plats för både träning och matcher. Hallen kan användas året runt oavsett väder. Den passar för föreningar, företagsturneringar och privata grupper.',                                           1800, 22,  1500, 'https://images.pexels.com/photos/36293742/pexels-photo-36293742.jpeg'),
+(1, 'Takterrassen Strand',  'Strandvägen 7',      '11456', 'Takterrass med utsikt över vattnet, perfekt för afterwork, middagar och sommarfester. Terrassen rymmer upp till 50 gäster och ger en minnesvärd inramning till både firande och nätverkande. Här får varje tillfälle en extra speciell känsla.',           110,  50,  1800, 'https://images.pexels.com/photos/1955986/pexels-photo-1955986.jpeg'),
+(7, 'Ljudstudion Norr',     'Kyrkogatan 19',      '90325', DEFAULT,                                                                                                                                                                                                                                                    18,   5,   400,  DEFAULT);
 
 INSERT INTO Booking (bookingId, venueId, firstName, lastName, startTime, endTime, active) VALUES
 -- Lokal 1: Konferensrum, Stockholm
@@ -74,3 +74,19 @@ INSERT INTO Booking (bookingId, venueId, firstName, lastName, startTime, endTime
 ('C3D4E5F6', 10, 'Malin',    'Dahlberg',  '2026-11-12 11:00', '2026-11-12 13:00', TRUE),
 ('D4E5F6G7', 10, 'Robin',    'Åkesson',   '2026-11-26 14:00', '2026-11-26 16:00', FALSE),
 ('E5F6G7H8', 10, 'Frida',    'Lundqvist', '2026-12-17 10:00', '2026-12-17 12:00', TRUE);
+
+INSERT INTO Amenity (name) VALUES
+('WiFi'), ('Projektor'), ('Whiteboard'), ('Ljudanläggning'), ('Bar'),
+('Kök'), ('Omklädningsrum'), ('Parkering'), ('Scen'), ('Tillgänglighetsanpassat');
+
+INSERT INTO VenueAmenity (venueId, amenityId) VALUES
+(1, 1), (1, 2), (1, 3), (1, 8),            -- Konferensrum Ljuset: WiFi, Projektor, Whiteboard, Parkering
+(2, 7), (2, 8),                            -- Padelcenter: Omklädningsrum, Parkering
+(3, 4), (3, 5), (3, 6), (3, 10),           -- Festvåningen: Ljudanläggning, Bar, Kök, Tillgänglighetsanpassat
+(4, 1), (4, 3),                            -- Mötesplats Uppsala: WiFi, Whiteboard
+(5, 4), (5, 7),                            -- Dansstudion: Ljudanläggning, Omklädningsrum
+(6, 1), (6, 4), (6, 8),                    -- Loftet Haga: WiFi, Ljudanläggning, Parkering
+(7, 1), (7, 2), (7, 4), (7, 9), (7, 10),   -- Aulan Sveavägen: WiFi, Projektor, Ljudanläggning, Scen, Tillgänglighetsanpassat
+(8, 7), (8, 8),                            -- Östgötahallen: Omklädningsrum, Parkering
+(9, 4), (9, 5), (9, 10),                   -- Takterrassen: Ljudanläggning, Bar, Tillgänglighetsanpassat
+(10, 1), (10, 4);                          -- Ljudstudion Norr: WiFi, Ljudanläggning
