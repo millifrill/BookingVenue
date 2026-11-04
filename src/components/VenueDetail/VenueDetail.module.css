@@ -30,13 +30,7 @@
   border-radius: 10px;
 }
 
-.name-location {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.price-capacity-space {
+.location-price-capacity-space {
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -83,23 +77,8 @@
   }
 }
 
-@media (width >= 768px) {
-  .name-location {
-    flex-direction: row;
-  }
-}
-
 @media (width >= 992px) {
   .content {
     grid-template-columns: 1.2fr 0.8fr;
-  }
-  .name-location {
-    flex-direction: column;
-  }
-}
-
-@media (width >= 1280px) {
-  .name-location {
-    flex-direction: row;
   }
 }

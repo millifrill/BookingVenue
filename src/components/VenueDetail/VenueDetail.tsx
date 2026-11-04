@@ -59,8 +59,8 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
       />
       <div className={styles['content']}>
         <div className={styles['info']}>
-          <div className={styles['name-location']}>
             <h1>{venue.name}</h1>
+          <div className={styles['location-price-capacity-space']}>
             <div className={styles['location']}>
               <GeoAlt />
               <span>
@@ -69,8 +69,6 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
                 {venue.cityName}
               </span>
             </div>
-          </div>
-          <div className={styles['price-capacity-space']}>
             <div className={styles['price']}>
               <Tag />
               <span>{venue.pricePerHour} kr/t</span>
