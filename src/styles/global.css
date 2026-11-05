@@ -17,21 +17,36 @@ p {
   font-size: 1rem;
 }
 
-.btn-primary {
+.btn {
   --bs-btn-font-family: var(--font-body);
+  --bs-btn-border-radius: var(--radius-pill);
+  --bs-btn-padding-x: var(--space-5);
+  --bs-btn-padding-y: var(--space-3);
+  --bs-btn-font-weight: 600;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--color-primary);
+  --bs-btn-color: var(--color-primary-text);
+  --bs-btn-border-color: var(--color-primary);
+  --bs-btn-hover-bg: var(--color-primary-hover);
+  --bs-btn-hover-border-color: var(--color-primary-hover);
+  --bs-btn-active-bg: var(--color-primary-active);
+  --bs-btn-active-border-color: var(--color-primary-active);
+  --bs-btn-disabled-bg: var(--color-accent-soft);
+  --bs-btn-disabled-border-color: var(--color-accent-soft);
+}
+
+.btn-outline {
   --bs-btn-bg: var(--color-surface);
   --bs-btn-color: var(--color-ink);
   --bs-btn-border-color: var(--color-border);
-  --bs-btn-border-radius: var(--radius-pill);
-  --bs-btn-padding-x: var(--space-5);
-  --bs-btn-padding-y: var(--space-3);
-}
-
-.btn-secondary {
-  --bs-btn-font-family: var(--font-body);
-  --bs-btn-bg: var(--color-primary);
-  --bs-btn-color: var(--color-primary-text);
-  --bs-btn-border-radius: var(--radius-pill);
-  --bs-btn-padding-x: var(--space-5);
-  --bs-btn-padding-y: var(--space-3);
+  --bs-btn-hover-bg: var(--color-primary-hover);
+  --bs-btn-hover-color: var(--color-primary-text);
+  --bs-btn-hover-border-color: var(--color-primary-hover);
+  --bs-btn-active-color: var(--color-primary-text);
+  --bs-btn-active-bg: var(--color-primary-active);
+  --bs-btn-active-border-color: var(--color-primary-active);
+  --bs-btn-disabled-bg: var(--color-accent-soft);
+  --bs-btn-disabled-border-color: var(--color-accent-soft);
 }

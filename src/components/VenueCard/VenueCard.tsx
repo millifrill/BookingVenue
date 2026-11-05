@@ -1,5 +1,4 @@
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import styles from './VenueCard.module.css';
 import type { Venue } from '../../types/Venue';
 import { Link } from 'react-router-dom';
@@ -36,12 +35,10 @@ function VenueCard({ venue }: { venue: Venue }) {
         <Card.Text className={styles['venue-description']}>
           {venue.description}
         </Card.Text>
-        <Link to={`/venue/${venue.venueId}`}>
-          <Button
-            className={styles['show-venue-btn']}
-            variant='primary'>
-            Visa lokal
-          </Button>
+        <Link
+          to={`/venue/${venue.venueId}`}
+          className='btn btn-outline'>
+          Visa lokal
         </Link>
       </Card.Body>
     </Card>

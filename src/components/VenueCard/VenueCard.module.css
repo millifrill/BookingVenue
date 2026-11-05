@@ -33,10 +33,3 @@
   overflow: hidden;
   font-size: 0.95rem;
 }
-
-.show-venue-btn {
-  margin: auto auto 4px 2px;
-  font-weight: 600;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-}

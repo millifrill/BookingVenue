@@ -11,8 +11,12 @@
   --color-footer: #f1ede6;
   --color-primary: #2d4a3a;
   --color-primary-text: #fefdfa;
+  --color-primary-hover: #243b2e;
+  --color-primary-active: #1c2e24;
   --color-accent: #c0562f;
   --color-accent-soft: #e2b4a3;
+  --color-accent-hover: #a34928;
+  --color-accent-active: #8a3e22;
   --color-danger: #b3261e;
   --color-shadow: #1c1b1a0f;
 
