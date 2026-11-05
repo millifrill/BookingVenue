@@ -74,7 +74,7 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
               <span>{venue.pricePerHour} kr/timme</span>
             </div>
             <div className={styles['capacity']}>
-              <People size={20} />
+              <People size={18} />
               <span>Upp till {venue.capacity} personer</span>
             </div>
             <div className={styles['space']}>
