@@ -1,0 +1,35 @@
+.venue-card {
+  width: 360px;
+  height: 536px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 6px 0 var(--color-shadow);
+}
+
+.venue-img {
+  width: 360px;
+  height: 265px;
+  object-fit: cover;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.venue-info {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: var(--space-1) var(--space-6);
+  margin: 0 0 var(--space-3) 2px;
+  font-size: 0.875rem;
+}
+
+.venue-info > span > svg {
+  margin: 0 5px 2px 0;
+}
+
+.venue-description {
+  min-height: 63px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.95rem;
+}

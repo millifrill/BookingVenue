@@ -1,8 +1,9 @@
-import Footer from './components/Footer/Footer';
-import Header from './components/Header/Header';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import VenueDetailPage from './pages/VenuePage';
 import NotFoundPage from './pages/NotFoundPage';
+import Footer from './components/Footer/Footer';
+import Header from './components/Header/Header';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<div> TODO: Venuepage </div>}
+            element={<HomePage />}
           />
           <Route
             path='/venue/:id'

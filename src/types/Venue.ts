@@ -5,15 +5,21 @@ export interface Amenity {
 
 export interface Venue {
   venueId: number;
-  name: string;
   cityId: number;
+  name: string;
   cityName: string;
   street: string;
   postalNumber: string;
-  description: string;
+  description: string | undefined;
   space: number;
   capacity: number;
   pricePerHour: number;
-  imageURL: string;
+  imageURL: string | undefined;
   amenities: Amenity[];
+}
+
+export interface VenueContextValue {
+  allVenues: Venue[];
+  errorMsg: string | null;
+  setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
 }

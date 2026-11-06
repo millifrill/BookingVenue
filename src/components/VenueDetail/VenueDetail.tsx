@@ -8,7 +8,6 @@ import {
   Tag,
   GeoAlt,
   People,
-  ArrowsFullscreen,
   Wifi,
   Projector,
   Easel2,
@@ -21,6 +20,7 @@ import {
   PersonWheelchair,
   Check,
   type Icon,
+  HouseDoor,
 } from 'react-bootstrap-icons';
 
 const amenityIcons: Record<string, Icon> = {
@@ -43,7 +43,7 @@ interface VenueDetailProps {
 
 export default function VenueDetail({ venue }: VenueDetailProps) {
   if (!venue) {
-    return "Lokal hittades inte.";
+    return 'Lokal hittades inte.';
   }
   return (
     <section className={styles['venue']}>
@@ -59,10 +59,10 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
       />
       <div className={styles['content']}>
         <div className={styles['info']}>
-            <h1>{venue.name}</h1>
+          <h1>{venue.name}</h1>
           <div className={styles['location-price-capacity-space']}>
             <div className={styles['location']}>
-              <GeoAlt />
+              <GeoAlt size={18} />
               <span>
                 {venue.street}, {venue.postalNumber}
                 {` `}
@@ -70,20 +70,18 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
               </span>
             </div>
             <div className={styles['price']}>
-              <Tag />
-              <span>{venue.pricePerHour} kr/t</span>
+              <Tag size={18} />
+              <span>{venue.pricePerHour} kr/timme</span>
             </div>
-
             <div className={styles['capacity']}>
-              <People />
+              <People size={18} />
               <span>Upp till {venue.capacity} personer</span>
             </div>
             <div className={styles['space']}>
-              <ArrowsFullscreen />
+              <HouseDoor size={18} />
               <span>{venue.space} m²</span>
             </div>
           </div>
-
           <div className={styles['description']}>
             <p>{venue.description}</p>
           </div>

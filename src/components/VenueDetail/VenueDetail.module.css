@@ -35,6 +35,8 @@
   flex-direction: column;
   width: 90%;
   margin-bottom: var(--space-4);
+  gap: 5px;
+  margin-left: 2px;
 }
 
 .location,
@@ -44,6 +46,10 @@
   display: flex;
   align-items: center;
   gap: var(--space-1);
+}
+
+.location-price-capacity-space > div > :nth-child(2) {
+  margin-left: 5px;
 }
 
 .content {

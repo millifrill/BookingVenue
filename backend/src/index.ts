@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import venueRoutes from './routes/venueRoutes.js';
+import venueRoutes from './routes/venueRoutes.ts';
 
 dotenv.config();
 
