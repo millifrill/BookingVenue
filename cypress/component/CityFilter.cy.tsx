@@ -30,7 +30,7 @@ describe('CityFilter', () => {
     mountFilter();
 
     cy.get('select option').then(($options) => {
-      const labels = [...$options].map((option) => option.textContent);
+      const labels = $options.toArray().map((option) => option.textContent);
       expect(labels).to.deep.equal([
         'Alla städer',
         ...CITIES.map((city) => city.name),
