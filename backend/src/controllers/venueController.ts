@@ -111,7 +111,7 @@ export const createVenue = async (
   }
 
   const sqlQuery = `INSERT INTO Venue(cityId, name, street, postalNumber, description, space, capacity, pricePerHour, imageURL)
-   VALUES (?,?,?,${description === undefined || description === '' ? 'DEFAULT' : '?'},?,?,?,?,${imageURL === undefined || imageURL === '' ? 'DEFAULT' : '?'})`;
+   VALUES (?,?,?,${description === '' ? 'DEFAULT' : '?'},?,?,?,?,${imageURL === '' ? 'DEFAULT' : '?'})`;
 
   const sqlValues = [cityId, name, street, postalNumber];
 
@@ -173,7 +173,7 @@ export const updateVenue = async (
       .status(400)
       .json({ error: 'Missing required fields', success: false });
   }
-  const sqlQuery = `UPDATE Venue SET cityId = ?, name = ?, street = ?, postalNumber = ?, description = ${description === undefined || description === '' ? 'DEFAULT' : '?'}, space = ?, capacity = ?, pricePerHour = ?, imageURL = ${imageURL === undefined || imageURL === '' ? 'DEFAULT' : '?'} WHERE venueId = ?`;
+  const sqlQuery = `UPDATE Venue SET cityId = ?, name = ?, street = ?, postalNumber = ?, description = ${description === '' ? 'DEFAULT' : '?'}, space = ?, capacity = ?, pricePerHour = ?, imageURL = ${imageURL === '' ? 'DEFAULT' : '?'} WHERE venueId = ?`;
 
   const sqlValues = [cityId, name, street, postalNumber];
 
