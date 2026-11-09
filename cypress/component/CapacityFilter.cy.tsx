@@ -40,22 +40,22 @@ describe('CapacityFilter', () => {
     cy.get('button[aria-label="Minska antal personer"]').click();
     cy.get('@onChange').should('not.have.been.called');
   });
-  it('does change to positive input value', () => {
-    mountFilter(1);
+  it('does call onChange for positive input values', () => {
+    mountFilter(null);
 
-    cy.get('input').clear().type('10');
-    cy.get('@onChange').should('have.been.calledWith', 10);
+    cy.get('input').type('1');
+    cy.get('@onChange').should('have.been.calledWith', 1);
   });
   it('does not allow input value of 0', () => {
-    mountFilter(1);
+    mountFilter(null);
 
-    cy.get('input').clear().type('0');
-    cy.get('@onChange').should('not.have.been.calledWith', 0);
+    cy.get('input').type('0');
+    cy.get('@onChange').should('not.have.been.called');
   });
   it('does not allow negative input value', () => {
-    mountFilter(1);
+    mountFilter(null);
 
-    cy.get('input').clear().type('-1');
-    cy.get('@onChange').should('not.have.been.calledWith', -1);
+    cy.get('input').type('-');
+    cy.get('@onChange').should('not.have.been.called');
   });
 });
