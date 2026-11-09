@@ -6,11 +6,14 @@ import { GeoAlt, HouseDoor, People, Tag } from 'react-bootstrap-icons';
 
 function VenueCard({ venue }: { venue: Venue }) {
   return (
-    <Card className={styles['venue-card']}>
+    <Card
+      className={styles['venue-card']}
+      data-cy='venue-card'>
       <Card.Img
         className={styles['venue-img']}
         variant='top'
         src={venue.imageURL}
+        alt={venue.name}
       />
       <Card.Body>
         <Card.Title as={'h3'}>{venue.name}</Card.Title>
@@ -37,7 +40,8 @@ function VenueCard({ venue }: { venue: Venue }) {
         </Card.Text>
         <Link
           to={`/venue/${venue.venueId}`}
-          className='btn btn-outline'>
+          className='btn btn-outline'
+          aria-label={`Visa lokal ${venue.name}`}>
           Visa lokal
         </Link>
       </Card.Body>

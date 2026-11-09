@@ -17,16 +17,47 @@ const testVenue: Venue = {
   imageURL:
     'https://images.pexels.com/photos/17294774/pexels-photo-17294774.jpeg',
   cityName: 'Malmö',
-  amenities: [],
+  amenities: [
+    { amenityId: 4, name: 'Bar' },
+    { amenityId: 5, name: 'Kök' },
+    { amenityId: 6, name: 'Tillgänglighetsanpassat' },
+  ],
 };
 
-describe('<VenueCard />', () => {
-  it('displays the venue name', () => {
+describe('VenueCard', () => {
+  beforeEach(() => {
     cy.mount(
       <MemoryRouter>
         <VenueCard venue={testVenue} />
       </MemoryRouter>,
     );
-    cy.contains('h3', testVenue.name).should('be.visible');
+  });
+
+  it('displays the correct venue information', () => {
+    cy.getByRole('img', { name: testVenue.name })
+      .should('have.attr', 'src', testVenue.imageURL)
+      .and('be.visible');
+    cy.getByRole('heading', { name: testVenue.name }).should('be.visible');
+    cy.contains('span', testVenue.cityName).should('be.visible');
+    cy.contains('span', testVenue.capacity).should('be.visible');
+    cy.contains('span', testVenue.space).should('be.visible');
+    cy.contains('span', testVenue.pricePerHour).should('be.visible');
+    cy.contains(testVenue.description).should('be.visible');
+  });
+
+  it('does not display venue details not intended for the venue card', () => {
+    cy.get("[data-cy='venue-card']").should('be.visible');
+    cy.contains(testVenue.street).should('not.exist');
+    cy.contains(testVenue.postalNumber).should('not.exist');
+    cy.contains(testVenue.amenities[2].name).should('not.exist');
+  });
+
+  it('displays the correct text and styling on "Visa lokal" link and links to the correct venue details page', () => {
+    cy.getByRole('link', { name: `Visa lokal ${testVenue.name}` })
+      .should('have.text', 'Visa lokal')
+      .and('have.class', 'btn')
+      .and('have.class', 'btn-outline')
+      .and('have.attr', 'href', `/venue/${testVenue.venueId}`)
+      .and('be.visible');
   });
 });
