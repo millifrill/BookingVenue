@@ -5,4 +5,6 @@ export interface Booking {
   lastName: string;
   startTime: Date;
   endTime: Date;
+  venueName: string;
+  venueImageURL: string;
 }
