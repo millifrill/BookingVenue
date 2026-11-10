@@ -14,7 +14,7 @@ const makeVenue = (overrides: Partial<Venue>): Venue => ({
   space: 50,
   capacity: 10,
   pricePerHour: 500,
-  imageURL: undefined,
+  imageURL: 'https://example.com/lokal.jpg',
   amenities: [],
   ...overrides,
 });
