@@ -1,0 +1,56 @@
+.find-booking {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.lead {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--color-ink-muted);
+}
+
+.search-card {
+  padding: 20px var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.search-input {
+  flex: 1;
+  padding: 14px var(--space-5);
+  border-radius: var(--radius-pill);
+}
+
+.error {
+  margin: 0;
+  color: var(--color-danger);
+}
