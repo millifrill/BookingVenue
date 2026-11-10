@@ -35,3 +35,7 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add('resetDatabase', () => {
+  cy.task('resetDatabase');
+});

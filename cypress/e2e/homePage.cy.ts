@@ -1,5 +1,10 @@
 describe('Booking Venue', () => {
-  it('visits the site BookingVenue', () => {
+  beforeEach(() => {
+    cy.task('resetAndSeedDatabase');
     cy.visit('/');
+  });
+
+  it('visits the site BookingVenue', () => {
+    cy.contains('BookingVenue').should('be.visible');
   });
 });
