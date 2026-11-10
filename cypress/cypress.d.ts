@@ -1,5 +1,5 @@
 declare namespace Cypress {
   interface Chainable {
-    resetDatabase(): Chainable<null>;
+    resetAndSeedDatabase(): Chainable<null>;
   }
 }
