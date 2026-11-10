@@ -1,6 +1,6 @@
 describe('Booking Venue', () => {
   beforeEach(() => {
-    cy.task('resetAndSeedDatabase');
+    cy.resetAndSeedDatabase();
     cy.visit('/');
   });
 
