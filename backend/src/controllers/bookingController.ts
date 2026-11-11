@@ -72,7 +72,20 @@ export const createBooking = async (req: Request, res: Response) => {
     });
   }
 
-  const bookingId = createBookingId();
+  let isIdExisting: boolean;
+  let bookingId: string;
+
+  do {
+    bookingId = createBookingId();
+
+    const [existingId] = await mySqlDatabase.execute <RowDataPacket[]>(
+      'SELECT bookingId FROM Booking WHERE bookingId = ?',
+      [bookingId]
+    );
+
+    isIdExisting = existingId.length > 0;
+  } while (isIdExisting);
+  
 
   try {
     const [existingBookings] = await mySqlDatabase.execute<Booking[]>(
