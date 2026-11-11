@@ -25,7 +25,6 @@ beforeEach(() => {
   cy.intercept('PUT', '**/venue/*').as('updateVenue');
   cy.intercept('DELETE', '**/venue/*').as('deleteVenue');
 
-  cy.intercept('GET', '**/bookings').as('getBookings');
   cy.intercept('GET', '**/booking/*').as('getBooking');
   cy.intercept('POST', '**/booking').as('createBooking');
   cy.intercept('PUT', '**/booking/*').as('updateBooking');

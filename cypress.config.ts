@@ -4,8 +4,6 @@ import createBundler from '@bahmutov/cypress-esbuild-preprocessor';
 import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor';
 import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild';
 
-process.loadEnvFile('./backend/.env');
-
 export default defineConfig({
   component: {
     devServer: {
@@ -30,6 +28,8 @@ export default defineConfig({
       on('file:preprocessor', bundler);
 
       await addCucumberPreprocessorPlugin(on, config);
+
+      process.loadEnvFile('./backend/.env');
 
       on('task', {
         resetAndSeedDatabase() {
