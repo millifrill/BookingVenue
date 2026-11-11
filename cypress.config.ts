@@ -1,5 +1,8 @@
 import { defineConfig } from 'cypress';
 import { execSync } from 'node:child_process';
+import createBundler from '@bahmutov/cypress-esbuild-preprocessor';
+import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor';
+import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild';
 
 process.loadEnvFile('./backend/.env');
 
@@ -16,7 +19,18 @@ export default defineConfig({
     defaultCommandTimeout: 5000,
     viewportWidth: 1200,
     viewportHeight: 800,
-    setupNodeEvents(on) {
+    specPattern: [
+      'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+      'cypress/e2e/**/*.feature',
+    ],
+    async setupNodeEvents(on, config) {
+      const bundler = createBundler({
+        plugins: [createEsbuildPlugin(config)],
+      });
+      on('file:preprocessor', bundler);
+
+      await addCucumberPreprocessorPlugin(on, config);
+
       on('task', {
         resetAndSeedDatabase() {
           execSync(
@@ -28,6 +42,7 @@ export default defineConfig({
           return null;
         },
       });
+      return config;
     },
   },
 });
