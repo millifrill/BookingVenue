@@ -4,6 +4,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import HomePage from './pages/HomePage';
+import FindBookingPage from './pages/FindBookingPage';
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
           <Route
             path='/venue/:id'
             element={<VenueDetailPage />}
+          />
+          <Route
+            path='/hitta-bokning'
+            element={<FindBookingPage />}
           />
           <Route
             path='/404'

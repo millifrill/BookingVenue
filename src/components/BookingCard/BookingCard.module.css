@@ -1,0 +1,52 @@
+.booking-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 6px 0 var(--color-shadow);
+}
+
+.booking-img {
+  width: 128px;
+  height: 128px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.booking-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.booking-number {
+  margin: 0;
+  font-family: ui-monospace, monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-muted);
+}
+
+.booking-venue {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.booking-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  color: var(--color-ink-muted);
+}
+
+.booking-meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

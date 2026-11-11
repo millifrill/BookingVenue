@@ -32,7 +32,6 @@ CREATE TABLE Booking (
 	lastName VARCHAR(50) NOT NULL,
 	startTime DATETIME NOT NULL,
 	endTime DATETIME NOT NULL,
-	active BOOL NOT NULL DEFAULT TRUE,
 	FOREIGN KEY (venueId) REFERENCES Venue(venueId),
 	CHECK (endTime > startTime)
 );
