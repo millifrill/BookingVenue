@@ -1,7 +1,7 @@
 describe('Booking Venue', () => {
   beforeEach(() => {
-    cy.resetAndSeedDatabase();
     cy.visit('/');
+    cy.wait('@getVenues');
   });
 
   it('visits the site BookingVenue', () => {

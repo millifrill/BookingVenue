@@ -15,3 +15,19 @@
 
 // Import commands.ts using ES2015 syntax:
 import './commands';
+
+beforeEach(() => {
+  cy.resetAndSeedDatabase();
+
+  cy.intercept('GET', '**/venues*').as('getVenues');
+  cy.intercept('GET', '**/venue/*').as('getVenue');
+  cy.intercept('POST', '**/venue').as('createVenue');
+  cy.intercept('PUT', '**/venue/*').as('updateVenue');
+  cy.intercept('DELETE', '**/venue/*').as('deleteVenue');
+
+  cy.intercept('GET', '**/bookings').as('getBookings');
+  cy.intercept('GET', '**/booking/*').as('getBooking');
+  cy.intercept('POST', '**/booking').as('createBooking');
+  cy.intercept('PUT', '**/booking/*').as('updateBooking');
+  cy.intercept('DELETE', '**/booking/*').as('deleteBooking');
+});
