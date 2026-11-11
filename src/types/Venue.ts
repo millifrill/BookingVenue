@@ -10,11 +10,11 @@ export interface Venue {
   cityName: string;
   street: string;
   postalNumber: string;
-  description: string | undefined;
+  description: string;
   space: number;
   capacity: number;
   pricePerHour: number;
-  imageURL: string | undefined;
+  imageURL: string;
   amenities: Amenity[];
 }
 
