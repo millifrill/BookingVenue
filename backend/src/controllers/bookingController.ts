@@ -78,14 +78,13 @@ export const createBooking = async (req: Request, res: Response) => {
   do {
     bookingId = createBookingId();
 
-    const [existingId] = await mySqlDatabase.execute <RowDataPacket[]>(
+    const [existingId] = await mySqlDatabase.execute<RowDataPacket[]>(
       'SELECT bookingId FROM Booking WHERE bookingId = ?',
-      [bookingId]
+      [bookingId],
     );
 
     isIdExisting = existingId.length > 0;
   } while (isIdExisting);
-  
 
   try {
     const [existingBookings] = await mySqlDatabase.execute<Booking[]>(
