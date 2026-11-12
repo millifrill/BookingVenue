@@ -17,11 +17,29 @@ export default function FindBookingPage() {
   const [bookingNumber, setBookingNumber] = useState('');
   const [booking, setBooking] = useState<FoundBooking | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [cancelMsg, setCancelMsg] = useState<string | null>(null);
+
+  async function handleCancel() {
+    if (!booking) return;
+    setErrorMsg(null);
+    setCancelMsg(null);
+
+    try {
+      await axios.delete<FoundBooking>(`${API_URL}/${booking.bookingId}`);
+      setBooking(null);
+      setCancelMsg(`Avbokning lyckades! ${bookingNumber} har raderats.`);
+      setBookingNumber('');
+    } catch (error) {
+      console.error(error);
+      setErrorMsg(FAILED_MESSAGE);
+    }
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setBooking(null);
     setErrorMsg(null);
+    setCancelMsg(null);
 
     const id = bookingNumber.trim();
     if (id === '') {
@@ -77,7 +95,19 @@ export default function FindBookingPage() {
           {errorMsg}
         </p>
       )}
-      {booking && <BookingCard booking={booking} />}
+      {cancelMsg && (
+        <p
+          className={styles['']}
+          role='alert'>
+          {cancelMsg}
+        </p>
+      )}
+      {booking && (
+        <BookingCard
+          booking={booking}
+          cancelBooking={handleCancel}
+        />
+      )}
     </section>
   );
 }
