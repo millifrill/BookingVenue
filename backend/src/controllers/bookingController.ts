@@ -55,19 +55,56 @@ export const createBooking = async (req: Request, res: Response) => {
     });
   }
 
-  if (new Date(startTime) >= new Date(endTime)) {
+  const st = new Date(startTime);
+  const et = new Date(endTime);
+
+  if (Number.isNaN(st.getTime()) || Number.isNaN(et.getTime())) {
+    return res.status(400).json({
+      error: 'Invalid date format',
+      success: false,
+    });
+  }
+
+  if (st >= et) {
     return res.status(400).json({
       error: 'Start time must be before end time',
       success: false,
     });
   }
 
-  const bookingId = createBookingId();
+  let isIdExisting: boolean;
+  let bookingId: string;
+
+  do {
+    bookingId = createBookingId();
+
+    const [existingId] = await mySqlDatabase.execute <RowDataPacket[]>(
+      'SELECT bookingId FROM Booking WHERE bookingId = ?',
+      [bookingId]
+    );
+
+    isIdExisting = existingId.length > 0;
+  } while (isIdExisting);
+  
 
   try {
+    const [existingBookings] = await mySqlDatabase.execute<Booking[]>(
+      `SELECT * FROM Booking 
+     WHERE venueId = ?
+     AND ((startTime < ? AND endTime > ?) OR (startTime < ? AND endTime > ?) OR (startTime >= ? AND endTime <= ?))`,
+      [venueId, et, et, st, st, st, et],
+    );
+
+    if (existingBookings.length > 0) {
+      return res.status(409).json({
+        error: 'Venue is already booked within the selected time range',
+        success: false,
+      });
+    }
+
     await mySqlDatabase.execute<ResultSetHeader>(
       'INSERT INTO Booking (bookingId, venueId, firstName, lastName, startTime, endTime) VALUES (?, ?, ?, ?, ?, ?)',
-      [bookingId, venueId, firstName, lastName, startTime, endTime],
+      [bookingId, venueId, firstName, lastName, st, et],
     );
 
     return res.status(201).json({
@@ -77,6 +114,12 @@ export const createBooking = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error creating booking:', err);
+    if ((err as { code?: string }).code === 'ER_NO_REFERENCED_ROW_2') {
+      return res.status(400).json({
+        error: 'Invalid venueId',
+        success: false,
+      });
+    }
     return res
       .status(500)
       .json({ error: 'Failed to create booking', success: false });
