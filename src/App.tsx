@@ -5,7 +5,7 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import HomePage from './pages/HomePage';
 import FindBookingPage from './pages/FindBookingPage';
-import AdminLogin from './pages/AdminLogin';
+import AdminLoginPage from './pages/AdminLoginPage';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
           />
           <Route
             path='/admin/login'
-            element={<AdminLogin />}
+            element={<AdminLoginPage />}
           />
           <Route
             path='/404'
