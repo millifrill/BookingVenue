@@ -101,7 +101,7 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
             ))}
           </ul>
         </div>
-        <Booking />
+        <Booking venue={venue} />
       </div>
     </section>
   );
