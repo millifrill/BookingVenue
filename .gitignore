@@ -28,3 +28,5 @@ dist-ssr
 # Cypress artefacts
 cypress/screenshots
 cypress/videos
+coverage
+.nyc_output
