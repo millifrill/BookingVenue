@@ -22,7 +22,9 @@
 }
 
 .input {
-  padding: 14px var(--space-5);
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: var(--space-5);
   background-color: var(--color-surface);
   border-color: var(--color-border);
   border-radius: var(--radius-pill);

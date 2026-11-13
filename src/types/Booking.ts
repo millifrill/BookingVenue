@@ -3,8 +3,8 @@ export interface Booking {
   venueId: number;
   firstName: string;
   lastName: string;
-  startTime: Date;
-  endTime: Date;
+  startTime: string;
+  endTime: string;
   venueName: string;
   venueImageURL: string;
 }
