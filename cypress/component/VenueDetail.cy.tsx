@@ -57,7 +57,7 @@ describe('VenueDetail', () => {
       cy.contains('li', amenity.name).should('be.visible');
     });
   });
-  it('back link points to /venue', () => {
+  it('back link points to homepage', () => {
     const venue = fakeVenue();
     mountVenueDetail(venue);
 

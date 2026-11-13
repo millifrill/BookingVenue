@@ -14,6 +14,19 @@ const SELECT_TIME_MESSAGE = 'Välj datum och tid';
 const END_BEFORE_START_MESSAGE = 'Sluttiden måste vara efter starttiden';
 const NAME_MESSAGE = 'Ange för- och efternamn';
 const FAILED_MESSAGE = 'Något gick fel, försök igen';
+const PAST_MESSAGE = 'Du kan inte boka en tid som redan har passerat';
+const ALREADY_BOOKED_MESSAGE = 'Lokalen är redan bokad under den tiden';
+const HOURS = Array.from(
+  { length: 16 },
+  (_, i) => `${String(i + 7).padStart(2, '0')}:00`,
+);
+
+function todayIso(): string {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
 
 export default function Booking({ venue }: { venue: Venue }) {
   const [date, setDate] = useState('');
@@ -33,6 +46,10 @@ export default function Booking({ venue }: { venue: Venue }) {
     }
     if (to <= from) {
       setTimeError(END_BEFORE_START_MESSAGE);
+      return;
+    }
+    if (new Date(`${date}T${from}:00`) <= new Date()) {
+      setTimeError(PAST_MESSAGE);
       return;
     }
     setTimeError(null);
@@ -70,8 +87,10 @@ export default function Booking({ venue }: { venue: Venue }) {
         endTime: `${date} ${to}:00`,
       });
       setBookingId(res.data.bookingId);
-    } catch {
-      setNameError(FAILED_MESSAGE);
+    } catch (error) {
+      const alreadyBooked =
+        axios.isAxiosError(error) && error.response?.status === 409;
+      setNameError(alreadyBooked ? ALREADY_BOOKED_MESSAGE : FAILED_MESSAGE);
     }
   }
 
@@ -85,6 +104,7 @@ export default function Booking({ venue }: { venue: Venue }) {
         <Form.Control
           className={styles['input']}
           type='date'
+          min={todayIso()}
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
@@ -94,23 +114,37 @@ export default function Booking({ venue }: { venue: Venue }) {
           className={styles['field']}
           controlId='bookingFrom'>
           <Form.Label>Från</Form.Label>
-          <Form.Control
+          <Form.Select
             className={styles['input']}
-            type='time'
             value={from}
-            onChange={(e) => setFrom(e.target.value)}
-          />
+            onChange={(e) => setFrom(e.target.value)}>
+            <option value=''>--:--</option>
+            {HOURS.map((hour) => (
+              <option
+                key={hour}
+                value={hour}>
+                {hour}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
         <Form.Group
           className={styles['field']}
           controlId='bookingTo'>
           <Form.Label>Till</Form.Label>
-          <Form.Control
+          <Form.Select
             className={styles['input']}
-            type='time'
             value={to}
-            onChange={(e) => setTo(e.target.value)}
-          />
+            onChange={(e) => setTo(e.target.value)}>
+            <option value=''>--:--</option>
+            {HOURS.map((hour) => (
+              <option
+                key={hour}
+                value={hour}>
+                {hour}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
       </div>
       {timeError && (
