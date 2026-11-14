@@ -5,6 +5,7 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import HomePage from './pages/HomePage';
 import FindBookingPage from './pages/FindBookingPage';
+import AdminLoginPage from './pages/AdminLoginPage';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
           <Route
             path='/hitta-bokning'
             element={<FindBookingPage />}
+          />
+          <Route
+            path='/admin/login'
+            element={<AdminLoginPage />}
           />
           <Route
             path='/404'
