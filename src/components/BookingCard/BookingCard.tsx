@@ -4,6 +4,8 @@ import {
   formatBookingTime,
 } from '../../utils/formatBooking';
 import styles from './BookingCard.module.css';
+import { Button } from 'react-bootstrap';
+import { Trash } from 'react-bootstrap-icons';
 
 export type FoundBooking = {
   bookingId: string;
@@ -16,7 +18,13 @@ export type FoundBooking = {
   endTime: string;
 };
 
-export default function BookingCard({ booking }: { booking: FoundBooking }) {
+export default function BookingCard({
+  booking,
+  cancelBooking,
+}: {
+  booking: FoundBooking;
+  cancelBooking: () => void;
+}) {
   return (
     <article className={styles['booking-card']}>
       <img
@@ -36,6 +44,11 @@ export default function BookingCard({ booking }: { booking: FoundBooking }) {
             <Clock size={18} />
             {formatBookingTime(booking.startTime, booking.endTime)}
           </span>
+          <Button
+            variant={'danger'}
+            onClick={cancelBooking}>
+            <Trash /> Avboka
+          </Button>
         </div>
       </div>
     </article>

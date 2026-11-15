@@ -5,6 +5,6 @@ describe('Booking Venue', () => {
   });
 
   it('visits the site BookingVenue', () => {
-    cy.contains('BookingVenue').should('be.visible');
+    cy.contains('BookingVenue.').should('be.visible');
   });
 });
