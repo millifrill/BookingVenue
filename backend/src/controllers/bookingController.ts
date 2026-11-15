@@ -26,7 +26,7 @@ export const getBookingById = async (
       `SELECT b.bookingId, b.venueId, b.firstName, b.lastName, b.startTime, b.endTime,
       v.name AS venueName,
       v.imageURL AS venueImageURL
-      FROM Booking b 
+      FROM Booking b
       JOIN Venue v ON b.venueId = v.venueId
       WHERE b.bookingId = ?`,
       [id],
@@ -88,7 +88,7 @@ export const createBooking = async (req: Request, res: Response) => {
 
   try {
     const [existingBookings] = await mySqlDatabase.execute<Booking[]>(
-      `SELECT * FROM Booking 
+      `SELECT * FROM Booking
      WHERE venueId = ?
      AND ((startTime < ? AND endTime > ?) OR (startTime < ? AND endTime > ?) OR (startTime >= ? AND endTime <= ?))`,
       [venueId, et, et, st, st, st, et],
@@ -122,6 +122,92 @@ export const createBooking = async (req: Request, res: Response) => {
     return res
       .status(500)
       .json({ error: 'Failed to create booking', success: false });
+  }
+};
+
+export const updateBooking = async (
+  req: Request<
+    { id: string },
+    { message?: string; success: boolean; error?: string },
+    Pick<Booking, 'startTime' | 'endTime'>,
+    void
+  >,
+  res: Response,
+) => {
+  const { id } = req.params;
+  const { startTime, endTime } = req.body;
+
+  if (!startTime || !endTime) {
+    return res
+      .status(400)
+      .json({ error: 'Missing required fields', success: false });
+  }
+
+  const st = new Date(startTime);
+  const et = new Date(endTime);
+
+  if (Number.isNaN(st.getTime()) || Number.isNaN(et.getTime())) {
+    return res.status(400).json({
+      error: 'Invalid date format',
+      success: false,
+    });
+  }
+
+  if (st >= et) {
+    return res.status(400).json({
+      error: 'Start time must be before end time',
+      success: false,
+    });
+  }
+
+  try {
+    const [bookings] = await mySqlDatabase.execute<RowDataPacket[]>(
+      'SELECT venueId FROM Booking WHERE bookingId = ?',
+      [id],
+    );
+
+    const booking = bookings[0];
+
+    if (!booking) {
+      return res.status(404).json({
+        error: 'Booking not found',
+        success: false,
+      });
+    }
+
+    const { venueId } = booking;
+
+    const [existingBookings] = await mySqlDatabase.execute<Booking[]>(
+      `SELECT * FROM Booking
+     WHERE venueId = ?
+     AND bookingId !=?
+     AND ((startTime < ? AND endTime > ?) OR (startTime < ? AND endTime > ?) OR (startTime >= ? AND endTime <= ?))`,
+      [venueId, id, et, et, st, st, st, et],
+    );
+
+    if (existingBookings.length > 0) {
+      return res.status(409).json({
+        error: 'Venue is already booked within the selected time range',
+        success: false,
+      });
+    }
+
+    await mySqlDatabase.execute<ResultSetHeader>(
+      'UPDATE Booking SET startTime = ?, endTime = ? WHERE bookingId = ?',
+      [st, et, id],
+    );
+
+    return res.status(200).json({
+      message: 'Booking updated successfully',
+      success: true,
+    });
+  } catch (err) {
+    console.error('Error updating booking:', err);
+
+    return res.status(500).json({
+      error: 'Failed to update booking',
+      success: false,
+    });
   }
 };
 
