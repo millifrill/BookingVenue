@@ -14,7 +14,12 @@ const BOOKING: FoundBooking = {
 
 describe('BookingCard', () => {
   beforeEach(() => {
-    cy.mount(<BookingCard booking={BOOKING} />);
+    cy.mount(
+      <BookingCard
+        booking={BOOKING}
+        cancelBooking={cy.stub().as('cancelBooking')}
+      />,
+    );
   });
 
   it('Given a booking, When the card is shown, Then it shows the name of the venue', () => {
@@ -34,5 +39,9 @@ describe('BookingCard', () => {
     cy.get('img')
       .should('have.attr', 'src', BOOKING.venueImageURL)
       .and('have.attr', 'alt', 'Salongen på Söder');
+  });
+  it('Given a booking, When Avboka is clicked, Then cancelBooking is called', () => {
+    cy.contains('button', 'Avboka').click();
+    cy.get('@cancelBooking').should('have.been.calledOnce');
   });
 });

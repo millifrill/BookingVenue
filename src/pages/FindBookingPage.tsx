@@ -97,7 +97,7 @@ export default function FindBookingPage() {
       )}
       {cancelMsg && (
         <p
-          className={styles['']}
+          className={styles['cancel']}
           role='alert'>
           {cancelMsg}
         </p>
