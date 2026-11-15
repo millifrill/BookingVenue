@@ -22,3 +22,14 @@ Then(
     cy.location('pathname').should('eq', '/venue/1');
   },
 );
+
+When('I select the city {string}', (city: string) => {
+  cy.wait('@getVenues');
+  cy.getByRole('combobox', { name: /stad/i }).select(city);
+});
+
+Then('I should see {int} venue items', (count: number) => {
+  cy.get("[data-cy='venue-card']")
+    .should('be.visible')
+    .and('have.length', count);
+});

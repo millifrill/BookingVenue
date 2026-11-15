@@ -11,3 +11,13 @@ Given I am on the HomePage
   Scenario: A user clicks on "Visa lokal" button to see more information about the venue
   When I click on "Visa lokal" button on "Konferensrum Ljuset" venue item
   Then I should be redirected to a page with more information about "Konferensrum Ljuset" venue
+
+  Scenario Outline: A user filters venues by city
+    When I select the city <city>
+    Then I should see <count> venue items
+
+    Examples:
+    | city        | count |
+    | 'Stockholm' | 3     |
+    | 'Göteborg'  | 2     |
+    | 'Malmö'     | 1     |
