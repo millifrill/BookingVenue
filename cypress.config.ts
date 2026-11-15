@@ -6,6 +6,8 @@ import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esb
 import codeCoverageTask from '@cypress/code-coverage/task';
 
 export default defineConfig({
+  viewportWidth: 1200,
+  viewportHeight: 800,
   component: {
     devServer: {
       framework: 'react',
@@ -20,8 +22,6 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://127.0.0.1:5173/',
     defaultCommandTimeout: 5000,
-    viewportWidth: 1200,
-    viewportHeight: 800,
     specPattern: ['cypress/e2e/**/*.cy.{ts,tsx}', 'cypress/e2e/**/*.feature'],
     async setupNodeEvents(on, config) {
       const bundler = createBundler({
