@@ -29,7 +29,7 @@ describe('UpdateBookingForm', () => {
     cy.getByRole('combobox', { name: 'Från' }).select('21:00');
     cy.getByRole('combobox', { name: 'Till' }).select('20:00');
     cy.getByRole('button', { name: 'Spara' }).click();
-    cy.get("[data-cy='save-booking-btn']").should(
+    cy.get("[data-cy='time-error']").should(
       'contain',
       'Sluttiden måste vara efter starttiden',
     );
