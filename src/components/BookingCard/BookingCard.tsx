@@ -1,11 +1,13 @@
-import { Calendar, Clock } from 'react-bootstrap-icons';
+import { Calendar, Clock, Pencil } from 'react-bootstrap-icons';
 import {
   formatBookingDate,
   formatBookingTime,
 } from '../../utils/formatBooking';
 import styles from './BookingCard.module.css';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
+import { useState } from 'react';
+import UpdateBookingForm from '../UpdateBookingForm/UpdateBookingForm';
 
 export type FoundBooking = {
   bookingId: string;
@@ -21,10 +23,27 @@ export type FoundBooking = {
 export default function BookingCard({
   booking,
   cancelBooking,
+  updateBooking,
 }: {
   booking: FoundBooking;
   cancelBooking: () => void;
+  updateBooking: (startTime: string, endTime: string) => void;
 }) {
+  const [showModal, setShowModal] = useState(false);
+
+  function openModal() {
+    setShowModal(true);
+  }
+
+  function handleClose() {
+    setShowModal(false);
+  }
+
+  function handleUpdate(startTime: string, endTime: string) {
+    updateBooking(startTime, endTime);
+    handleClose();
+  }
+
   return (
     <article className={styles['booking-card']}>
       <img
@@ -44,13 +63,41 @@ export default function BookingCard({
             <Clock size={18} />
             {formatBookingTime(booking.startTime, booking.endTime)}
           </span>
-          <Button
-            variant={'danger'}
-            onClick={cancelBooking}>
-            <Trash /> Avboka
-          </Button>
+          <div
+            className={styles['btn-group']}
+            role='group'
+            aria-label='Hantera bokning'>
+            <Button
+              variant={'outline'}
+              onClick={openModal}>
+              <Pencil /> Ändra
+            </Button>
+            <Button
+              variant={'danger'}
+              onClick={cancelBooking}>
+              <Trash /> Avboka
+            </Button>
+          </div>
         </div>
       </div>
+
+      <Modal
+        show={showModal}
+        onHide={handleClose}
+        centered>
+        <Modal.Header
+          closeButton
+          closeLabel='Stäng'>
+          <Modal.Title as='h3'>Ändra bokning</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <UpdateBookingForm
+            startTime={booking.startTime}
+            endTime={booking.endTime}
+            onSave={handleUpdate}
+          />
+        </Modal.Body>
+      </Modal>
     </article>
   );
 }

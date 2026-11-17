@@ -12,34 +12,21 @@ const API_URL = 'http://localhost:3000/api/booking';
 const EMPTY_FIELD_MESSAGE = 'Ange ett bokningsnummer';
 const NOT_FOUND_MESSAGE = 'Ingen bokning hittades';
 const FAILED_MESSAGE = 'Något gick fel, försök igen';
+const ALREADY_BOOKED_MESSAGE = 'Lokalen är redan bokad under den tiden';
 
 export default function FindBookingPage() {
   const [bookingNumber, setBookingNumber] = useState('');
   const [booking, setBooking] = useState<FoundBooking | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [updateMsg, setUpdateMsg] = useState<string | null>(null);
   const [cancelMsg, setCancelMsg] = useState<string | null>(null);
-
-  async function handleCancel() {
-    if (!booking) return;
-    setErrorMsg(null);
-    setCancelMsg(null);
-
-    try {
-      await axios.delete<FoundBooking>(`${API_URL}/${booking.bookingId}`);
-      setBooking(null);
-      setCancelMsg(`Avbokning lyckades! ${bookingNumber} har raderats.`);
-      setBookingNumber('');
-    } catch (error) {
-      console.error(error);
-      setErrorMsg(FAILED_MESSAGE);
-    }
-  }
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setBooking(null);
-    setErrorMsg(null);
+    setUpdateMsg(null);
     setCancelMsg(null);
+    setErrorMsg(null);
 
     const id = bookingNumber.trim();
     if (id === '') {
@@ -57,6 +44,42 @@ export default function FindBookingPage() {
     }
   }
 
+  async function handleUpdate(startTime: string, endTime: string) {
+    if (!booking) return;
+    setUpdateMsg(null);
+    setErrorMsg(null);
+
+    try {
+      await axios.put(`${API_URL}/${booking.bookingId}`, {
+        startTime,
+        endTime,
+      });
+      setBooking({ ...booking, startTime, endTime });
+      setUpdateMsg(`Uppdateringen lyckades! ${bookingNumber} har uppdaterats.`);
+    } catch (error) {
+      console.error(error);
+      const alreadyBooked =
+        axios.isAxiosError(error) && error.response?.status === 409;
+      setErrorMsg(alreadyBooked ? ALREADY_BOOKED_MESSAGE : FAILED_MESSAGE);
+    }
+  }
+
+  async function handleCancel() {
+    if (!booking) return;
+    setErrorMsg(null);
+    setCancelMsg(null);
+
+    try {
+      await axios.delete<FoundBooking>(`${API_URL}/${booking.bookingId}`);
+      setBooking(null);
+      setCancelMsg(`Avbokning lyckades! ${bookingNumber} har raderats.`);
+      setBookingNumber('');
+    } catch (error) {
+      console.error(error);
+      setErrorMsg(FAILED_MESSAGE);
+    }
+  }
+
   return (
     <section className={styles['find-booking']}>
       <p className={styles['eyebrow']}>Ändra eller avboka</p>
@@ -64,7 +87,6 @@ export default function FindBookingPage() {
       <p className={styles['lead']}>
         Ange bokningsnumret från din bekräftelse, t.ex. K7P2XQ9M.
       </p>
-
       <Form
         className={styles['search-card']}
         onSubmit={handleSubmit}
@@ -95,6 +117,13 @@ export default function FindBookingPage() {
           {errorMsg}
         </p>
       )}
+      {updateMsg && (
+        <p
+          className={styles['update']}
+          role='alert'>
+          {updateMsg}
+        </p>
+      )}
       {cancelMsg && (
         <p
           className={styles['cancel']}
@@ -106,6 +135,7 @@ export default function FindBookingPage() {
         <BookingCard
           booking={booking}
           cancelBooking={handleCancel}
+          updateBooking={handleUpdate}
         />
       )}
     </section>

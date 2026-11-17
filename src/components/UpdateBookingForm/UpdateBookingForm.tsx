@@ -1,0 +1,126 @@
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import styles from '../Booking/Booking.module.css';
+import { formatClock } from '../../utils/formatBooking';
+
+export type UpdateBookingFormProps = {
+  startTime: string;
+  endTime: string;
+  onSave: (startTime: string, endTime: string) => void;
+};
+
+const SELECT_TIME_MESSAGE = 'Välj datum och tid';
+const END_BEFORE_START_MESSAGE = 'Sluttiden måste vara efter starttiden';
+const PAST_MESSAGE = 'Du kan inte boka en tid som redan har passerat';
+const HOURS = Array.from(
+  { length: 16 },
+  (_, i) => `${String(i + 7).padStart(2, '0')}:00`,
+);
+
+function todayIso(): string {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
+export default function UpdateBookingForm({
+  startTime,
+  endTime,
+  onSave,
+}: UpdateBookingFormProps) {
+  const [date, setDate] = useState(
+    new Date(startTime).toLocaleDateString('sv-SE'),
+  );
+  const [from, setFrom] = useState(formatClock(startTime));
+  const [to, setTo] = useState(formatClock(endTime));
+  const [timeError, setTimeError] = useState<string | null>(null);
+
+  function handleSave() {
+    if (!date || !from || !to) {
+      setTimeError(SELECT_TIME_MESSAGE);
+      return;
+    }
+    if (to <= from) {
+      setTimeError(END_BEFORE_START_MESSAGE);
+      return;
+    }
+    if (new Date(`${date}T${from}:00`) <= new Date()) {
+      setTimeError(PAST_MESSAGE);
+      return;
+    }
+    setTimeError(null);
+    onSave(`${date} ${from}:00`, `${date} ${to}:00`);
+  }
+
+  return (
+    <aside className={styles['booking']}>
+      <Form.Group
+        className={styles['field']}
+        controlId='updateBookingDate'>
+        <Form.Label>Datum</Form.Label>
+        <Form.Control
+          data-cy='update-booking-date'
+          className={styles['input']}
+          type='date'
+          min={todayIso()}
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+      </Form.Group>
+      <div className={styles['time-row']}>
+        <Form.Group
+          className={styles['field']}
+          controlId='updateBookingFrom'>
+          <Form.Label>Från</Form.Label>
+          <Form.Select
+            className={styles['input']}
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}>
+            <option value=''>--:--</option>
+            {HOURS.map((hour) => (
+              <option
+                key={hour}
+                value={hour}>
+                {hour}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+        <Form.Group
+          className={styles['field']}
+          controlId='updateBookingTo'>
+          <Form.Label>Till</Form.Label>
+          <Form.Select
+            className={styles['input']}
+            value={to}
+            onChange={(e) => setTo(e.target.value)}>
+            <option value=''>--:--</option>
+            {HOURS.map((hour) => (
+              <option
+                key={hour}
+                value={hour}>
+                {hour}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+      </div>
+      {timeError && (
+        <p
+          data-cy='time-error'
+          className={styles['error']}
+          role='alert'>
+          {timeError}
+        </p>
+      )}
+      <Button
+        className={styles['full-width']}
+        variant='primary'
+        onClick={handleSave}>
+        Spara
+      </Button>
+    </aside>
+  );
+}

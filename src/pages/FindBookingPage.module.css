@@ -55,6 +55,11 @@
   color: var(--color-danger);
 }
 
+.update {
+  margin: 0;
+  color: var(--color-primary);
+}
+
 .cancel {
   margin: 0;
   color: var(--color-primary);
