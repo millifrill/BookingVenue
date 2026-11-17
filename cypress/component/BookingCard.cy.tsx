@@ -17,6 +17,7 @@ describe('BookingCard', () => {
     cy.mount(
       <BookingCard
         booking={BOOKING}
+        updateBooking={cy.stub().as('updateBooking')}
         cancelBooking={cy.stub().as('cancelBooking')}
       />,
     );

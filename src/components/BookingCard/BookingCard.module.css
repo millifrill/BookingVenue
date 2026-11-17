@@ -50,3 +50,8 @@
   align-items: center;
   gap: 6px;
 }
+
+.btn-group {
+  display: flex;
+  gap: var(--space-2);
+}
