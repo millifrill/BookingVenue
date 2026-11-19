@@ -2,6 +2,7 @@ import { useParams, Navigate } from 'react-router-dom';
 import VenueDetail from '../components/VenueDetail/VenueDetail';
 import { useEffect, useState } from 'react';
 import type { Venue } from '../types/Venue';
+import { API_URL } from '../utils/constants';
 
 export default function VenueDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -11,7 +12,7 @@ export default function VenueDetailPage() {
   useEffect(() => {
     async function fetchVenue() {
       try {
-        const response = await fetch(`http://localhost:3000/api/venue/${id}`);
+        const response = await fetch(`${API_URL}/venue/${id}`);
         if (!response.ok) {
           setNotFound(true);
           throw new Error(`Error status: ${response.status}`);

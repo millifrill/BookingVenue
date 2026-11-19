@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:3000/api/booking';
+export const API_URL = 'http://localhost:3000/api';
 
 export const SELECT_TIME_MESSAGE = 'Välj datum och tid';
 export const END_BEFORE_START_MESSAGE = 'Sluttiden måste vara efter starttiden';

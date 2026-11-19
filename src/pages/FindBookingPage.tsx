@@ -52,7 +52,7 @@ export default function FindBookingPage() {
     setErrorMsg(null);
 
     try {
-      await axios.put(`${API_URL}/${booking.bookingId}`, {
+      await axios.put(`${API_URL}/booking/${booking.bookingId}`, {
         startTime,
         endTime,
       });
@@ -72,7 +72,9 @@ export default function FindBookingPage() {
     setCancelMsg(null);
 
     try {
-      await axios.delete<FoundBooking>(`${API_URL}/${booking.bookingId}`);
+      await axios.delete<FoundBooking>(
+        `${API_URL}/booking/${booking.bookingId}`,
+      );
       setBooking(null);
       setCancelMsg(`Avbokning lyckades! ${bookingNumber} har raderats.`);
       setBookingNumber('');

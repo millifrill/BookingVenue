@@ -70,13 +70,16 @@ export default function Booking({ venue }: { venue: Venue }) {
     }
 
     try {
-      const res = await axios.post<{ bookingId: string }>(API_URL, {
-        venueId: venue.venueId,
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        startTime: `${date} ${from}:00`,
-        endTime: `${date} ${to}:00`,
-      });
+      const res = await axios.post<{ bookingId: string }>(
+        `${API_URL}/booking`,
+        {
+          venueId: venue.venueId,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          startTime: `${date} ${from}:00`,
+          endTime: `${date} ${to}:00`,
+        },
+      );
       setBookingId(res.data.bookingId);
     } catch (error) {
       const alreadyBooked =
