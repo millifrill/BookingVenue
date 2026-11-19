@@ -16,7 +16,6 @@ export default function VenueDetailPage() {
         const response = await axios.get(`${API_URL}/venue/${id}`);
         const data: Venue = response.data;
         setVenue(data);
-        console.log('Venue details:', data);
       } catch (error) {
         console.error('Error fetching venue:', error);
         setNotFound(true);
