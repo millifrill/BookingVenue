@@ -3,6 +3,7 @@ import VenueDetail from '../components/VenueDetail/VenueDetail';
 import { useEffect, useState } from 'react';
 import type { Venue } from '../types/Venue';
 import { API_URL } from '../utils/constants';
+import axios from 'axios';
 
 export default function VenueDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,12 +13,8 @@ export default function VenueDetailPage() {
   useEffect(() => {
     async function fetchVenue() {
       try {
-        const response = await fetch(`${API_URL}/venue/${id}`);
-        if (!response.ok) {
-          setNotFound(true);
-          throw new Error(`Error status: ${response.status}`);
-        }
-        const data: Venue = await response.json();
+        const response = await axios.get(`${API_URL}/venue/${id}`);
+        const data: Venue = response.data;
         setVenue(data);
         console.log('Venue details:', data);
       } catch (error) {
