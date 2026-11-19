@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
@@ -60,7 +60,7 @@ export default function Booking({ venue }: { venue: Venue }) {
     }
   }
 
-  async function handleConfirm(e: FormEvent) {
+  async function handleConfirm(e: SubmitEvent) {
     e.preventDefault();
     setNameError(null);
 
