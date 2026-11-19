@@ -7,12 +7,14 @@ import { Search } from 'react-bootstrap-icons';
 import BookingCard from '../components/BookingCard/BookingCard';
 import type { FoundBooking } from '../components/BookingCard/BookingCard';
 import styles from './FindBookingPage.module.css';
+import {
+  ALREADY_BOOKED_MESSAGE,
+  API_URL,
+  FAILED_MESSAGE,
+} from '../utils/constants';
 
-const API_URL = 'http://localhost:3000/api/booking';
 const EMPTY_FIELD_MESSAGE = 'Ange ett bokningsnummer';
 const NOT_FOUND_MESSAGE = 'Ingen bokning hittades';
-const FAILED_MESSAGE = 'Något gick fel, försök igen';
-const ALREADY_BOOKED_MESSAGE = 'Lokalen är redan bokad under den tiden';
 
 export default function FindBookingPage() {
   const [bookingNumber, setBookingNumber] = useState('');

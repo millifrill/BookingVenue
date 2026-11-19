@@ -6,27 +6,18 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import type { Venue } from '../../types/Venue';
-import { formatLongDate } from '../../utils/formatLongDate';
+import {
+  SELECT_TIME_MESSAGE,
+  END_BEFORE_START_MESSAGE,
+  NAME_MESSAGE,
+  FAILED_MESSAGE,
+  PAST_MESSAGE,
+  ALREADY_BOOKED_MESSAGE,
+  HOURS,
+  API_URL,
+} from '../../utils/constants';
+import { formatLongDate, todayIso } from '../../utils/formatDate';
 import styles from './Booking.module.css';
-
-const API_URL = 'http://localhost:3000/api/booking';
-const SELECT_TIME_MESSAGE = 'Välj datum och tid';
-const END_BEFORE_START_MESSAGE = 'Sluttiden måste vara efter starttiden';
-const NAME_MESSAGE = 'Ange för- och efternamn';
-const FAILED_MESSAGE = 'Något gick fel, försök igen';
-const PAST_MESSAGE = 'Du kan inte boka en tid som redan har passerat';
-const ALREADY_BOOKED_MESSAGE = 'Lokalen är redan bokad under den tiden';
-const HOURS = Array.from(
-  { length: 16 },
-  (_, i) => `${String(i + 7).padStart(2, '0')}:00`,
-);
-
-function todayIso(): string {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${now.getFullYear()}-${month}-${day}`;
-}
 
 export default function Booking({ venue }: { venue: Venue }) {
   const [date, setDate] = useState('');
