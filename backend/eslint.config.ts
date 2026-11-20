@@ -9,6 +9,7 @@ export default defineConfig([
     files: ['src/**/*.ts'],
     extends: [js.configs.recommended, tseslint.configs.recommended],
     rules: {
+      'prefer-const': 'error',
       'no-duplicate-imports': 'warn',
       '@typescript-eslint/naming-convention': [
         'error',
@@ -33,7 +34,7 @@ export default defineConfig([
           selector: ['variable'],
           types: ['boolean'],
           format: ['PascalCase'],
-          prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
+          prefix: ['is', 'should', 'has', 'can', 'did', 'will', 'show'],
         },
       ],
     },

@@ -15,6 +15,41 @@ export default defineConfig([
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
+    rules: {
+      'prefer-const': 'error',
+      'no-duplicate-imports': 'warn',
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: ['variable', 'typeProperty'],
+          format: ['camelCase'],
+        },
+        {
+          selector: ['variable', 'parameter'],
+          modifiers: ['const'],
+          format: ['camelCase', 'UPPER_CASE'],
+        },
+        {
+          selector: ['function'],
+          format: ['camelCase', 'PascalCase'],
+        },
+        {
+          selector: ['typeLike'],
+          format: ['PascalCase'],
+        },
+        {
+          selector: ['variable'],
+          types: ['boolean'],
+          format: ['PascalCase'],
+          prefix: ['is', 'should', 'has', 'can', 'did', 'will', 'show'],
+        },
+        {
+          selector: ['variable'],
+          filter: 'Context$',
+          format: ['PascalCase'],
+        },
+      ],
+    },
     languageOptions: {
       globals: globals.browser,
     },
