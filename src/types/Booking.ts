@@ -8,3 +8,14 @@ export interface Booking {
   venueName: string;
   venueImageURL: string;
 }
+
+export type FoundBooking = {
+  bookingId: string;
+  venueId: number;
+  venueName: string;
+  venueImageURL: string;
+  firstName: string;
+  lastName: string;
+  startTime: string;
+  endTime: string;
+};

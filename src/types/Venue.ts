@@ -3,6 +3,11 @@ export interface Amenity {
   name: string;
 }
 
+export type City = {
+  cityId: number;
+  name: string;
+};
+
 export interface Venue {
   venueId: number;
   cityId: number;

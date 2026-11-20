@@ -1,5 +1,5 @@
 import BookingCard from '../../src/components/BookingCard/BookingCard.tsx';
-import type { FoundBooking } from '../../src/components/BookingCard/BookingCard.tsx';
+import { FoundBooking } from '../../src/types/Booking.ts';
 
 const BOOKING: FoundBooking = {
   bookingId: 'K7P2XQ9M',

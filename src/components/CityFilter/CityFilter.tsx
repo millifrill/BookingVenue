@@ -1,9 +1,5 @@
 import Form from 'react-bootstrap/Form';
-
-export type City = {
-  cityId: number;
-  name: string;
-};
+import type { City } from '../../types/Venue';
 
 export type CityFilterProps = {
   cities: City[];

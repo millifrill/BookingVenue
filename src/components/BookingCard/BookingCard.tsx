@@ -1,24 +1,13 @@
-import { Calendar, Clock, Pencil } from 'react-bootstrap-icons';
+import { Calendar, Clock, Pencil, Trash } from 'react-bootstrap-icons';
 import {
   formatBookingDate,
   formatBookingTime,
 } from '../../utils/formatBooking';
 import styles from './BookingCard.module.css';
 import { Button, Modal } from 'react-bootstrap';
-import { Trash } from 'react-bootstrap-icons';
 import { useState } from 'react';
 import UpdateBookingForm from '../UpdateBookingForm/UpdateBookingForm';
-
-export type FoundBooking = {
-  bookingId: string;
-  venueId: number;
-  venueName: string;
-  venueImageURL: string;
-  firstName: string;
-  lastName: string;
-  startTime: string;
-  endTime: string;
-};
+import type { FoundBooking } from '../../types/Booking';
 
 export default function BookingCard({
   booking,

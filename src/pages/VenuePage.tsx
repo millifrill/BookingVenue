@@ -6,14 +6,14 @@ import type { Venue } from '../types/Venue';
 export default function VenueDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [venue, setVenue] = useState<Venue | null>(null);
-  const [notFound, setNotFound] = useState(false);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
     async function fetchVenue() {
       try {
         const response = await fetch(`http://localhost:3000/api/venue/${id}`);
         if (!response.ok) {
-          setNotFound(true);
+          setIsNotFound(true);
           throw new Error(`Error status: ${response.status}`);
         }
         const data: Venue = await response.json();
@@ -21,13 +21,13 @@ export default function VenueDetailPage() {
         console.log('Venue details:', data);
       } catch (error) {
         console.error('Error fetching venue:', error);
-        setNotFound(true);
+        setIsNotFound(true);
       }
     }
     fetchVenue();
   }, [id]);
 
-  if (notFound) {
+  if (isNotFound) {
     return (
       <Navigate
         to='/404'

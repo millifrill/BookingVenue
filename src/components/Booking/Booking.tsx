@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
@@ -88,9 +87,9 @@ export default function Booking({ venue }: { venue: Venue }) {
       });
       setBookingId(res.data.bookingId);
     } catch (error) {
-      const alreadyBooked =
+      const isAlreadyBooked =
         axios.isAxiosError(error) && error.response?.status === 409;
-      setNameError(alreadyBooked ? ALREADY_BOOKED_MESSAGE : FAILED_MESSAGE);
+      setNameError(isAlreadyBooked ? ALREADY_BOOKED_MESSAGE : FAILED_MESSAGE);
     }
   }
 

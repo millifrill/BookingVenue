@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "check": "eslint . && stylelint \"src/**/*.css\" && prettier --check .",
+    "format": "prettier --write",
     "test:component": "cypress run --component && nyc report --report-dir ./coverage/component --reporter=text-summary --reporter=lcov",
     "test:e2e": "cypress run && nyc report --report-dir ./coverage/e2e --reporter=text-summary --reporter=lcov",
     "test": "npm run test:component && npm run test:e2e",
