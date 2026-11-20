@@ -37,7 +37,7 @@ export default function FindBookingPage() {
     }
 
     try {
-      const res = await axios.get<FoundBooking>(`${API_URL}/${id}`);
+      const res = await axios.get<FoundBooking>(`${API_URL}/booking/${id}`);
       setBooking(res.data);
     } catch (error) {
       const notFound =
