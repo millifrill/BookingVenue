@@ -1,4 +1,5 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
+import { API_URL } from '../../../src/utils/constants';
 
 Given('I have a booking number {string}', (bookingId: string) => {
   cy.wrap(bookingId).as('bookingId');
@@ -6,7 +7,7 @@ Given('I have a booking number {string}', (bookingId: string) => {
 
 Given('the booking was cancelled', () => {
   cy.get('@bookingId').then((bookingId) => {
-    cy.request('DELETE', `http://localhost:3000/api/booking/${bookingId}`);
+    cy.request('DELETE', `${API_URL}/booking/${bookingId}`);
   });
 });
 

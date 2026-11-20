@@ -1,8 +1,5 @@
 import { Calendar, Clock, Pencil } from 'react-bootstrap-icons';
-import {
-  formatBookingDate,
-  formatBookingTime,
-} from '../../utils/formatBooking';
+import { formatBookingDate, formatBookingTime } from '../../utils/formatDate';
 import styles from './BookingCard.module.css';
 import { Button, Modal } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';

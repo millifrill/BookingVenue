@@ -7,12 +7,14 @@ import { Search } from 'react-bootstrap-icons';
 import BookingCard from '../components/BookingCard/BookingCard';
 import type { FoundBooking } from '../components/BookingCard/BookingCard';
 import styles from './FindBookingPage.module.css';
+import {
+  ALREADY_BOOKED_MESSAGE,
+  API_URL,
+  FAILED_MESSAGE,
+} from '../utils/constants';
 
-const API_URL = 'http://localhost:3000/api/booking';
 const EMPTY_FIELD_MESSAGE = 'Ange ett bokningsnummer';
 const NOT_FOUND_MESSAGE = 'Ingen bokning hittades';
-const FAILED_MESSAGE = 'Något gick fel, försök igen';
-const ALREADY_BOOKED_MESSAGE = 'Lokalen är redan bokad under den tiden';
 
 export default function FindBookingPage() {
   const [bookingNumber, setBookingNumber] = useState('');
@@ -35,7 +37,7 @@ export default function FindBookingPage() {
     }
 
     try {
-      const res = await axios.get<FoundBooking>(`${API_URL}/${id}`);
+      const res = await axios.get<FoundBooking>(`${API_URL}/booking/${id}`);
       setBooking(res.data);
     } catch (error) {
       const notFound =
@@ -50,12 +52,12 @@ export default function FindBookingPage() {
     setErrorMsg(null);
 
     try {
-      await axios.put(`${API_URL}/${booking.bookingId}`, {
+      await axios.put(`${API_URL}/booking/${booking.bookingId}`, {
         startTime,
         endTime,
       });
       setBooking({ ...booking, startTime, endTime });
-      setUpdateMsg(`Uppdateringen lyckades! ${bookingNumber} har uppdaterats.`);
+      setUpdateMsg(`Bokning ${bookingNumber} har uppdaterats.`);
     } catch (error) {
       console.error(error);
       const alreadyBooked =
@@ -70,9 +72,11 @@ export default function FindBookingPage() {
     setCancelMsg(null);
 
     try {
-      await axios.delete<FoundBooking>(`${API_URL}/${booking.bookingId}`);
+      await axios.delete<FoundBooking>(
+        `${API_URL}/booking/${booking.bookingId}`,
+      );
       setBooking(null);
-      setCancelMsg(`Avbokning lyckades! ${bookingNumber} har raderats.`);
+      setCancelMsg(`Bokning ${bookingNumber} har raderats.`);
       setBookingNumber('');
     } catch (error) {
       console.error(error);
