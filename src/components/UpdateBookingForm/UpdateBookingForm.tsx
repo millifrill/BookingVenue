@@ -3,13 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styles from '../Booking/Booking.module.css';
 import { todayIso, formatClock } from '../../utils/formatDate';
-import {
-  LOCALE,
-  SELECT_TIME_MESSAGE,
-  END_BEFORE_START_MESSAGE,
-  PAST_MESSAGE,
-  HOURS,
-} from '../../utils/constants';
+import { LOCALE, HOURS } from '../../utils/constants';
+import { validateBookingTime } from '../../utils/validateBookingTime';
 
 export type UpdateBookingFormProps = {
   startTime: string;
@@ -30,19 +25,9 @@ export default function UpdateBookingForm({
   const [timeError, setTimeError] = useState<string | null>(null);
 
   function handleSave() {
-    if (!date || !from || !to) {
-      setTimeError(SELECT_TIME_MESSAGE);
-      return;
-    }
-    if (to <= from) {
-      setTimeError(END_BEFORE_START_MESSAGE);
-      return;
-    }
-    if (new Date(`${date}T${from}:00`) <= new Date()) {
-      setTimeError(PAST_MESSAGE);
-      return;
-    }
-    setTimeError(null);
+    const validateBookingTimeMessage = validateBookingTime(date, from, to);
+    setTimeError(validateBookingTimeMessage);
+    if (validateBookingTimeMessage !== null) return;
     onSave(`${date} ${from}:00`, `${date} ${to}:00`);
   }
 

@@ -7,17 +7,15 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import type { Venue } from '../../types/Venue';
 import {
-  SELECT_TIME_MESSAGE,
-  END_BEFORE_START_MESSAGE,
   NAME_MESSAGE,
   FAILED_MESSAGE,
-  PAST_MESSAGE,
   ALREADY_BOOKED_MESSAGE,
   HOURS,
   API_URL,
 } from '../../utils/constants';
 import { formatLongDate, todayIso } from '../../utils/formatDate';
 import styles from './Booking.module.css';
+import { validateBookingTime } from '../../utils/validateBookingTime';
 
 export default function Booking({ venue }: { venue: Venue }) {
   const [date, setDate] = useState('');
@@ -31,19 +29,9 @@ export default function Booking({ venue }: { venue: Venue }) {
   const [bookingId, setBookingId] = useState<string | null>(null);
 
   function handleBook() {
-    if (!date || !from || !to) {
-      setTimeError(SELECT_TIME_MESSAGE);
-      return;
-    }
-    if (to <= from) {
-      setTimeError(END_BEFORE_START_MESSAGE);
-      return;
-    }
-    if (new Date(`${date}T${from}:00`) <= new Date()) {
-      setTimeError(PAST_MESSAGE);
-      return;
-    }
-    setTimeError(null);
+    const validateBookingTimeMessage = validateBookingTime(date, from, to);
+    setTimeError(validateBookingTimeMessage);
+    if (validateBookingTimeMessage !== null) return;
     setShowModal(true);
   }
 
