@@ -45,13 +45,16 @@ export default defineConfig([
         },
         {
           selector: ['variable'],
-          filter: 'Context$',
+          filter: 'Context$|Component$',
           format: ['PascalCase'],
         },
       ],
     },
     languageOptions: {
       globals: globals.browser,
+      parserOptions: {
+        projectService: true,
+      },
     },
   },
 ]);

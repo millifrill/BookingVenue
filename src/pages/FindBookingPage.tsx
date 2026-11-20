@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Search } from 'react-bootstrap-icons';
 import BookingCard from '../components/BookingCard/BookingCard';
-import type { FoundBooking } from '../components/BookingCard/BookingCard';
 import styles from './FindBookingPage.module.css';
+import type { FoundBooking } from '../types/Booking';
 
 const API_URL = 'http://localhost:3000/api/booking';
 const EMPTY_FIELD_MESSAGE = 'Ange ett bokningsnummer';
@@ -38,9 +37,9 @@ export default function FindBookingPage() {
       const res = await axios.get<FoundBooking>(`${API_URL}/${id}`);
       setBooking(res.data);
     } catch (error) {
-      const notFound =
+      const isNotFound =
         axios.isAxiosError(error) && error.response?.status === 404;
-      setErrorMsg(notFound ? NOT_FOUND_MESSAGE : FAILED_MESSAGE);
+      setErrorMsg(isNotFound ? NOT_FOUND_MESSAGE : FAILED_MESSAGE);
     }
   }
 
@@ -58,9 +57,9 @@ export default function FindBookingPage() {
       setUpdateMsg(`Uppdateringen lyckades! ${bookingNumber} har uppdaterats.`);
     } catch (error) {
       console.error(error);
-      const alreadyBooked =
+      const isAlreadyBooked =
         axios.isAxiosError(error) && error.response?.status === 409;
-      setErrorMsg(alreadyBooked ? ALREADY_BOOKED_MESSAGE : FAILED_MESSAGE);
+      setErrorMsg(isAlreadyBooked ? ALREADY_BOOKED_MESSAGE : FAILED_MESSAGE);
     }
   }
 
