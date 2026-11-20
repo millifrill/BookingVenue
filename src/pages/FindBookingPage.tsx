@@ -57,7 +57,7 @@ export default function FindBookingPage() {
         endTime,
       });
       setBooking({ ...booking, startTime, endTime });
-      setUpdateMsg(`Uppdateringen lyckades! ${bookingNumber} har uppdaterats.`);
+      setUpdateMsg(`Bokning ${bookingNumber} har uppdaterats.`);
     } catch (error) {
       console.error(error);
       const alreadyBooked =
@@ -76,7 +76,7 @@ export default function FindBookingPage() {
         `${API_URL}/booking/${booking.bookingId}`,
       );
       setBooking(null);
-      setCancelMsg(`Avbokning lyckades! ${bookingNumber} har raderats.`);
+      setCancelMsg(`Bokning ${bookingNumber} har raderats.`);
       setBookingNumber('');
     } catch (error) {
       console.error(error);
