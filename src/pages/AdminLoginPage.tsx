@@ -54,7 +54,7 @@ export default function AdminLoginPage() {
         </Form.Group>
         <Button type='submit'>Logga in</Button>
       </Form>
-      <span className={styles['failMessage']}>{failMessage}</span>
+      <span className={styles['fail-message']}>{failMessage}</span>
     </section>
   );
 }
