@@ -1,7 +1,7 @@
 import {
   formatBookingDate,
   formatBookingTime,
-} from '../../src/utils/formatBooking.ts';
+} from '../../src/utils/formatDate.ts';
 
 const at = (hour: number, minute = 0) =>
   new Date(2026, 9, 23, hour, minute).toISOString();
