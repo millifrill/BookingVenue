@@ -7,6 +7,6 @@
   margin: 0 auto;
 }
 
-.failMessage {
+.fail-message {
   color: var(--color-danger);
 }
