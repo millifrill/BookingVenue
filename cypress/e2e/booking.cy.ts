@@ -1,7 +1,7 @@
+import { API_URL } from '../../src/utils/constants.ts';
 import { nextWeekIso } from '../support/dates.ts';
 
 const VENUE_NAME = 'Konferensrum Ljuset';
-const API_BOOKING = 'http://localhost:3000/api/booking';
 
 const openVenuePage = () => {
   cy.visit('/');
@@ -47,7 +47,7 @@ describe('Booking', () => {
 
   it('Given a time that is already booked, When another visitor books the same time, Then a message says that the venue is already booked', () => {
     const date = nextWeekIso();
-    cy.request('POST', API_BOOKING, {
+    cy.request('POST', `${API_URL}/booking`, {
       venueId: 1,
       firstName: 'Karin',
       lastName: 'Lindqvist',

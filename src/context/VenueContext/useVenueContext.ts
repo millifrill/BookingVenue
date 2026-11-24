@@ -1,5 +1,11 @@
 import { createContext, useContext } from 'react';
-import type { VenueContextValue } from '../../types/Venue';
+import type { Venue } from '../../types/Venue';
+
+interface VenueContextValue {
+  allVenues: Venue[];
+  errorMsg: string | null;
+  setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
+}
 
 export const VenueContext = createContext<VenueContextValue | null>(null);
 

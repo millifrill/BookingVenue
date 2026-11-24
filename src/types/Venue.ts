@@ -17,9 +17,3 @@ export interface Venue {
   imageURL: string;
   amenities: Amenity[];
 }
-
-export interface VenueContextValue {
-  allVenues: Venue[];
-  errorMsg: string | null;
-  setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
-}

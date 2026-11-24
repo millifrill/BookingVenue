@@ -2,7 +2,9 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styles from '../Booking/Booking.module.css';
-import { formatClock } from '../../utils/formatBooking';
+import { todayIso, formatClock } from '../../utils/formatDate';
+import { LOCALE, HOURS } from '../../utils/constants';
+import { validateBookingTime } from '../../utils/validateBookingTime';
 
 export type UpdateBookingFormProps = {
   startTime: string;
@@ -10,47 +12,22 @@ export type UpdateBookingFormProps = {
   onSave: (startTime: string, endTime: string) => void;
 };
 
-const SELECT_TIME_MESSAGE = 'Välj datum och tid';
-const END_BEFORE_START_MESSAGE = 'Sluttiden måste vara efter starttiden';
-const PAST_MESSAGE = 'Du kan inte boka en tid som redan har passerat';
-const HOURS = Array.from(
-  { length: 16 },
-  (_, i) => `${String(i + 7).padStart(2, '0')}:00`,
-);
-
-function todayIso(): string {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${now.getFullYear()}-${month}-${day}`;
-}
-
 export default function UpdateBookingForm({
   startTime,
   endTime,
   onSave,
 }: UpdateBookingFormProps) {
   const [date, setDate] = useState(
-    new Date(startTime).toLocaleDateString('sv-SE'),
+    new Date(startTime).toLocaleDateString(LOCALE),
   );
   const [from, setFrom] = useState(formatClock(startTime));
   const [to, setTo] = useState(formatClock(endTime));
   const [timeError, setTimeError] = useState<string | null>(null);
 
   function handleSave() {
-    if (!date || !from || !to) {
-      setTimeError(SELECT_TIME_MESSAGE);
-      return;
-    }
-    if (to <= from) {
-      setTimeError(END_BEFORE_START_MESSAGE);
-      return;
-    }
-    if (new Date(`${date}T${from}:00`) <= new Date()) {
-      setTimeError(PAST_MESSAGE);
-      return;
-    }
-    setTimeError(null);
+    const validateBookingTimeMessage = validateBookingTime(date, from, to);
+    setTimeError(validateBookingTimeMessage);
+    if (validateBookingTimeMessage !== null) return;
     onSave(`${date} ${from}:00`, `${date} ${to}:00`);
   }
 
