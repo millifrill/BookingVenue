@@ -6,13 +6,14 @@ import {
   updateVenue,
   deleteVenue,
 } from '../controllers/venueController.ts';
+import { authenticateToken } from '../middleware/authMiddleware.ts';
 
 const router = express.Router();
 
 router.get('/venues', getVenues);
 router.get('/venue/:id', getVenueById);
-router.post('/venue', createVenue);
-router.put('/venue/:id', updateVenue);
-router.delete('/venue/:id', deleteVenue);
+router.post('/venue', authenticateToken, createVenue);
+router.put('/venue/:id', authenticateToken, updateVenue);
+router.delete('/venue/:id', authenticateToken, deleteVenue);
 
 export default router;

@@ -3,7 +3,12 @@ import { Navigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminContext/useAdminContext';
 
 export default function AdminPage() {
-  const { loggedIn, setLoggedIn } = useAdminAuth();
+  const { loggedIn, setLoggedIn, setToken } = useAdminAuth();
+
+  function logOut() {
+    setLoggedIn(false);
+    setToken(null);
+  }
 
   if (!loggedIn) {
     return (
@@ -17,7 +22,7 @@ export default function AdminPage() {
   return (
     <section className='text-center'>
       <h1>Admin</h1>
-      <Button onClick={() => setLoggedIn(false)}>Logga ut</Button>
+      <Button onClick={logOut}>Logga ut</Button>
     </section>
   );
 }

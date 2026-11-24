@@ -1,8 +1,10 @@
 import type { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 export const adminLogin = (req: Request, res: Response) => {
   const adminPassword = process.env.ADMIN_PASSWORD;
   const { password } = req.body as { password?: string };
+  const jwtSecret = process.env.JWT_SECRET;
 
   if (!adminPassword) {
     return res.status(500).json({
@@ -19,5 +21,16 @@ export const adminLogin = (req: Request, res: Response) => {
     return res.status(401).json({ error: 'Wrong password', success: false });
   }
 
-  return res.status(200).json({ success: true });
+  if (!jwtSecret) {
+    return res.status(500).json({
+      error: 'Missing JWT secret',
+      success: false,
+    });
+  }
+
+  const token = jwt.sign({ admin: 'admin' }, jwtSecret, {
+    expiresIn: '1h',
+  });
+
+  return res.status(200).json({ success: true, token: token });
 };

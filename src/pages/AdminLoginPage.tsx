@@ -9,7 +9,7 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
   const [failMessage, setFailMessage] = useState('');
   const navigate = useNavigate();
-  const { loggedIn, setLoggedIn } = useAdminAuth();
+  const { loggedIn, setLoggedIn, setToken } = useAdminAuth();
 
   async function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -20,7 +20,10 @@ export default function AdminLoginPage() {
     }
 
     try {
-      await axios.post('http://localhost:3000/api/admin/login', { password });
+      const res = await axios.post('http://localhost:3000/api/admin/login', {
+        password,
+      });
+      setToken(res.data.token);
       setLoggedIn(true);
       navigate('/admin');
     } catch (err) {
