@@ -7,7 +7,7 @@ Feature: Cancel Booking
         When I search for the booking number
         Then I should see the venue 'Festvåningen Hamnen'
         When I click 'Avboka'
-        Then I should see message 'Avbokning lyckades! M4N5P6Q7 har raderats.'
+        Then I should see message 'Bokning M4N5P6Q7 har raderats.'
         And I should not see the venue 'Festvåningen Hamnen'
 
     Scenario: A cancelled booking can not be searched for

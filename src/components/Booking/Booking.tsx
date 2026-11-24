@@ -1,31 +1,20 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import type { Venue } from '../../types/Venue';
-import { formatLongDate } from '../../utils/formatLongDate';
+import {
+  NAME_MESSAGE,
+  FAILED_MESSAGE,
+  ALREADY_BOOKED_MESSAGE,
+  HOURS,
+  API_URL,
+} from '../../utils/constants';
+import { formatLongDate, todayIso } from '../../utils/formatDate';
 import styles from './Booking.module.css';
-
-const API_URL = 'http://localhost:3000/api/booking';
-const SELECT_TIME_MESSAGE = 'Välj datum och tid';
-const END_BEFORE_START_MESSAGE = 'Sluttiden måste vara efter starttiden';
-const NAME_MESSAGE = 'Ange för- och efternamn';
-const FAILED_MESSAGE = 'Något gick fel, försök igen';
-const PAST_MESSAGE = 'Du kan inte boka en tid som redan har passerat';
-const ALREADY_BOOKED_MESSAGE = 'Lokalen är redan bokad under den tiden';
-const HOURS = Array.from(
-  { length: 16 },
-  (_, i) => `${String(i + 7).padStart(2, '0')}:00`,
-);
-
-function todayIso(): string {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${now.getFullYear()}-${month}-${day}`;
-}
+import { validateBookingTime } from '../../utils/validateBookingTime';
 
 export default function Booking({ venue }: { venue: Venue }) {
   const [date, setDate] = useState('');
@@ -39,19 +28,9 @@ export default function Booking({ venue }: { venue: Venue }) {
   const [bookingId, setBookingId] = useState<string | null>(null);
 
   function handleBook() {
-    if (!date || !from || !to) {
-      setTimeError(SELECT_TIME_MESSAGE);
-      return;
-    }
-    if (to <= from) {
-      setTimeError(END_BEFORE_START_MESSAGE);
-      return;
-    }
-    if (new Date(`${date}T${from}:00`) <= new Date()) {
-      setTimeError(PAST_MESSAGE);
-      return;
-    }
-    setTimeError(null);
+    const validateBookingTimeMessage = validateBookingTime(date, from, to);
+    setTimeError(validateBookingTimeMessage);
+    if (validateBookingTimeMessage !== null) return;
     setShowModal(true);
   }
 
@@ -68,7 +47,7 @@ export default function Booking({ venue }: { venue: Venue }) {
     }
   }
 
-  async function handleConfirm(e: FormEvent) {
+  async function handleConfirm(e: SubmitEvent) {
     e.preventDefault();
     setNameError(null);
 
@@ -78,13 +57,16 @@ export default function Booking({ venue }: { venue: Venue }) {
     }
 
     try {
-      const res = await axios.post<{ bookingId: string }>(API_URL, {
-        venueId: venue.venueId,
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        startTime: `${date} ${from}:00`,
-        endTime: `${date} ${to}:00`,
-      });
+      const res = await axios.post<{ bookingId: string }>(
+        `${API_URL}/booking`,
+        {
+          venueId: venue.venueId,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          startTime: `${date} ${from}:00`,
+          endTime: `${date} ${to}:00`,
+        },
+      );
       setBookingId(res.data.bookingId);
     } catch (error) {
       const isAlreadyBooked =
