@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Search } from 'react-bootstrap-icons';
 import BookingCard from '../components/BookingCard/BookingCard';
-import type { FoundBooking } from '../components/BookingCard/BookingCard';
 import styles from './FindBookingPage.module.css';
+import type { FoundBooking } from '../types/Booking';
 import {
   ALREADY_BOOKED_MESSAGE,
   API_URL,
@@ -23,7 +22,7 @@ export default function FindBookingPage() {
   const [cancelMsg, setCancelMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
     setBooking(null);
     setUpdateMsg(null);
@@ -40,9 +39,9 @@ export default function FindBookingPage() {
       const res = await axios.get<FoundBooking>(`${API_URL}/booking/${id}`);
       setBooking(res.data);
     } catch (error) {
-      const notFound =
+      const isNotFound =
         axios.isAxiosError(error) && error.response?.status === 404;
-      setErrorMsg(notFound ? NOT_FOUND_MESSAGE : FAILED_MESSAGE);
+      setErrorMsg(isNotFound ? NOT_FOUND_MESSAGE : FAILED_MESSAGE);
     }
   }
 
@@ -60,9 +59,9 @@ export default function FindBookingPage() {
       setUpdateMsg(`Bokning ${bookingNumber} har uppdaterats.`);
     } catch (error) {
       console.error(error);
-      const alreadyBooked =
+      const isAlreadyBooked =
         axios.isAxiosError(error) && error.response?.status === 409;
-      setErrorMsg(alreadyBooked ? ALREADY_BOOKED_MESSAGE : FAILED_MESSAGE);
+      setErrorMsg(isAlreadyBooked ? ALREADY_BOOKED_MESSAGE : FAILED_MESSAGE);
     }
   }
 

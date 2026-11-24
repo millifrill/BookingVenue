@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function VenueDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [venue, setVenue] = useState<Venue | null>(null);
-  const [notFound, setNotFound] = useState(false);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
     async function fetchVenue() {
@@ -18,13 +18,13 @@ export default function VenueDetailPage() {
         setVenue(data);
       } catch (error) {
         console.error('Error fetching venue:', error);
-        setNotFound(true);
+        setIsNotFound(true);
       }
     }
     fetchVenue();
   }, [id]);
 
-  if (notFound) {
+  if (isNotFound) {
     return (
       <Navigate
         to='/404'
