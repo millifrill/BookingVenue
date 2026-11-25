@@ -7,7 +7,7 @@ export default function AdminAuthProvider({
   children: React.ReactNode;
 }) {
   const [token, setToken] = useState(() => localStorage.getItem('admin'));
-  const [loggedIn, setLoggedIn] = useState(
+  const [isLoggedIn, setIsLoggedIn] = useState(
     () => localStorage.getItem('admin') !== null,
   );
 
@@ -21,7 +21,7 @@ export default function AdminAuthProvider({
 
   return (
     <AdminAuthContext.Provider
-      value={{ loggedIn, setLoggedIn, token, setToken }}>
+      value={{ isLoggedIn, setIsLoggedIn, token, setToken }}>
       {children}
     </AdminAuthContext.Provider>
   );

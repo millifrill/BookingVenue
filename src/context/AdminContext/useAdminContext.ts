@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react';
 
 export type AdminAuthValue = {
-  loggedIn: boolean;
-  setLoggedIn: (value: boolean) => void;
+  isLoggedIn: boolean;
+  setIsLoggedIn: (value: boolean) => void;
   token: string | null;
   setToken: (value: string | null) => void;
 };

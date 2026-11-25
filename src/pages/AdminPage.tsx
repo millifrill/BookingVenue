@@ -3,14 +3,14 @@ import { Navigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminContext/useAdminContext';
 
 export default function AdminPage() {
-  const { loggedIn, setLoggedIn, setToken } = useAdminAuth();
+  const { isLoggedIn, setIsLoggedIn, setToken } = useAdminAuth();
 
   function logOut() {
-    setLoggedIn(false);
+    setIsLoggedIn(false);
     setToken(null);
   }
 
-  if (!loggedIn) {
+  if (!isLoggedIn) {
     return (
       <Navigate
         to='/admin/login'

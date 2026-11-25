@@ -9,7 +9,7 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
   const [failMessage, setFailMessage] = useState('');
   const navigate = useNavigate();
-  const { loggedIn, setLoggedIn, setToken } = useAdminAuth();
+  const { isLoggedIn, setIsLoggedIn, setToken } = useAdminAuth();
 
   async function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
         password,
       });
       setToken(res.data.token);
-      setLoggedIn(true);
+      setIsLoggedIn(true);
       navigate('/admin');
     } catch (err) {
       const isWrongPassword =
@@ -33,7 +33,7 @@ export default function AdminLoginPage() {
     }
   }
 
-  if (loggedIn) {
+  if (isLoggedIn) {
     return (
       <Navigate
         to='/admin'

@@ -7,7 +7,7 @@ import { useAdminAuth } from '../../context/AdminContext/useAdminContext';
 import { PersonLock, PersonCheck } from 'react-bootstrap-icons';
 
 export default function Header() {
-  const { loggedIn } = useAdminAuth();
+  const { isLoggedIn } = useAdminAuth();
 
   return (
     <Navbar
@@ -49,7 +49,7 @@ export default function Header() {
               to={ADMIN_PATH}
               eventKey={ADMIN_PATH}
               className={styles['site-header-admin']}>
-              {loggedIn ? <PersonCheck size={30} /> : <PersonLock size={30} />}
+              {isLoggedIn ? <PersonCheck size={30} /> : <PersonLock size={30} />}
               Admin
             </Nav.Link>
           </Nav>

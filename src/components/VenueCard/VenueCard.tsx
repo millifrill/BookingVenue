@@ -10,7 +10,7 @@ import { API_URL } from '../../utils/constants';
 import { useVenueContext } from '../../context/VenueContext/useVenueContext';
 
 function VenueCard({ venue }: { venue: Venue }) {
-  const { loggedIn, token } = useAdminAuth();
+  const { isLoggedIn, token } = useAdminAuth();
   const { setAllVenues, setAlert } = useVenueContext();
 
   async function handleDelete() {
@@ -87,7 +87,7 @@ function VenueCard({ venue }: { venue: Venue }) {
             aria-label={`Visa lokal ${venue.name}`}>
             Visa lokal
           </Link>
-          {loggedIn && (
+          {isLoggedIn && (
             <Button
               className={styles['venue-delete']}
               onClick={handleDelete}>
