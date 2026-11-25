@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import VenueList from '../components/VenueList/VenueList';
 import CapacityFilter from '../components/CapacityFilter/CapacityFilter';
 import CityFilter from '../components/CityFilter/CityFilter';
@@ -8,6 +8,7 @@ import { filterByCity } from '../utils/filterByCity';
 import { filterByArea } from '../utils/filterByArea';
 import { filterByCapacity } from '../utils/filterByCapacity';
 import type { Venue, City } from '../types/Venue';
+import { Alert } from 'react-bootstrap';
 
 function getCities(venues: Venue[]): City[] {
   const cities = new Map<number, City>();
@@ -18,10 +19,16 @@ function getCities(venues: Venue[]): City[] {
 }
 
 function HomePage() {
-  const { allVenues } = useVenueContext();
+  const { allVenues, alert, setAlert } = useVenueContext();
   const [cityId, setCityId] = useState<number | null>(null);
   const [minSpace, setMinSpace] = useState<number | null>(null);
   const [capacity, setCapacity] = useState<number | null>(1);
+
+  useEffect(() => {
+    if (!alert) return;
+    const endAlert = window.setTimeout(() => setAlert(null), 3000);
+    return () => window.clearTimeout(endAlert);
+  });
 
   const venues = filterByCity(
     filterByArea(filterByCapacity(allVenues, capacity), minSpace),
@@ -30,6 +37,13 @@ function HomePage() {
 
   return (
     <>
+      {alert && (
+        <Alert
+          className='alert'
+          variant={alert.variant}>
+          {alert.text}
+        </Alert>
+      )}
       <CityFilter
         cities={getCities(allVenues)}
         value={cityId}

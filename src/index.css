@@ -22,3 +22,12 @@ body {
   text-align: center;
   padding: var(--space-6);
 }
+
+.alert {
+  position: fixed;
+  z-index: 1;
+  top: 5rem;
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+}

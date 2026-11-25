@@ -29,7 +29,7 @@ export const adminLogin = (req: Request, res: Response) => {
   }
 
   const token = jwt.sign({ admin: 'admin' }, jwtSecret, {
-    expiresIn: '1h',
+    expiresIn: '30d',
   });
 
   return res.status(200).json({ success: true, token: token });

@@ -11,6 +11,10 @@ export default function VenueProvider({
 }) {
   const [allVenues, setAllVenues] = useState<Venue[] | []>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [alert, setAlert] = useState<{
+    variant: 'success' | 'danger';
+    text: string;
+  } | null>(null);
 
   useEffect(() => {
     async function getAllVenues(): Promise<void> {
@@ -27,7 +31,15 @@ export default function VenueProvider({
   }, []);
 
   return (
-    <VenueContext.Provider value={{ allVenues, errorMsg, setErrorMsg }}>
+    <VenueContext.Provider
+      value={{
+        allVenues,
+        errorMsg,
+        setErrorMsg,
+        setAllVenues,
+        alert,
+        setAlert,
+      }}>
       {children}
     </VenueContext.Provider>
   );

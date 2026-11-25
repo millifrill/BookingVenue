@@ -85,7 +85,7 @@ export default function VenueDetail({ venue }: VenueDetailProps) {
           <div className={styles['description']}>
             <p>{venue.description}</p>
           </div>
-          <h2>Det här ingår</h2>
+          {venue.amenities.length !== 0 && <h2>Det här ingår</h2>}
           <ul className={styles['amenities']}>
             {venue.amenities.map((amenity) => (
               <li
