@@ -8,6 +8,10 @@ import { filterByCity } from '../utils/filterByCity';
 import { filterByArea } from '../utils/filterByArea';
 import { filterByCapacity } from '../utils/filterByCapacity';
 import type { Venue, City } from '../types/Venue';
+import { Form } from 'react-bootstrap';
+import DateTimeFilter, {
+  type DateTimeFilterValue,
+} from '../components/DateTimeFilter/DateTimeFilter';
 
 function getCities(venues: Venue[]): City[] {
   const cities = new Map<number, City>();
@@ -22,6 +26,11 @@ function HomePage() {
   const [cityId, setCityId] = useState<number | null>(null);
   const [minSpace, setMinSpace] = useState<number | null>(null);
   const [capacity, setCapacity] = useState<number | null>(1);
+  const [dateTime, setDateTime] = useState<DateTimeFilterValue>({
+    date: '',
+    from: '',
+    to: '',
+  });
 
   const venues = filterByCity(
     filterByArea(filterByCapacity(allVenues, capacity), minSpace),
@@ -30,19 +39,25 @@ function HomePage() {
 
   return (
     <>
-      <CityFilter
-        cities={getCities(allVenues)}
-        value={cityId}
-        onChange={setCityId}
-      />
-      <AreaFilter
-        value={minSpace}
-        onChange={setMinSpace}
-      />
-      <CapacityFilter
-        value={capacity}
-        onChange={setCapacity}
-      />
+      <Form>
+        <CityFilter
+          cities={getCities(allVenues)}
+          value={cityId}
+          onChange={setCityId}
+        />
+        <AreaFilter
+          value={minSpace}
+          onChange={setMinSpace}
+        />
+        <CapacityFilter
+          value={capacity}
+          onChange={setCapacity}
+        />
+        <DateTimeFilter
+          value={dateTime}
+          onChange={setDateTime}
+        />
+      </Form>
       <VenueList venues={venues} />
     </>
   );
