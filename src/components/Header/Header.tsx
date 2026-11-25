@@ -49,7 +49,11 @@ export default function Header() {
               to={ADMIN_PATH}
               eventKey={ADMIN_PATH}
               className={styles['site-header-admin']}>
-              {isLoggedIn ? <PersonCheck size={30} /> : <PersonLock size={30} />}
+              {isLoggedIn ? (
+                <PersonCheck size={30} />
+              ) : (
+                <PersonLock size={30} />
+              )}
               Admin
             </Nav.Link>
           </Nav>

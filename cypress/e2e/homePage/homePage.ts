@@ -4,8 +4,8 @@ Given('I am on the HomePage', () => {
   cy.visit('/');
 });
 
-Then('I should see a list of 10 venue items', () => {
-  cy.get("[data-cy='venue-card']").should('be.visible').and('have.length', 10);
+Then('I should see a list of 15 venue items', () => {
+  cy.get("[data-cy='venue-card']").should('be.visible').and('have.length', 15);
 });
 
 When(
