@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import type { Venue } from '../../types/Venue';
 import { VenueContext } from './useVenueContext';
@@ -12,6 +12,12 @@ export default function VenueProvider({
   const [allVenues, setAllVenues] = useState<Venue[] | []>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  const [reloadCount, setReloadCount] = useState(0);
+  const reloadVenues = useCallback(
+    () => setReloadCount((count) => count + 1),
+    [],
+  );
+
   useEffect(() => {
     async function getAllVenues(): Promise<void> {
       setErrorMsg(null);
@@ -24,10 +30,11 @@ export default function VenueProvider({
       }
     }
     getAllVenues();
-  }, []);
+  }, [reloadCount]);
 
   return (
-    <VenueContext.Provider value={{ allVenues, errorMsg, setErrorMsg }}>
+    <VenueContext.Provider
+      value={{ allVenues, errorMsg, setErrorMsg, reloadVenues }}>
       {children}
     </VenueContext.Provider>
   );

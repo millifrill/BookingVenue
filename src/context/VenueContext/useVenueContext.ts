@@ -5,6 +5,7 @@ interface VenueContextValue {
   allVenues: Venue[];
   errorMsg: string | null;
   setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
+  reloadVenues: () => void;
 }
 
 export const VenueContext = createContext<VenueContextValue | null>(null);

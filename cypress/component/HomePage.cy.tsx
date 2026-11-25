@@ -58,7 +58,12 @@ const mountHomePage = (venues: Venue[] = VENUES) => {
   cy.mount(
     <MemoryRouter>
       <VenueContext.Provider
-        value={{ allVenues: venues, errorMsg: null, setErrorMsg: cy.stub() }}>
+        value={{
+          allVenues: venues,
+          errorMsg: null,
+          setErrorMsg: cy.stub(),
+          reloadVenues: cy.stub(),
+        }}>
         <HomePage />
       </VenueContext.Provider>
     </MemoryRouter>,
