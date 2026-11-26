@@ -7,12 +7,12 @@ DROP TABLE IF EXISTS Venue;
 DROP TABLE IF EXISTS City;
 
 CREATE TABLE City (
-	cityId INT PRIMARY KEY AUTO_INCREMENT,
+	cityId INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE Venue (
-	venueId INT PRIMARY KEY AUTO_INCREMENT,
+	venueId INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	cityId INT NOT NULL,
 	name VARCHAR(50) NOT NULL,
 	street VARCHAR(50) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE Venue (
 	description VARCHAR(255) DEFAULT 'Den här lokalen har ingen beskrivning ännu.',
 	space INT NOT NULL,
 	capacity INT NOT NULL,
-	pricePerHour INT UNSIGNED NOT NULL,
+	pricePerHour INT NOT NULL CHECK (pricePerHour >= 0),
 	imageURL VARCHAR(255) DEFAULT 'https://images.pexels.com/photos/39225128/pexels-photo-39225128.jpeg',
 	FOREIGN KEY (cityId) REFERENCES City(cityId)
 );
@@ -30,14 +30,14 @@ CREATE TABLE Booking (
 	venueId INT NOT NULL,
 	firstName VARCHAR(50) NOT NULL,
 	lastName VARCHAR(50) NOT NULL,
-	startTime DATETIME NOT NULL,
-	endTime DATETIME NOT NULL,
+	startTime TIMESTAMP NOT NULL,
+	endTime TIMESTAMP NOT NULL,
 	FOREIGN KEY (venueId) REFERENCES Venue(venueId),
 	CHECK (endTime > startTime)
 );
 
 CREATE TABLE Amenity (
-	amenityId INT PRIMARY KEY AUTO_INCREMENT,
+	amenityId INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name VARCHAR(50) NOT NULL UNIQUE
 );
 

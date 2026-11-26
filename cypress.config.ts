@@ -36,10 +36,10 @@ export default defineConfig({
       on('task', {
         resetAndSeedDatabase() {
           execSync(
-            `mysql --default-character-set=utf8mb4 -h 127.0.0.1 -u root --password=${process.env.MYSQL_PASSWORD} BookingVenue < ./backend/database/schema.sql`,
+            `PGPASSWORD=${process.env.PG_PASSWORD} psql -h ${process.env.PG_HOST} -U ${process.env.PG_USER} -d ${process.env.PG_DATABASE} -v ON_ERROR_STOP=1 -f ./backend/database/schema.sql`,
           );
           execSync(
-            `mysql --default-character-set=utf8mb4 -h 127.0.0.1 -u root --password=${process.env.MYSQL_PASSWORD} BookingVenue < ./backend/database/seed.sql`,
+            `PGPASSWORD=${process.env.PG_PASSWORD} psql -h ${process.env.PG_HOST} -U ${process.env.PG_USER} -d ${process.env.PG_DATABASE} -v ON_ERROR_STOP=1 -f ./backend/database/seed.sql`,
           );
           return null;
         },
