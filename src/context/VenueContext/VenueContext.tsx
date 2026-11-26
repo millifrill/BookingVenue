@@ -3,6 +3,7 @@ import axios from 'axios';
 import type { Venue } from '../../types/Venue';
 import { VenueContext } from './useVenueContext';
 import { API_URL } from '../../utils/constants';
+import type { Alert } from '../../types/Alert';
 
 export default function VenueProvider({
   children,
@@ -11,10 +12,7 @@ export default function VenueProvider({
 }) {
   const [allVenues, setAllVenues] = useState<Venue[] | []>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [alert, setAlert] = useState<{
-    variant: 'success' | 'danger';
-    text: string;
-  } | null>(null);
+  const [alert, setAlert] = useState<Alert | null>(null);
 
   useEffect(() => {
     async function getAllVenues(): Promise<void> {

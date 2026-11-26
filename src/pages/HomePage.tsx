@@ -28,7 +28,7 @@ function HomePage() {
     if (!alert) return;
     const endAlert = window.setTimeout(() => setAlert(null), 3000);
     return () => window.clearTimeout(endAlert);
-  });
+  }, [alert, setAlert]);
 
   const venues = filterByCity(
     filterByArea(filterByCapacity(allVenues, capacity), minSpace),

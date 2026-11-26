@@ -1,14 +1,15 @@
 import { createContext, useContext } from 'react';
 import type { Venue } from '../../types/Venue';
+import type { Alert } from '../../types/Alert';
 
 interface VenueContextValue {
   allVenues: Venue[];
   errorMsg: string | null;
   setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
   setAllVenues: React.Dispatch<React.SetStateAction<Venue[]>>;
-  alert: { variant: 'success' | 'danger'; text: string } | null;
+  alert: Alert | null;
   setAlert: React.Dispatch<
-    React.SetStateAction<{ variant: 'success' | 'danger'; text: string } | null>
+    React.SetStateAction<Alert | null>
   >;
 }
 

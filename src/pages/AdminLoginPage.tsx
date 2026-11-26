@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminContext/useAdminContext';
 import styles from './AdminLoginPage.module.css';
+import { API_URL } from '../utils/constants';
 
 export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
@@ -20,7 +21,7 @@ export default function AdminLoginPage() {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/api/admin/login', {
+      const res = await axios.post(`${API_URL}/admin/login`, {
         password,
       });
       setToken(res.data.token);

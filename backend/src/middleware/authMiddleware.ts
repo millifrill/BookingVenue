@@ -29,6 +29,7 @@ export const authenticateToken = (
   } catch {
     return res.status(403).json({
       error: 'Forbidden - Invalid or expired token',
+      success: false,
     });
   }
 };
