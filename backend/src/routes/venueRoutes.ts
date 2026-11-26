@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   getVenues,
+  getAvailableVenueIds,
   getVenueById,
   createVenue,
   updateVenue,
@@ -10,6 +11,7 @@ import {
 const router = express.Router();
 
 router.get('/venues', getVenues);
+router.get('/venues/available', getAvailableVenueIds);
 router.get('/venue/:id', getVenueById);
 router.post('/venue', createVenue);
 router.put('/venue/:id', updateVenue);
