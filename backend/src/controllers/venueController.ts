@@ -81,16 +81,16 @@ export const getAvailableVenueIds = async (req: Request, res: Response) => {
     });
   }
 
-  const sqlQuery = `SELECT venueId FROM Venue
+  const sqlQuery = `SELECT venueId AS "venueId" FROM Venue
      WHERE venueId NOT IN ( SELECT venueId FROM Booking
-                            WHERE startTime < ? AND endTime > ?)`;
+                            WHERE startTime < $1 AND endTime > $2)`;
 
   try {
-    const [availableVenues] = await mySqlDatabase.execute<RowDataPacket[]>(
+    const availableVenues = await pgDatabase.query<{ venueId: number }>(
       sqlQuery,
       [endTime, startTime],
     );
-    const venueIds = availableVenues.map((venue) => venue.venueId);
+    const venueIds = availableVenues.rows.map((venue) => venue.venueId);
     res.status(200).json(venueIds);
   } catch (err) {
     console.error('Error fetching available venues:', err);
