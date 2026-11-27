@@ -96,7 +96,6 @@ function HomePage() {
           onChange={setCapacity}
         />
         <DateTimeFilter
-          // availableVenues={getAvailableVenues}
           value={dateTime}
           onChange={setDateTime}
         />
