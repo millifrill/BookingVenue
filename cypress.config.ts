@@ -36,10 +36,12 @@ export default defineConfig({
       on('task', {
         resetAndSeedDatabase() {
           execSync(
-            `PGPASSWORD=${process.env.PG_PASSWORD} psql -h ${process.env.PG_HOST} -U ${process.env.PG_USER} -d ${process.env.PG_DATABASE} -v ON_ERROR_STOP=1 -f ./backend/database/schema.sql`,
+            `psql -h ${process.env.PG_HOST} -U ${process.env.PG_USER} -d ${process.env.PG_DATABASE} -v ON_ERROR_STOP=1 -f ./backend/database/schema.sql`,
+            { env: { ...process.env, PGPASSWORD: process.env.PG_PASSWORD } },
           );
           execSync(
-            `PGPASSWORD=${process.env.PG_PASSWORD} psql -h ${process.env.PG_HOST} -U ${process.env.PG_USER} -d ${process.env.PG_DATABASE} -v ON_ERROR_STOP=1 -f ./backend/database/seed.sql`,
+            `psql -h ${process.env.PG_HOST} -U ${process.env.PG_USER} -d ${process.env.PG_DATABASE} -v ON_ERROR_STOP=1 -f ./backend/database/seed.sql`,
+            { env: { ...process.env, PGPASSWORD: process.env.PG_PASSWORD } },
           );
           return null;
         },
