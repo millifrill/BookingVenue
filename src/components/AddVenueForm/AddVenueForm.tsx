@@ -34,6 +34,13 @@ export default function AddVenueForm({ cities, onAdd }: AddVenueFormProps) {
   const [imageURL, setImageURL] = useState('');
   const [errors, setErrors] = useState<VenueErrors>({});
 
+  function handleNumberChange(setValue: (value: string) => void) {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!/^\d*$/.test(e.target.value)) return;
+      setValue(e.target.value);
+    };
+  }
+
   function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
     const venueErrors = validateVenue({
@@ -151,10 +158,11 @@ export default function AddVenueForm({ cities, onAdd }: AddVenueFormProps) {
         <Form.Label>Yta (m²)</Form.Label>
         <Form.Control
           className={styles['input']}
-          type='number'
-          min={0}
+          type='text'
+          inputMode='numeric'
+          pattern='[0-9]*'
           value={space}
-          onChange={(e) => setSpace(e.target.value)}
+          onChange={handleNumberChange(setSpace)}
         />
         {errors.space && (
           <p
@@ -170,10 +178,11 @@ export default function AddVenueForm({ cities, onAdd }: AddVenueFormProps) {
         <Form.Label>Max antal personer</Form.Label>
         <Form.Control
           className={styles['input']}
-          type='number'
-          min={0}
+          type='text'
+          inputMode='numeric'
+          pattern='[0-9]*'
           value={capacity}
-          onChange={(e) => setCapacity(e.target.value)}
+          onChange={handleNumberChange(setCapacity)}
         />
         {errors.capacity && (
           <p
@@ -189,10 +198,11 @@ export default function AddVenueForm({ cities, onAdd }: AddVenueFormProps) {
         <Form.Label>Pris per timme (kr)</Form.Label>
         <Form.Control
           className={styles['input']}
-          type='number'
-          min={0}
+          type='text'
+          inputMode='numeric'
+          pattern='[0-9]*'
           value={pricePerHour}
-          onChange={(e) => setPricePerHour(e.target.value)}
+          onChange={handleNumberChange(setPricePerHour)}
         />
         {errors.pricePerHour && (
           <p
@@ -205,7 +215,7 @@ export default function AddVenueForm({ cities, onAdd }: AddVenueFormProps) {
       <Form.Group
         className={styles['field']}
         controlId='venueDescription'>
-        <Form.Label>Beskrivning</Form.Label>
+        <Form.Label>Beskrivning (valfritt)</Form.Label>
         <Form.Control
           className={styles['input']}
           type='text'
@@ -216,7 +226,7 @@ export default function AddVenueForm({ cities, onAdd }: AddVenueFormProps) {
       <Form.Group
         className={styles['field']}
         controlId='venueImageUrl'>
-        <Form.Label>Bild-URL</Form.Label>
+        <Form.Label>Bild-URL (valfritt)</Form.Label>
         <Form.Control
           className={styles['input']}
           type='text'

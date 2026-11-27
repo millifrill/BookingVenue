@@ -10,9 +10,9 @@ const fillValidForm = () => {
   cy.getByRole('combobox', { name: 'Stad' }).select('Malmö');
   cy.getByRole('textbox', { name: 'Gatuadress' }).type('Storgatan 1');
   cy.getByRole('textbox', { name: 'Postnummer' }).type('21122');
-  cy.getByRole('spinbutton', { name: 'Yta (m²)' }).type('120');
-  cy.getByRole('spinbutton', { name: 'Max antal personer' }).type('40');
-  cy.getByRole('spinbutton', { name: 'Pris per timme (kr)' }).type('900');
+  cy.getByRole('textbox', { name: 'Yta (m²)' }).type('120');
+  cy.getByRole('textbox', { name: 'Max antal personer' }).type('40');
+  cy.getByRole('textbox', { name: 'Pris per timme (kr)' }).type('900');
 };
 
 const submit = () =>
@@ -60,9 +60,7 @@ describe('AddVenueForm', () => {
 
   it('Given a capacity of 0, When the admin submits, Then an error about the capacity is shown', () => {
     fillValidForm();
-    cy.getByRole('spinbutton', { name: 'Max antal personer' })
-      .clear()
-      .type('0');
+    cy.getByRole('textbox', { name: 'Max antal personer' }).clear().type('0');
 
     submit();
 
@@ -72,8 +70,10 @@ describe('AddVenueForm', () => {
 
   it('Given a valid form, When the admin submits, Then onAdd is called with the venue and numbers as numbers', () => {
     fillValidForm();
-    cy.getByRole('textbox', { name: 'Beskrivning' }).type('Nära havet');
-    cy.getByRole('textbox', { name: 'Bild-URL' }).type(
+    cy.getByRole('textbox', { name: 'Beskrivning (valfritt)' }).type(
+      'Nära havet',
+    );
+    cy.getByRole('textbox', { name: 'Bild-URL (valfritt)' }).type(
       'https://example.com/hav.jpg',
     );
 
@@ -101,5 +101,30 @@ describe('AddVenueForm', () => {
       description: '',
       imageURL: '',
     });
+  });
+
+  it('Given the form is shown, When the admin looks at the fields, Then description and image are marked as optional', () => {
+    cy.getByRole('textbox', { name: 'Beskrivning (valfritt)' }).should(
+      'be.visible',
+    );
+    cy.getByRole('textbox', { name: 'Bild-URL (valfritt)' }).should(
+      'be.visible',
+    );
+  });
+
+  it('Given the number fields, When the admin types letters or symbols, Then only the digits are kept', () => {
+    cy.getByRole('textbox', { name: 'Yta (m²)' }).type('1a2-b.3');
+    cy.getByRole('textbox', { name: 'Max antal personer' }).type('x4y0');
+    cy.getByRole('textbox', { name: 'Pris per timme (kr)' }).type('-9e5');
+
+    cy.getByRole('textbox', { name: 'Yta (m²)' }).should('have.value', '123');
+    cy.getByRole('textbox', { name: 'Max antal personer' }).should(
+      'have.value',
+      '40',
+    );
+    cy.getByRole('textbox', { name: 'Pris per timme (kr)' }).should(
+      'have.value',
+      '95',
+    );
   });
 });

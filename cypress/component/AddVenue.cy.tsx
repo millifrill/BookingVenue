@@ -55,9 +55,9 @@ const fillAndSubmit = () => {
   cy.getByRole('combobox', { name: 'Stad' }).select('Malmö');
   cy.getByRole('textbox', { name: 'Gatuadress' }).type('Storgatan 1');
   cy.getByRole('textbox', { name: 'Postnummer' }).type('21122');
-  cy.getByRole('spinbutton', { name: 'Yta (m²)' }).type('120');
-  cy.getByRole('spinbutton', { name: 'Max antal personer' }).type('40');
-  cy.getByRole('spinbutton', { name: 'Pris per timme (kr)' }).type('900');
+  cy.getByRole('textbox', { name: 'Yta (m²)' }).type('120');
+  cy.getByRole('textbox', { name: 'Max antal personer' }).type('40');
+  cy.getByRole('textbox', { name: 'Pris per timme (kr)' }).type('900');
   cy.getByRole('button', { name: 'Lägg till lokal' }).click();
 };
 
