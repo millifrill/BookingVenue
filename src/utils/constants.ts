@@ -1,4 +1,5 @@
-export const API_URL = 'http://localhost:3000/api';
+export const API_URL =
+  import.meta.env?.VITE_API_URL ?? 'http://localhost:3000/api';
 
 export const SELECT_TIME_MESSAGE = 'Välj datum och tid';
 export const END_BEFORE_START_MESSAGE = 'Sluttiden måste vara efter starttiden';
@@ -15,6 +16,7 @@ export const VENUE_SPACE_MESSAGE = 'Ange en yta större än 0';
 export const VENUE_CAPACITY_MESSAGE = 'Ange ett antal personer större än 0';
 export const VENUE_PRICE_MESSAGE = 'Ange ett pris större än 0';
 export const VENUE_ADDED_MESSAGE = 'Lokalen har lagts till';
+export const LOGGED_OUT_MESSAGE = 'Du är inte längre inloggad, logga in igen';
 
 export const LOCALE = 'sv-SE';
 

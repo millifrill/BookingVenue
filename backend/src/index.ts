@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import venueRoutes from './routes/venueRoutes.ts';
 import bookingRoutes from './routes/bookingRoutes.ts';
+import adminRoutes from './routes/adminRoutes.ts';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/api', venueRoutes);
 app.use('/api', bookingRoutes);
+app.use('/api', adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

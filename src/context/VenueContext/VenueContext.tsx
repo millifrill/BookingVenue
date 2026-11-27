@@ -3,6 +3,7 @@ import axios from 'axios';
 import type { Venue } from '../../types/Venue';
 import { VenueContext } from './useVenueContext';
 import { API_URL } from '../../utils/constants';
+import type { Alert } from '../../types/Alert';
 
 export default function VenueProvider({
   children,
@@ -11,6 +12,7 @@ export default function VenueProvider({
 }) {
   const [allVenues, setAllVenues] = useState<Venue[] | []>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [alert, setAlert] = useState<Alert | null>(null);
 
   const [reloadCount, setReloadCount] = useState(0);
   const reloadVenues = useCallback(
@@ -32,9 +34,23 @@ export default function VenueProvider({
     getAllVenues();
   }, [reloadCount]);
 
+  useEffect(() => {
+    if (!alert) return;
+    const endAlert = window.setTimeout(() => setAlert(null), 3000);
+    return () => window.clearTimeout(endAlert);
+  }, [alert]);
+
   return (
     <VenueContext.Provider
-      value={{ allVenues, errorMsg, setErrorMsg, reloadVenues }}>
+      value={{
+        allVenues,
+        errorMsg,
+        setErrorMsg,
+        setAllVenues,
+        alert,
+        setAlert,
+        reloadVenues,
+      }}>
       {children}
     </VenueContext.Provider>
   );

@@ -2,6 +2,7 @@ import { MemoryRouter } from 'react-router-dom';
 import HomePage from '../../src/pages/HomePage.tsx';
 import { VenueContext } from '../../src/context/VenueContext/useVenueContext.ts';
 import type { Venue } from '../../src/types/Venue.ts';
+import { AdminAuthContext } from '../../src/context/AdminContext/useAdminContext.ts';
 
 const makeVenue = (overrides: Partial<Venue>): Venue => ({
   venueId: 1,
@@ -57,15 +58,26 @@ const VENUES: Venue[] = [
 const mountHomePage = (venues: Venue[] = VENUES) => {
   cy.mount(
     <MemoryRouter>
-      <VenueContext.Provider
+      <AdminAuthContext.Provider
         value={{
-          allVenues: venues,
-          errorMsg: null,
-          setErrorMsg: cy.stub(),
-          reloadVenues: cy.stub(),
+          isLoggedIn: false,
+          setIsLoggedIn: cy.stub(),
+          token: null,
+          setToken: cy.stub(),
         }}>
-        <HomePage />
-      </VenueContext.Provider>
+        <VenueContext.Provider
+          value={{
+            allVenues: venues,
+            errorMsg: null,
+            setErrorMsg: cy.stub(),
+            setAllVenues: cy.stub(),
+            alert: null,
+            setAlert: cy.stub(),
+            reloadVenues: cy.stub(),
+          }}>
+          <HomePage />
+        </VenueContext.Provider>
+      </AdminAuthContext.Provider>
     </MemoryRouter>,
   );
 };

@@ -1,11 +1,20 @@
 import { MemoryRouter } from 'react-router-dom';
 import Header from '../../src/components/Header/Header';
+import { AdminAuthContext } from '../../src/context/AdminContext/useAdminContext';
 
 describe('Header', () => {
   beforeEach(() => {
     cy.mount(
       <MemoryRouter>
-        <Header />
+        <AdminAuthContext.Provider
+          value={{
+            isLoggedIn: false,
+            setIsLoggedIn: cy.stub(),
+            token: null,
+            setToken: cy.stub(),
+          }}>
+          <Header />
+        </AdminAuthContext.Provider>
       </MemoryRouter>,
     );
   });

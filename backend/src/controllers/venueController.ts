@@ -40,6 +40,51 @@ export const getVenues = async (_req: Request, res: Response) => {
   }
 };
 
+export const getAvailableVenueIds = async (req: Request, res: Response) => {
+  const { startTime, endTime } = req.query;
+
+  if (typeof startTime !== 'string' || typeof endTime !== 'string') {
+    return res
+      .status(400)
+      .json({ error: 'Missing required fields', success: false });
+  }
+
+  const st = new Date(startTime);
+  const et = new Date(endTime);
+
+  if (Number.isNaN(st.getTime()) || Number.isNaN(et.getTime())) {
+    return res.status(400).json({
+      error: 'Invalid date format',
+      success: false,
+    });
+  }
+
+  if (st >= et) {
+    return res.status(400).json({
+      error: 'Start time must be before end time',
+      success: false,
+    });
+  }
+
+  const sqlQuery = `SELECT venueId FROM Venue
+     WHERE venueId NOT IN ( SELECT venueId FROM Booking
+                            WHERE startTime < ? AND endTime > ?)`;
+
+  try {
+    const [availableVenues] = await mySqlDatabase.execute<RowDataPacket[]>(
+      sqlQuery,
+      [endTime, startTime],
+    );
+    const venueIds = availableVenues.map((venue) => venue.venueId);
+    res.status(200).json(venueIds);
+  } catch (err) {
+    console.error('Error fetching available venues:', err);
+    return res
+      .status(500)
+      .json({ error: 'Failed to fetch available venues', success: false });
+  }
+};
+
 export const getVenueById = async (
   req: Request<
     { id: string },
@@ -55,6 +100,7 @@ export const getVenueById = async (
    FROM Venue v
    JOIN City c ON v.cityId = c.cityId
    WHERE v.venueId = ?`;
+
   try {
     const [result] = await mySqlDatabase.execute<Venue[]>(sqlQuery, [id]);
     if (result.length === 0) {
@@ -78,10 +124,9 @@ export const getVenueById = async (
 
 export const createVenue = async (
   req: Request<
-    void,
+    Record<string, string>,
     { message?: string; success: boolean; error?: string },
-    Omit<Venue, 'venueId'>,
-    void
+    Omit<Venue, 'venueId'>
   >,
   res: Response,
 ) => {
@@ -96,6 +141,7 @@ export const createVenue = async (
     pricePerHour,
     imageURL,
   } = req.body;
+
   if (
     !cityId ||
     !name ||
@@ -143,8 +189,7 @@ export const updateVenue = async (
   req: Request<
     { id: string },
     { message?: string; success: boolean; error?: string },
-    Omit<Venue, 'venueId'>,
-    void
+    Omit<Venue, 'venueId'>
   >,
   res: Response,
 ) => {
@@ -160,6 +205,7 @@ export const updateVenue = async (
     pricePerHour,
     imageURL,
   } = req.body;
+
   if (
     !cityId ||
     !name ||
@@ -173,6 +219,7 @@ export const updateVenue = async (
       .status(400)
       .json({ error: 'Missing required fields', success: false });
   }
+
   const sqlQuery = `UPDATE Venue SET cityId = ?, name = ?, street = ?, postalNumber = ?, description = ${description === '' ? 'DEFAULT' : '?'}, space = ?, capacity = ?, pricePerHour = ?, imageURL = ${imageURL === '' ? 'DEFAULT' : '?'} WHERE venueId = ?`;
 
   const sqlValues = [cityId, name, street, postalNumber];
@@ -214,13 +261,13 @@ export const deleteVenue = async (
   req: Request<
     { id: string },
     { message?: string; success: boolean; error?: string },
-    Omit<Venue, 'venueId'>,
-    void
+    Omit<Venue, 'venueId'>
   >,
   res: Response,
 ) => {
   const { id } = req.params;
   const sqlQuery = 'DELETE FROM Venue WHERE venueId = ?';
+
   try {
     const [result] = await mySqlDatabase.execute<ResultSetHeader>(sqlQuery, [
       id,

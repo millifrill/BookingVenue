@@ -3,33 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { ADMIN_PATH, MAIN_LINKS } from '../../config/navigation';
 import Logo from '../Logo/Logo';
 import styles from './Header.module.css';
-
-function LockIcon() {
-  return (
-    <svg
-      className='site-header-icon'
-      width='16'
-      height='16'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      aria-hidden='true'>
-      <rect
-        x='3'
-        y='11'
-        width='18'
-        height='11'
-        rx='2'
-      />
-      <path d='M7 11V7a5 5 0 0 1 10 0v4' />
-    </svg>
-  );
-}
+import { useAdminAuth } from '../../context/AdminContext/useAdminContext';
+import { PersonLock, PersonCheck } from 'react-bootstrap-icons';
 
 export default function Header() {
+  const { isLoggedIn } = useAdminAuth();
+
   return (
     <Navbar
       as='header'
@@ -70,7 +49,11 @@ export default function Header() {
               to={ADMIN_PATH}
               eventKey={ADMIN_PATH}
               className={styles['site-header-admin']}>
-              <LockIcon />
+              {isLoggedIn ? (
+                <PersonCheck size={30} />
+              ) : (
+                <PersonLock size={30} />
+              )}
               Admin
             </Nav.Link>
           </Nav>
