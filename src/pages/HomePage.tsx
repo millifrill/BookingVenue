@@ -10,6 +10,7 @@ import { filterByCity } from '../utils/filterByCity';
 import { filterByArea } from '../utils/filterByArea';
 import { filterByCapacity } from '../utils/filterByCapacity';
 import type { Venue, City } from '../types/Venue';
+import { Alert } from 'react-bootstrap';
 import DateTimeFilter, {
   type DateTimeFilterValue,
 } from '../components/DateTimeFilter/DateTimeFilter';
@@ -27,7 +28,7 @@ function getCities(venues: Venue[]): City[] {
 }
 
 function HomePage() {
-  const { allVenues } = useVenueContext();
+  const { allVenues, alert } = useVenueContext();
   const [cityId, setCityId] = useState<number | null>(null);
   const [minSpace, setMinSpace] = useState<number | null>(null);
   const [capacity, setCapacity] = useState<number | null>(1);
@@ -83,6 +84,13 @@ function HomePage() {
   return (
     <>
       <Hero />
+      {alert && (
+        <Alert
+          className='alert'
+          variant={alert.variant}>
+          {alert.text}
+        </Alert>
+      )}
       <FilterBar>
         <CityFilter
           cities={getCities(allVenues)}

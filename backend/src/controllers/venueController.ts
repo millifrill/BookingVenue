@@ -124,10 +124,9 @@ export const getVenueById = async (
 
 export const createVenue = async (
   req: Request<
-    void,
+    Record<string, string>,
     { message?: string; success: boolean; error?: string },
-    Omit<Venue, 'venueId'>,
-    void
+    Omit<Venue, 'venueId'>
   >,
   res: Response,
 ) => {
@@ -190,8 +189,7 @@ export const updateVenue = async (
   req: Request<
     { id: string },
     { message?: string; success: boolean; error?: string },
-    Omit<Venue, 'venueId'>,
-    void
+    Omit<Venue, 'venueId'>
   >,
   res: Response,
 ) => {
@@ -263,8 +261,7 @@ export const deleteVenue = async (
   req: Request<
     { id: string },
     { message?: string; success: boolean; error?: string },
-    Omit<Venue, 'venueId'>,
-    void
+    Omit<Venue, 'venueId'>
   >,
   res: Response,
 ) => {

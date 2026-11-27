@@ -7,13 +7,16 @@ import './index.css';
 import './styles/global.css';
 import App from './App.tsx';
 import VenueProvider from './context/VenueContext/VenueContext.tsx';
+import AdminAuthProvider from './context/AdminContext/AdminContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <VenueProvider>
-        <App />
-      </VenueProvider>
+      <AdminAuthProvider>
+        <VenueProvider>
+          <App />
+        </VenueProvider>
+      </AdminAuthProvider>
     </BrowserRouter>
   </StrictMode>,
 );
