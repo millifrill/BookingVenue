@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   getVenues,
+  getAvailableVenueIds,
   getVenueById,
   createVenue,
   updateVenue,
@@ -11,6 +12,7 @@ import { authenticateToken } from '../middleware/authMiddleware.ts';
 const router = express.Router();
 
 router.get('/venues', getVenues);
+router.get('/venues/available', getAvailableVenueIds);
 router.get('/venue/:id', getVenueById);
 router.post('/venue', authenticateToken, createVenue);
 router.put('/venue/:id', authenticateToken, updateVenue);
