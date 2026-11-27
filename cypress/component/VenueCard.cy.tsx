@@ -2,6 +2,8 @@ import React from 'react';
 import VenueCard from '../../src/components/VenueCard/VenueCard';
 import { Venue } from '../../src/types/Venue';
 import { MemoryRouter } from 'react-router-dom';
+import { AdminAuthContext } from '../../src/context/AdminContext/useAdminContext';
+import { VenueContext } from '../../src/context/VenueContext/useVenueContext';
 
 const testVenue: Venue = {
   venueId: 3,
@@ -28,7 +30,25 @@ describe('VenueCard', () => {
   beforeEach(() => {
     cy.mount(
       <MemoryRouter>
-        <VenueCard venue={testVenue} />
+        <AdminAuthContext.Provider
+          value={{
+            isLoggedIn: false,
+            setIsLoggedIn: cy.stub(),
+            token: null,
+            setToken: cy.stub(),
+          }}>
+          <VenueContext.Provider
+            value={{
+              allVenues: [testVenue],
+              errorMsg: null,
+              setErrorMsg: cy.stub(),
+              setAllVenues: cy.stub(),
+              alert: null,
+              setAlert: cy.stub(),
+            }}>
+            <VenueCard venue={testVenue} />
+          </VenueContext.Provider>
+        </AdminAuthContext.Provider>
       </MemoryRouter>,
     );
   });

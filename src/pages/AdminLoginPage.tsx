@@ -1,8 +1,64 @@
+import { useState, type SubmitEvent } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { useAdminAuth } from '../context/AdminContext/useAdminContext';
+import styles from './AdminLoginPage.module.css';
+import { API_URL } from '../utils/constants';
+
 export default function AdminLoginPage() {
+  const [password, setPassword] = useState('');
+  const [failMessage, setFailMessage] = useState('');
+  const navigate = useNavigate();
+  const { isLoggedIn, setIsLoggedIn, setToken } = useAdminAuth();
+
+  async function handleSubmit(event: SubmitEvent) {
+    event.preventDefault();
+
+    if (password === '') {
+      setFailMessage('Ange lösenord');
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${API_URL}/admin/login`, {
+        password,
+      });
+      setToken(res.data.token);
+      setIsLoggedIn(true);
+      navigate('/admin');
+    } catch (err) {
+      const isWrongPassword =
+        axios.isAxiosError(err) && err.response?.status === 401;
+      setFailMessage(isWrongPassword ? 'Fel lösenord' : 'Något gick fel');
+    }
+  }
+
+  if (isLoggedIn) {
+    return (
+      <Navigate
+        to='/admin'
+        replace
+      />
+    );
+  }
+
   return (
     <section className='text-center'>
-      <h1>Admin login</h1>
-      <p>Kommer snart.</p>
+      <h1>Admin - Logga in</h1>
+      <Form
+        onSubmit={handleSubmit}
+        className={styles['form']}>
+        <Form.Group controlId='adminPassword'>
+          <Form.Control
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+        <Button type='submit'>Logga in</Button>
+      </Form>
+      <span className={styles['fail-message']}>{failMessage}</span>
     </section>
   );
 }
