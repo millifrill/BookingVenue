@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 import { HOURS } from '../../utils/constants';
-import { todayIso } from '../../utils/formatDate';
 import styles from '../Booking/Booking.module.css';
+import { todayIso } from '../../utils/formatDate';
 
 export type DateTimeFilterValue = {
   date: string;
@@ -62,12 +62,14 @@ export default function DateTimeFilter({
           <Form.Select
             className={styles['input']}
             value={value.from}
-            onChange={handleFromChange}>
+            onChange={handleFromChange}
+            disabled={!value.date}>
             <option value=''>--:--</option>
             {HOURS.map((hour) => (
               <option
                 key={hour}
-                value={hour}>
+                value={hour}
+                disabled={value.to !== '' && hour >= value.to}>
                 {hour}
               </option>
             ))}
@@ -80,12 +82,14 @@ export default function DateTimeFilter({
           <Form.Select
             className={styles['input']}
             value={value.to}
-            onChange={handleToChange}>
+            onChange={handleToChange}
+            disabled={!value.date}>
             <option value=''>--:--</option>
             {HOURS.map((hour) => (
               <option
                 key={hour}
-                value={hour}>
+                value={hour}
+                disabled={value.from !== '' && hour <= value.from}>
                 {hour}
               </option>
             ))}
