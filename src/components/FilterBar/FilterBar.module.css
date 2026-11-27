@@ -9,6 +9,14 @@
   box-shadow: 0 8px 24px 0 #1c1b1a14;
 }
 
+.group {
+  display: contents;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 .field {
   flex: 1;
   min-width: 0;
