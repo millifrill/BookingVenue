@@ -19,16 +19,10 @@ function getCities(venues: Venue[]): City[] {
 }
 
 function HomePage() {
-  const { allVenues, alert, setAlert } = useVenueContext();
+  const { allVenues, alert } = useVenueContext();
   const [cityId, setCityId] = useState<number | null>(null);
   const [minSpace, setMinSpace] = useState<number | null>(null);
   const [capacity, setCapacity] = useState<number | null>(1);
-
-  useEffect(() => {
-    if (!alert) return;
-    const endAlert = window.setTimeout(() => setAlert(null), 3000);
-    return () => window.clearTimeout(endAlert);
-  }, [alert, setAlert]);
 
   const venues = filterByCity(
     filterByArea(filterByCapacity(allVenues, capacity), minSpace),
