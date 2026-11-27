@@ -1,10 +1,9 @@
 import type { Request, Response } from 'express';
-import type { ResultSetHeader, RowDataPacket } from 'mysql2';
-import mySqlPool from '../connectionMySql.ts';
+import pgPool from '../connectionPostgres.ts';
 
-const mySqlDatabase = mySqlPool;
+const pgDatabase = pgPool;
 
-interface Venue extends RowDataPacket {
+interface Venue {
   venueId: number;
   cityId: number;
   name: string;
@@ -18,19 +17,35 @@ interface Venue extends RowDataPacket {
   imageURL: string;
 }
 
+interface Amenity {
+  amenityId: number;
+  name: string;
+}
+
 export const getVenues = async (_req: Request, res: Response) => {
   try {
-    const [result] = await mySqlDatabase.query<Venue[]>(
-      `SELECT Venue.*, City.name AS cityName
+    const result = await pgDatabase.query<Venue>(
+      `SELECT 
+        Venue.venueid AS "venueId", 
+        Venue.cityid AS "cityId",
+        Venue.name,
+        Venue.street,
+        Venue.postalnumber AS "postalNumber",
+        Venue.description,
+        Venue.space,
+        Venue.capacity,
+        Venue.priceperhour AS "pricePerHour",
+        Venue.imageurl AS "imageURL",
+        City.name AS "cityName"
        FROM Venue
        JOIN City ON Venue.cityId = City.cityId`,
     );
-    if (result.length === 0) {
+    if (result.rows.length === 0) {
       return res
         .status(404)
         .json({ error: 'Venues not found', success: false });
     }
-    res.status(200).json(result);
+    res.status(200).json(result.rows);
   } catch (err) {
     console.error('Error fetching venues:', err);
 
@@ -66,16 +81,16 @@ export const getAvailableVenueIds = async (req: Request, res: Response) => {
     });
   }
 
-  const sqlQuery = `SELECT venueId FROM Venue
+  const sqlQuery = `SELECT venueId AS "venueId" FROM Venue
      WHERE venueId NOT IN ( SELECT venueId FROM Booking
-                            WHERE startTime < ? AND endTime > ?)`;
+                            WHERE startTime < $1 AND endTime > $2)`;
 
   try {
-    const [availableVenues] = await mySqlDatabase.execute<RowDataPacket[]>(
+    const availableVenues = await pgDatabase.query<{ venueId: number }>(
       sqlQuery,
       [endTime, startTime],
     );
-    const venueIds = availableVenues.map((venue) => venue.venueId);
+    const venueIds = availableVenues.rows.map((venue) => venue.venueId);
     res.status(200).json(venueIds);
   } catch (err) {
     console.error('Error fetching available venues:', err);
@@ -96,24 +111,23 @@ export const getVenueById = async (
 ) => {
   const { id } = req.params;
   const sqlQuery = `SELECT
-   v.venueId, v.cityId, v.name, c.name AS cityName, v.street, v.postalNumber, v.description, v.space, v.capacity, v.pricePerHour, v.imageURL
+   v.venueId AS "venueId", v.cityId AS "cityId", v.name AS "name", c.name AS "cityName", v.street AS "street", v.postalNumber AS "postalNumber", v.description AS "description", v.space AS "space", v.capacity AS "capacity", v.pricePerHour AS "pricePerHour", v.imageurl AS "imageURL"
    FROM Venue v
    JOIN City c ON v.cityId = c.cityId
-   WHERE v.venueId = ?`;
-
+   WHERE v.venueId = $1`;
   try {
-    const [result] = await mySqlDatabase.execute<Venue[]>(sqlQuery, [id]);
-    if (result.length === 0) {
+    const result = await pgDatabase.query<Venue>(sqlQuery, [id]);
+    if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Venue not found', success: false });
     }
-    const [amenities] = await mySqlDatabase.execute<RowDataPacket[]>(
-      `SELECT a.amenityId, a.name
+    const amenities = await pgDatabase.query<Amenity>(
+      `SELECT a.amenityId AS "amenityId", a.name
        FROM Amenity a
        JOIN VenueAmenity va ON a.amenityId = va.amenityId
-       WHERE va.venueId = ?`,
+       WHERE va.venueId = $1`,
       [id],
     );
-    res.status(200).json({ ...result[0], amenities });
+    res.status(200).json({ ...result.rows[0], amenities: amenities.rows });
   } catch (err) {
     console.error('Error fetchig venue:', err);
     return res
@@ -156,23 +170,26 @@ export const createVenue = async (
       .json({ error: 'Missing required fields', success: false });
   }
 
+  const hasDescription = description !== undefined && description !== '';
+  const hasImage = imageURL !== undefined && imageURL !== '';
+
   const sqlQuery = `INSERT INTO Venue(cityId, name, street, postalNumber, description, space, capacity, pricePerHour, imageURL)
-   VALUES (?,?,?,${description === '' ? 'DEFAULT' : '?'},?,?,?,?,${imageURL === '' ? 'DEFAULT' : '?'})`;
+   VALUES ($1,$2,$3,$4, ${hasDescription ? '$5' : 'DEFAULT'}, ${hasDescription ? '$6' : '$5'},${hasDescription ? '$7' : '$6'},${hasDescription ? '$8' : '$7'}, ${hasImage ? `${hasDescription ? '$9' : '$8'}` : 'DEFAULT'})`;
 
   const sqlValues = [cityId, name, street, postalNumber];
 
-  if (description !== undefined && description !== '') {
+  if (hasDescription) {
     sqlValues.push(description);
   }
 
   sqlValues.push(space, capacity, pricePerHour);
 
-  if (imageURL !== undefined && imageURL !== '') {
+  if (hasImage) {
     sqlValues.push(imageURL);
   }
 
   try {
-    await mySqlDatabase.execute<Venue[]>(sqlQuery, sqlValues);
+    await pgDatabase.query<Venue>(sqlQuery, sqlValues);
     res.status(201).json({
       message: 'Venue created successfully',
       success: true,
@@ -220,28 +237,28 @@ export const updateVenue = async (
       .json({ error: 'Missing required fields', success: false });
   }
 
-  const sqlQuery = `UPDATE Venue SET cityId = ?, name = ?, street = ?, postalNumber = ?, description = ${description === '' ? 'DEFAULT' : '?'}, space = ?, capacity = ?, pricePerHour = ?, imageURL = ${imageURL === '' ? 'DEFAULT' : '?'} WHERE venueId = ?`;
+  const hasDescription = description !== undefined && description !== '';
+  const hasImage = imageURL !== undefined && imageURL !== '';
+
+  const sqlQuery = `UPDATE Venue SET cityId = $1, name = $2, street = $3, postalNumber = $4, description = ${hasDescription ? '$5' : 'DEFAULT'}, space = ${hasDescription ? '$6' : '$5'}, capacity = ${hasDescription ? '$7' : '$6'}, pricePerHour = ${hasDescription ? '$8' : '$7'}, imageURL = ${hasImage ? `${hasDescription ? '$9' : '$8'}` : 'DEFAULT'} WHERE venueId = $${8 + (hasDescription ? 1 : 0) + (hasImage ? 1 : 0)}`;
 
   const sqlValues = [cityId, name, street, postalNumber];
 
-  if (description !== undefined && description !== '') {
+  if (hasDescription) {
     sqlValues.push(description);
   }
 
   sqlValues.push(space, capacity, pricePerHour);
 
-  if (imageURL !== undefined && imageURL !== '') {
+  if (hasImage) {
     sqlValues.push(imageURL);
   }
 
   sqlValues.push(id);
 
   try {
-    const [result] = await mySqlDatabase.execute<ResultSetHeader>(
-      sqlQuery,
-      sqlValues,
-    );
-    if (result.affectedRows === 0) {
+    const result = await pgDatabase.query<Venue>(sqlQuery, sqlValues);
+    if (result.rowCount === 0) {
       res.status(404).json({ error: 'Venue not found', success: false });
     } else {
       res.status(200).json({
@@ -266,13 +283,10 @@ export const deleteVenue = async (
   res: Response,
 ) => {
   const { id } = req.params;
-  const sqlQuery = 'DELETE FROM Venue WHERE venueId = ?';
-
+  const sqlQuery = 'DELETE FROM Venue WHERE venueId = $1';
   try {
-    const [result] = await mySqlDatabase.execute<ResultSetHeader>(sqlQuery, [
-      id,
-    ]);
-    if (result.affectedRows === 0) {
+    const result = await pgDatabase.query<Venue>(sqlQuery, [id]);
+    if (result.rowCount === 0) {
       res.status(404).json({ error: 'Venue not found', success: false });
     } else {
       res.status(200).json({
@@ -282,7 +296,7 @@ export const deleteVenue = async (
     }
   } catch (err) {
     console.error('Error deleting venue:', err);
-    if ((err as { code?: string }).code === 'ER_ROW_IS_REFERENCED_2') {
+    if ((err as { code?: string }).code === '23503') {
       return res.status(409).json({
         error: 'Cannot delete a venue with bookings',
         success: false,
