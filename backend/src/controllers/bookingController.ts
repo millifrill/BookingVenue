@@ -1,11 +1,10 @@
 import type { Request, Response } from 'express';
-import type { ResultSetHeader, RowDataPacket } from 'mysql2';
-import mySqlPool from '../connectionMySql.ts';
+import pgPool from '../connectionPostgres.ts';
 import { createBookingId } from '../utils/createBookingId.ts';
 
-const mySqlDatabase = mySqlPool;
+const pgDatabase = pgPool;
 
-interface Booking extends RowDataPacket {
+interface Booking {
   bookingId: string;
   venueId: number;
   firstName: string;
@@ -22,21 +21,21 @@ export const getBookingById = async (
 ) => {
   const { id } = req.params;
   try {
-    const [result] = await mySqlDatabase.execute<Booking[]>(
-      `SELECT b.bookingId, b.venueId, b.firstName, b.lastName, b.startTime, b.endTime,
-      v.name AS venueName,
-      v.imageURL AS venueImageURL
+    const result = await pgDatabase.query<Booking>(
+      `SELECT b.bookingId AS "bookingId", b.venueId AS "venueId", b.firstName AS "firstName", b.lastName AS "lastName", b.startTime AS "startTime", b.endTime AS "endTime",
+      v.name AS "venueName",
+      v.imageURL AS "venueImageURL"
       FROM Booking b
       JOIN Venue v ON b.venueId = v.venueId
-      WHERE b.bookingId = ?`,
+      WHERE b.bookingId = $1`,
       [id],
     );
-    if (result.length === 0) {
+    if (result.rows.length === 0) {
       return res
         .status(404)
         .json({ error: 'Booking not found', success: false });
     }
-    return res.status(200).json(result[0]);
+    return res.status(200).json(result.rows[0]);
   } catch (err) {
     console.error('Error fetching booking:', err);
     return res
@@ -78,31 +77,31 @@ export const createBooking = async (req: Request, res: Response) => {
   do {
     bookingId = createBookingId();
 
-    const [existingId] = await mySqlDatabase.execute<RowDataPacket[]>(
-      'SELECT bookingId FROM Booking WHERE bookingId = ?',
+    const existingId = await pgDatabase.query<{ bookingId: string }>(
+      'SELECT bookingId FROM Booking WHERE bookingId = $1',
       [bookingId],
     );
 
-    isIdExisting = existingId.length > 0;
+    isIdExisting = existingId.rows.length > 0;
   } while (isIdExisting);
 
   try {
-    const [existingBookings] = await mySqlDatabase.execute<Booking[]>(
+    const existingBookings = await pgDatabase.query<Booking>(
       `SELECT * FROM Booking
-     WHERE venueId = ?
-     AND ((startTime < ? AND endTime > ?) OR (startTime < ? AND endTime > ?) OR (startTime >= ? AND endTime <= ?))`,
+     WHERE venueId = $1
+     AND ((startTime < $2 AND endTime > $3) OR (startTime < $4 AND endTime > $5) OR (startTime >= $6 AND endTime <= $7))`,
       [venueId, et, et, st, st, st, et],
     );
 
-    if (existingBookings.length > 0) {
+    if (existingBookings.rows.length > 0) {
       return res.status(409).json({
         error: 'Venue is already booked within the selected time range',
         success: false,
       });
     }
 
-    await mySqlDatabase.execute<ResultSetHeader>(
-      'INSERT INTO Booking (bookingId, venueId, firstName, lastName, startTime, endTime) VALUES (?, ?, ?, ?, ?, ?)',
+    await pgDatabase.query(
+      'INSERT INTO Booking (bookingId, venueId, firstName, lastName, startTime, endTime) VALUES ($1, $2, $3, $4, $5, $6)',
       [bookingId, venueId, firstName, lastName, st, et],
     );
 
@@ -113,7 +112,7 @@ export const createBooking = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error creating booking:', err);
-    if ((err as { code?: string }).code === 'ER_NO_REFERENCED_ROW_2') {
+    if ((err as { code?: string }).code === '23503') {
       return res.status(400).json({
         error: 'Invalid venueId',
         success: false,
@@ -161,12 +160,12 @@ export const updateBooking = async (
   }
 
   try {
-    const [bookings] = await mySqlDatabase.execute<RowDataPacket[]>(
-      'SELECT venueId FROM Booking WHERE bookingId = ?',
+    const bookings = await pgDatabase.query<{ venueId: number }>(
+      'SELECT venueId AS "venueId" FROM Booking WHERE bookingId = $1',
       [id],
     );
 
-    const booking = bookings[0];
+    const booking = bookings.rows[0];
 
     if (!booking) {
       return res.status(404).json({
@@ -177,23 +176,23 @@ export const updateBooking = async (
 
     const { venueId } = booking;
 
-    const [existingBookings] = await mySqlDatabase.execute<Booking[]>(
+    const existingBookings = await pgDatabase.query<Booking>(
       `SELECT * FROM Booking
-     WHERE venueId = ?
-     AND bookingId !=?
-     AND ((startTime < ? AND endTime > ?) OR (startTime < ? AND endTime > ?) OR (startTime >= ? AND endTime <= ?))`,
+     WHERE venueId = $1
+     AND bookingId != $2
+     AND ((startTime < $3 AND endTime > $4) OR (startTime < $5 AND endTime > $6) OR (startTime >= $7 AND endTime <= $8))`,
       [venueId, id, et, et, st, st, st, et],
     );
 
-    if (existingBookings.length > 0) {
+    if (existingBookings.rows.length > 0) {
       return res.status(409).json({
         error: 'Venue is already booked within the selected time range',
         success: false,
       });
     }
 
-    await mySqlDatabase.execute<ResultSetHeader>(
-      'UPDATE Booking SET startTime = ?, endTime = ? WHERE bookingId = ?',
+    await pgDatabase.query(
+      'UPDATE Booking SET startTime = $1, endTime = $2 WHERE bookingId = $3',
       [st, et, id],
     );
 
@@ -217,11 +216,11 @@ export const deleteBooking = async (
 ) => {
   const { id } = req.params;
   try {
-    const [result] = await mySqlDatabase.execute<ResultSetHeader>(
-      'DELETE FROM Booking WHERE bookingId = ?',
+    const result = await pgDatabase.query(
+      'DELETE FROM Booking WHERE bookingId = $1',
       [id],
     );
-    if (result.affectedRows === 0) {
+    if (result.rowCount === 0) {
       return res
         .status(404)
         .json({ error: 'Booking not found', success: false });
