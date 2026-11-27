@@ -40,7 +40,10 @@ function VenueCard({ venue }: { venue: Venue }) {
         });
         return;
       }
-      if (axios.isAxiosError(error) && (error.response?.status === 401 || error.response?.status === 403)) {
+      if (
+        axios.isAxiosError(error) &&
+        (error.response?.status === 401 || error.response?.status === 403)
+      ) {
         setToken(null);
         setIsLoggedIn(false);
         setAlert({

@@ -28,11 +28,11 @@ export default function VenueProvider({
     getAllVenues();
   }, []);
 
-    useEffect(() => {
-      if (!alert) return;
-      const endAlert = window.setTimeout(() => setAlert(null), 3000);
-      return () => window.clearTimeout(endAlert);
-    }, [alert]);
+  useEffect(() => {
+    if (!alert) return;
+    const endAlert = window.setTimeout(() => setAlert(null), 3000);
+    return () => window.clearTimeout(endAlert);
+  }, [alert]);
 
   return (
     <VenueContext.Provider

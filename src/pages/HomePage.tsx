@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import VenueList from '../components/VenueList/VenueList';
 import CapacityFilter from '../components/CapacityFilter/CapacityFilter';
 import CityFilter from '../components/CityFilter/CityFilter';
