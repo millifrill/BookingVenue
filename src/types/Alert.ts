@@ -1,4 +1,4 @@
 export type Alert = {
-    variant: 'success' | 'danger';
-    text: string;
-}
+  variant: 'success' | 'danger';
+  text: string;
+};

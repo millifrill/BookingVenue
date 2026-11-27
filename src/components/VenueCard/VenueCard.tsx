@@ -10,7 +10,7 @@ import { API_URL } from '../../utils/constants';
 import { useVenueContext } from '../../context/VenueContext/useVenueContext';
 
 function VenueCard({ venue }: { venue: Venue }) {
-  const { isLoggedIn, token } = useAdminAuth();
+  const { isLoggedIn, token, setIsLoggedIn, setToken } = useAdminAuth();
   const { setAllVenues, setAlert } = useVenueContext();
 
   async function handleDelete() {
@@ -37,6 +37,15 @@ function VenueCard({ venue }: { venue: Venue }) {
         setAlert({
           variant: 'danger',
           text: 'Borttagning misslyckades. Lokalen hittades inte.',
+        });
+        return;
+      }
+      if (axios.isAxiosError(error) && (error.response?.status === 401 || error.response?.status === 403)) {
+        setToken(null);
+        setIsLoggedIn(false);
+        setAlert({
+          variant: 'danger',
+          text: `Borttagning misslyckades. Du är inte längre inloggad.`,
         });
         return;
       }
