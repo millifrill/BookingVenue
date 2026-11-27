@@ -1,0 +1,125 @@
+.filter-bar {
+  display: flex;
+  gap: var(--space-4);
+  margin: 0 var(--space-6);
+  padding: 21px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 28px;
+  box-shadow: 0 8px 24px 0 #1c1b1a14;
+}
+
+.field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field .label {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.field .unit {
+  text-transform: none;
+}
+
+.field .control,
+.field .select,
+.field .stepper {
+  padding: 12px 17px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 6px 0 var(--color-shadow);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 24px;
+  color: var(--color-ink);
+}
+
+.field .control::placeholder,
+.field .stepper-input::placeholder {
+  color: var(--color-ink-subtle);
+}
+
+.field .control[type='number'] {
+  appearance: textfield;
+}
+
+.field .control[type='number']::-webkit-inner-spin-button,
+.field .control[type='number']::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.field .select {
+  padding-right: 41px;
+  background-image: url('../../assets/icons/chevron.svg');
+  background-repeat: no-repeat;
+  background-position: right 17px center;
+  background-size: 16px 16px;
+}
+
+.field .stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 7px;
+}
+
+.field .stepper-button {
+  display: flex;
+  padding: 10px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+.field .stepper-button:hover {
+  background: var(--color-sand);
+}
+
+.field .stepper-button img {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.field .stepper-input,
+.field .stepper-input:focus {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 24px;
+  color: var(--color-ink);
+}
+
+.field .control:focus,
+.field .select:focus,
+.field .stepper:focus-within {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 2px 6px 0 var(--color-shadow);
+}
+
+@media (width <= 768px) {
+  .filter-bar {
+    flex-direction: column;
+    margin: 0 var(--space-4);
+  }
+}

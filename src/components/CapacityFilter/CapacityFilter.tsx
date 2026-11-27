@@ -1,5 +1,7 @@
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import minusIcon from '../../assets/icons/minus.svg';
+import plusIcon from '../../assets/icons/plus.svg';
+import styles from '../FilterBar/FilterBar.module.css';
 
 export type CapacityFilterProps = {
   value: number | null;
@@ -34,16 +36,23 @@ export default function CapacityFilter({
   };
 
   return (
-    <div>
-      <Form.Group controlId='capacityFilter'>
-        <Form.Label>Antal personer</Form.Label>
-        <Button
+    <Form.Group
+      className={styles['field']}
+      controlId='capacityFilter'>
+      <Form.Label className={styles['label']}>Antal personer</Form.Label>
+      <div className={styles['stepper']}>
+        <button
+          className={styles['stepper-button']}
+          type='button'
           aria-label='Minska antal personer'
-          variant='secondary'
           onClick={decreaseCapacity}>
-          -
-        </Button>
+          <img
+            src={minusIcon}
+            alt=''
+          />
+        </button>
         <Form.Control
+          className={styles['stepper-input']}
           type='text'
           inputMode='numeric'
           pattern='[0-9]*'
@@ -51,13 +60,17 @@ export default function CapacityFilter({
           value={value ?? ''}
           onChange={handleInputChange}
         />
-        <Button
+        <button
+          className={styles['stepper-button']}
+          type='button'
           aria-label='Öka antal personer'
-          variant='secondary'
           onClick={increaseCapacity}>
-          +
-        </Button>
-      </Form.Group>
-    </div>
+          <img
+            src={plusIcon}
+            alt=''
+          />
+        </button>
+      </div>
+    </Form.Group>
   );
 }

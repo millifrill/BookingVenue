@@ -3,6 +3,8 @@ import VenueList from '../components/VenueList/VenueList';
 import CapacityFilter from '../components/CapacityFilter/CapacityFilter';
 import CityFilter from '../components/CityFilter/CityFilter';
 import AreaFilter from '../components/AreaFilter/AreaFilter';
+import FilterBar from '../components/FilterBar/FilterBar';
+import Hero from '../components/Hero/Hero';
 import { useVenueContext } from '../context/VenueContext/useVenueContext';
 import { filterByCity } from '../utils/filterByCity';
 import { filterByArea } from '../utils/filterByArea';
@@ -30,19 +32,22 @@ function HomePage() {
 
   return (
     <>
-      <CityFilter
-        cities={getCities(allVenues)}
-        value={cityId}
-        onChange={setCityId}
-      />
-      <AreaFilter
-        value={minSpace}
-        onChange={setMinSpace}
-      />
-      <CapacityFilter
-        value={capacity}
-        onChange={setCapacity}
-      />
+      <Hero />
+      <FilterBar>
+        <CityFilter
+          cities={getCities(allVenues)}
+          value={cityId}
+          onChange={setCityId}
+        />
+        <AreaFilter
+          value={minSpace}
+          onChange={setMinSpace}
+        />
+        <CapacityFilter
+          value={capacity}
+          onChange={setCapacity}
+        />
+      </FilterBar>
       <VenueList venues={venues} />
     </>
   );
