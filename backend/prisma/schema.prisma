@@ -43,7 +43,7 @@ model Venue {
   description  String?        @default("Den här lokalen har ingen beskrivning ännu.") @db.VarChar(255)
   space        Int
   capacity     Int
-  priceperHour Int            @map("priceperhour")
+  pricePerHour Int            @map("priceperhour")
   imageUrl     String?        @default("https://images.pexels.com/photos/39225128/pexels-photo-39225128.jpeg") @db.VarChar(255) @map("imageurl")
   booking      Booking[]
   city         City           @relation(fields: [cityId], references: [cityId], onDelete: NoAction, onUpdate: NoAction)
