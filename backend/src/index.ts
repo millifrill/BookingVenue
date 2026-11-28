@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import venueRoutes from './routes/venueRoutes.ts';
 import bookingRoutes from './routes/bookingRoutes.ts';
 import adminRoutes from './routes/adminRoutes.ts';
+import cityRoutes from './routes/cityRoutes.ts';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/api', venueRoutes);
 app.use('/api', bookingRoutes);
 app.use('/api', adminRoutes);
+app.use('/api', cityRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
