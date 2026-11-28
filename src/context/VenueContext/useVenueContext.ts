@@ -9,6 +9,7 @@ interface VenueContextValue {
   setAllVenues: React.Dispatch<React.SetStateAction<Venue[]>>;
   alert: Alert | null;
   setAlert: React.Dispatch<React.SetStateAction<Alert | null>>;
+  reloadVenues: () => void;
 }
 
 export const VenueContext = createContext<VenueContextValue | null>(null);

@@ -45,6 +45,7 @@ describe('VenueCard', () => {
               setAllVenues: cy.stub(),
               alert: null,
               setAlert: cy.stub(),
+              reloadVenues: cy.stub(),
             }}>
             <VenueCard venue={testVenue} />
           </VenueContext.Provider>

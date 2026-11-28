@@ -73,6 +73,7 @@ const mountHomePage = (venues: Venue[] = VENUES) => {
             setAllVenues: cy.stub(),
             alert: null,
             setAlert: cy.stub(),
+            reloadVenues: cy.stub(),
           }}>
           <HomePage />
         </VenueContext.Provider>

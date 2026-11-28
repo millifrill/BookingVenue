@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Amenity {
+  amenityId    Int            @id @default(autoincrement()) @map("amenityid")
+  name         String         @unique @db.VarChar(50)
+  venueAmenity VenueAmenity[]
+  @@map("amenity")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model Booking {
+  bookingId String   @id @db.Char(8) @map("bookingid")
+  venueId   Int @map("venueid")
+  firstName String   @db.VarChar(50) @map("firstname")
+  lastName  String   @db.VarChar(50) @map("lastname")
+  startTime DateTime @db.Timestamp(6) @map("starttime")
+  endTime   DateTime @db.Timestamp(6) @map("endtime")
+  venue     Venue    @relation(fields: [venueId], references: [venueId], onDelete: NoAction, onUpdate: NoAction)
+  @@map("booking")
+}
+
+model City {
+  cityId Int     @id @default(autoincrement()) @map("cityid")
+  name   String  @unique @db.VarChar(50)
+  venue  Venue[]
+  @@map("city")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model Venue {
+  venueId      Int            @id @default(autoincrement()) @map("venueid")
+  cityId       Int            @map("cityid")
+  name         String         @db.VarChar(50)
+  street       String         @db.VarChar(50)
+  postalNumber String         @db.VarChar(5) @map("postalnumber")
+  description  String?        @default("Den här lokalen har ingen beskrivning ännu.") @db.VarChar(255)
+  space        Int
+  capacity     Int
+  priceperHour Int            @map("priceperhour")
+  imageUrl     String?        @default("https://images.pexels.com/photos/39225128/pexels-photo-39225128.jpeg") @db.VarChar(255) @map("imageurl")
+  booking      Booking[]
+  city         City           @relation(fields: [cityId], references: [cityId], onDelete: NoAction, onUpdate: NoAction)
+  venueamenity VenueAmenity[]
+  @@map("venue")
+}
+
+model VenueAmenity {
+  venueId   Int @map("venueid")
+  amenityId Int @map("amenityid")
+  amenity   Amenity @relation(fields: [amenityId], references: [amenityId], onDelete: NoAction, onUpdate: NoAction)
+  venue     Venue   @relation(fields: [venueId], references: [venueId], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([venueId, amenityId])
+  @@map("venueamenity")
+}
