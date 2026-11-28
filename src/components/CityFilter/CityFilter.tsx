@@ -1,5 +1,6 @@
 import Form from 'react-bootstrap/Form';
 import type { City } from '../../types/Venue';
+import styles from '../FilterBar/FilterBar.module.css';
 
 export type CityFilterProps = {
   cities: City[];
@@ -15,9 +16,12 @@ export default function CityFilter({
   onChange,
 }: CityFilterProps) {
   return (
-    <Form.Group controlId='cityFilter'>
-      <Form.Label>Stad</Form.Label>
+    <Form.Group
+      className={styles['field']}
+      controlId='cityFilter'>
+      <Form.Label className={styles['label']}>Stad</Form.Label>
       <Form.Select
+        className={styles['select']}
         value={value ?? ALL_CITIES}
         onChange={(e) =>
           onChange(

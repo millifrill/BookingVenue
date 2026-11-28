@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 import { HOURS } from '../../utils/constants';
-import styles from '../Booking/Booking.module.css';
+import styles from '../FilterBar/FilterBar.module.css';
 import { todayIso } from '../../utils/formatDate';
 
 export type DateTimeFilterValue = {
@@ -35,7 +35,7 @@ export default function DateTimeFilter({
   }
 
   return (
-    <fieldset>
+    <fieldset className={styles['group']}>
       <Form.Label
         as='legend'
         visuallyHidden>
@@ -44,23 +44,23 @@ export default function DateTimeFilter({
       <Form.Group
         className={styles['field']}
         controlId='filterDate'>
-        <Form.Label>Datum</Form.Label>
+        <Form.Label className={styles['label']}>Datum</Form.Label>
         <Form.Control
           data-cy='filter-date'
-          className={styles['input']}
+          className={styles['control']}
           type='date'
           min={todayIso()}
           value={value.date}
           onChange={handleDateChange}
         />
       </Form.Group>
-      <div className={styles['time-row']}>
+      <div className={styles['group']}>
         <Form.Group
           className={styles['field']}
           controlId='filterTimeFrom'>
-          <Form.Label>Från</Form.Label>
+          <Form.Label className={styles['label']}>Från</Form.Label>
           <Form.Select
-            className={styles['input']}
+            className={styles['select']}
             value={value.from}
             onChange={handleFromChange}
             disabled={!value.date}>
@@ -78,9 +78,9 @@ export default function DateTimeFilter({
         <Form.Group
           className={styles['field']}
           controlId='filterTimeTo'>
-          <Form.Label>Till</Form.Label>
+          <Form.Label className={styles['label']}>Till</Form.Label>
           <Form.Select
-            className={styles['input']}
+            className={styles['select']}
             value={value.to}
             onChange={handleToChange}
             disabled={!value.date}>
