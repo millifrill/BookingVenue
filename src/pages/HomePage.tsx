@@ -3,13 +3,14 @@ import VenueList from '../components/VenueList/VenueList';
 import CapacityFilter from '../components/CapacityFilter/CapacityFilter';
 import CityFilter from '../components/CityFilter/CityFilter';
 import AreaFilter from '../components/AreaFilter/AreaFilter';
+import FilterBar from '../components/FilterBar/FilterBar';
+import Hero from '../components/Hero/Hero';
 import { useVenueContext } from '../context/VenueContext/useVenueContext';
 import { filterByCity } from '../utils/filterByCity';
 import { filterByArea } from '../utils/filterByArea';
 import { filterByCapacity } from '../utils/filterByCapacity';
 import type { Venue, City } from '../types/Venue';
 import { Alert } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
 import DateTimeFilter, {
   type DateTimeFilterValue,
 } from '../components/DateTimeFilter/DateTimeFilter';
@@ -82,6 +83,7 @@ function HomePage() {
 
   return (
     <>
+      <Hero />
       {alert && (
         <Alert
           className='alert'
@@ -89,7 +91,7 @@ function HomePage() {
           {alert.text}
         </Alert>
       )}
-      <Form>
+      <FilterBar>
         <CityFilter
           cities={getCities(allVenues)}
           value={cityId}
@@ -107,7 +109,7 @@ function HomePage() {
           value={dateTime}
           onChange={setDateTime}
         />
-      </Form>
+      </FilterBar>
       <VenueList venues={venues} />
     </>
   );
