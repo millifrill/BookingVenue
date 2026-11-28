@@ -9,7 +9,7 @@ import { useVenueContext } from '../context/VenueContext/useVenueContext';
 import { filterByCity } from '../utils/filterByCity';
 import { filterByArea } from '../utils/filterByArea';
 import { filterByCapacity } from '../utils/filterByCapacity';
-import type { Venue, City } from '../types/Venue';
+import { getCities } from '../utils/getCities';
 import { Alert } from 'react-bootstrap';
 import DateTimeFilter, {
   type DateTimeFilterValue,
@@ -18,14 +18,6 @@ import { filterByAvailability } from '../utils/filterByAvailability';
 import axios from 'axios';
 import { API_URL } from '../utils/constants';
 import { validateBookingTime } from '../utils/validateBookingTime';
-
-function getCities(venues: Venue[]): City[] {
-  const cities = new Map<number, City>();
-  venues.forEach((venue) =>
-    cities.set(venue.cityId, { cityId: venue.cityId, name: venue.cityName }),
-  );
-  return [...cities.values()];
-}
 
 function HomePage() {
   const { allVenues, alert } = useVenueContext();

@@ -1,6 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminContext/useAdminContext';
+import AddVenue from '../components/AddVenue/AddVenue';
 
 export default function AdminPage() {
   const { isLoggedIn, setIsLoggedIn, setToken } = useAdminAuth();
@@ -23,6 +24,7 @@ export default function AdminPage() {
     <section className='text-center'>
       <h1>Admin</h1>
       <Button onClick={logOut}>Logga ut</Button>
+      <AddVenue />
     </section>
   );
 }
